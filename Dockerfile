@@ -1,7 +1,6 @@
 # Etapa 1: Construcción de la aplicación Angular
-FROM node:22 AS builder
+FROM node:18 AS builder
 
-# Directorio de trabajo en el contenedor
 WORKDIR /app
 
 # Copia los archivos de configuración y package.json al contenedor
@@ -13,8 +12,8 @@ RUN npm install
 # Copia el resto de los archivos del proyecto
 COPY . .
 
-# Ejecuta el build para producción
-RUN npm run build --prod
+# Ejecuta el build para producción con la nueva opción
+RUN npm run build -- --configuration production
 
 # Etapa 2: Servir la aplicación Angular usando Nginx
 FROM nginx:alpine
@@ -22,10 +21,10 @@ FROM nginx:alpine
 # Elimina la configuración predeterminada de Nginx
 RUN rm -rf /usr/share/nginx/html/*
 
-# Copia los archivos generados en dist/ por Angular al directorio de Nginx
-COPY --from=builder /app/dist/ /usr/share/nginx/html
+# Copia los archivos generados en dist/entrevista-pro-front/ al directorio de Nginx
+COPY --from=builder /app/dist/entrevista-pro-front/ /usr/share/nginx/html/
 
-# Expone el puerto 80 para servir la aplicación
+# Exponer el puerto 80 para servir la aplicación
 EXPOSE 80
 
 # Comando para iniciar Nginx
