@@ -1,5 +1,5 @@
 # Etapa 1: Construcción de la aplicación Angular
-FROM node:16 AS builder
+FROM node:22 AS builder
 
 # Directorio de trabajo en el contenedor
 WORKDIR /app
