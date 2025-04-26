@@ -10,10 +10,11 @@ import { LoginService } from '../../services/login.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+
   loginForm: FormGroup;
   email: FormControl;
   password: FormControl;
-  constructor(public loginService:LoginService) {
+  constructor() {
     this.email = new FormControl('', [Validators.required]);
     this.password = new FormControl('', [Validators.required]);
 
@@ -23,14 +24,14 @@ export class LoginComponent {
 
     })
   }
-  postLogin(){
-    this.loginService.login(this.loginForm.value).subscribe({
-      next: (data) =>{
-        console.log(data);
-      },
-      error: (e)=>{
-        console.log(e);
-      }
-    })
-  }
+  // postLogin(){
+  //   this.loginService.login(this.loginForm.value).subscribe({
+  //     next: (data) =>{
+  //       console.log(data);
+  //     },
+  //     error: (e)=>{
+  //       console.log(e);
+  //     }
+  //   })
+  // }
 }
