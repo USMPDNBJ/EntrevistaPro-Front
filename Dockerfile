@@ -1,32 +1,34 @@
 # Etapa 1: Construcción de la aplicación Angular
 FROM node:18 AS builder
 
-# Directorio de trabajo
 WORKDIR /app
 
-# Copiar el package.json y package-lock.json
+# Copiar archivos de configuración
 COPY package*.json ./
 
 # Instalar dependencias
 RUN npm install
 
-# Copiar el código fuente de la aplicación Angular
+# Copiar el código fuente de la aplicación
 COPY . .
 
-# Construir la aplicación para producción
+# Construir la aplicación
 RUN npm run build --prod
 
-# Etapa 2: Configuración de Nginx
+# Etapa 2: Nginx
 FROM nginx:latest
 
-# Copiar los archivos de la aplicación construida desde la etapa anterior
-COPY --from=builder /app/dist/entrevista-pro-front /usr/share/nginx/html
+# Eliminar la configuración predeterminada de Nginx
+RUN rm /etc/nginx/conf.d/default.conf
 
-# Copiar configuración personalizada de Nginx
+# Copiar la configuración personalizada de Nginx
 COPY nginx.conf /etc/nginx/nginx.conf
+
+# Copiar la aplicación construida desde la etapa anterior
+COPY --from=builder /app/dist/entrevista-pro-front /usr/share/nginx/html
 
 # Exponer el puerto 80
 EXPOSE 80
 
-# Comando por defecto para iniciar Nginx
+# Comando para iniciar Nginx
 CMD ["nginx", "-g", "daemon off;"]
