@@ -1,0 +1,62 @@
+<div class="fondoPage">
+  <div class="container fondoForm">
+    <div class="row formPad ">
+      <div class="col-6 divImgForm">
+        <img src="img/1.png" alt="imagen" class="imgForm">
+        <div class="infoTot">
+          <p class="titForm">Prepárate para destacar: practica, mejora y domina tus entrevistas con</p>
+          <p class="info2">EntrevistaPro</p>
+        </div>
+      </div>
+      <div class="col-6 form divImgForm">
+
+        <form [formGroup]="loginForm" class="form2">
+          <div class="row tits">
+            <div class="col-9">
+              <p class="titForm">Bienvenidos a</p><br>
+              <p class="titForm2">EntrevistaPro</p>
+            </div>
+            <div class="col-3">
+              <img src="img/logo.jpg" alt="logo" class="imgLogo">
+            </div>
+          </div>
+          <fieldset>
+            <div class="input-group mb-3">
+              <span class="input-group-text">📧</span>
+              <div class="form-floating">
+                <input type="text" class="form-control colInp" id="floatingInputGroup1" placeholder="Correo Electrónico" formControlName="email">
+                <label for="floatingInputGroup1">Correo Electrónico</label>
+              </div>
+            </div>
+            @if (email.invalid && email.touched) {
+            <p class="error">Rellene el campo</p>
+            }
+          </fieldset>
+          <fieldset>
+            <div class="input-group mb-3">
+              <span class="input-group-text">🔑</span>
+              <div class="form-floating">
+                <input type="password" class="form-control colInp" id="floatingInputGroup1" placeholder="Contraseña" formControlName="password">
+                <label for="floatingInputGroup1">Contraseña</label>
+              </div>
+            </div>
+            @if (password.invalid && password.touched) {
+            <p class="error">Rellene el campo</p>
+            }
+          </fieldset>
+
+          <div class="d-grid gap-2">
+            <button class="btn btnForm" type="submit">Ingresar</button>
+          </div>
+
+          <div class="divReg">
+            <p class="txtReg linkReg">No tienes una cuenta registrada? </p><a class="linkReg"
+              routerLink="/register">Registrate</a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

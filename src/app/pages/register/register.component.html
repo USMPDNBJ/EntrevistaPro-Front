@@ -1,0 +1,68 @@
+<div class="container mt-5">
+  <div class="row shadow rounded overflow-hidden">
+
+    <!-- Columna de la imagen -->
+    <div class="col-md-6 d-none d-md-block p-0">
+      <img src="img/registro.png" alt="Imagen de registro" class="img-fluid h-80 w-80" style="object-fit: cover;">
+      <p class="titForm">Prepárate para destacar: practica, mejora </p>
+      <p class="titForm">y domina tus entrevistas con</p>
+      <p class="info2">EntrevistaPro</p>
+    </div>
+
+    <!-- Columna del formulario -->
+    <div class="col-md-6 bg-white p-4">
+      <div class="row">
+        <div class="col-9 bordx">
+          <h2 class="mb-4 titReg">Registrate Aquí!</h2>
+          <p class="txtReg">Vamos a prepararlos para que puedan acceder a su cuenta personal.</p>
+        </div>
+        <div class="col-3 bordx">
+          <img src="img/logo.jpg" alt="Imagen de registro" class="imgLogo">
+        </div>
+      </div>
+      <form class="bordx" [formGroup]="userGroup">
+        <div class="mb-3 row">
+          <div class="col w-50 ">
+            <label for="nombres" class="form-label">Nombres</label>
+            <input type="text" class="form-control" id="nombres" required formControlName="nombres">
+          </div>
+          <div class="col w-50 ">
+            <label for="apellidos" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" id="apellidos" required formControlName="apellidos">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo Electrónico</label>
+          <input type="email" class="form-control" id="correo" required formControlName="correo">
+        </div>
+
+        <div class="mb-3">
+          <label for="dni" class="form-label">Numero DNI</label>
+          <input type="text" class="form-control" id="dni" required formControlName="dni">
+        </div>
+
+        <div class="mb-3">
+          <label for="celular" class="form-label">Numero Celular</label>
+          <input type="tel" class="form-control" id="celular" required formControlName="celular">
+        </div>
+
+        <div class="mb-3">
+          <label for="contrasena" class="form-label">Contraseña</label >
+          <input type="password" class="form-control" id="contrasena" required formControlName="contrasena">
+        </div>
+
+        <div class="mb-3">
+          <label for="verificarContrasena" class="form-label">Repetir Contraseña</label>
+          <input type="password" class="form-control" id="verificarContrasena" required>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn ">Registrarse</button>
+        </div>
+        <a class="linkLog bordx" routerLink="/w">Ya tengo una cuenta</a>
+      </form>
+    </div>
+
+  </div>
+</div>

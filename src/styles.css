@@ -1,4 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+
+}
+.btn{
+  background-color: rgb(19, 138, 122) !important;
+  font-weight: bold !important;
+  color: white !important;
+  transition: background-color 0.3s ease, filter 0.3s ease !important;
+}
+.btn:hover {
+
+  background-color: rgb(14, 114, 101) !important;
+  color: rgb(226, 225, 225) !important;
+
+
 :root {
   font-family: 'Poppins', sans-serif;
+
 }
