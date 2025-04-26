@@ -26,7 +26,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copiar la aplicación construida desde la etapa anterior
 COPY --from=builder /app/dist/entrevista-pro-front /usr/share/nginx/html
-COPY dist/my-angular-app /usr/share/nginx/html
+
 # Exponer el puerto 80
 EXPOSE 80
 
