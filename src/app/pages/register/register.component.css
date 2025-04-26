@@ -1,0 +1,48 @@
+.titReg {
+
+  color: rgb(19, 138, 122);
+  font-weight: bold;
+  font-size: 35px;
+  filter: drop-shadow(0 0 1px rgb(19, 138, 122));
+}
+
+.txtReg {
+  margin-top: -20px;
+  font-size: 12px;
+}
+
+.info2 {
+  margin-top: -1%;
+  color: rgb(19, 138, 122);
+  font-weight: bold;
+  font-size: 35px;
+  filter: drop-shadow(0 0 1px rgb(19, 138, 122));
+}
+
+.titForm {
+  font-size: 30px;
+  width: 100%;
+  filter: drop-shadow(0 0 0.5px black);
+  margin-bottom: 0;
+  padding-bottom: 0;
+
+}
+
+/* .bordx {
+  border: 2px solid red;
+} */
+
+.imgLogo {
+  width: 60%;
+  position: relative;
+  left: 30px;
+}
+
+.linkLog {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  text-decoration: none;
+
+}

@@ -95,7 +95,7 @@
 }
 
 .btnForm {
-  background-color: rgb(19, 138, 122);
+
   color: white;
   font-weight: bold;
   font-size: 20px;
@@ -117,6 +117,7 @@
 .linkReg {
   display: inline;
   font-size: 85%;
+  text-decoration: none;
 }
 
 .divReg{
