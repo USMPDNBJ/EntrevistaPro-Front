@@ -1,0 +1,75 @@
+.navbar {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 50px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.349);
+  margin: 20px 90px 90px;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+.navbar-logo img {
+  height: 90px;
+  width: auto;
+  padding-left: 80px;
+}
+
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  align-items: center; /* Añadido para centrar verticalmente los ítems */
+  margin: 0;
+  padding: 0;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.navbar-menu li {
+  padding-right: 80px;
+  display: flex; /* Añadido para centrar el enlace dentro del <li> */
+  align-items: center; /* Añadido para centrar verticalmente */
+}
+
+.navbar-menu a {
+  color: rgb(71, 71, 71);
+  font-size: 25px;
+  text-decoration: none;
+}
+
+.navbar-menu a:hover {
+  color: #007bff;
+}
+
+.navbar-menu button {
+  font-weight: bold;
+  margin-left: 20px;
+  border-radius: 40px;
+  background-color: rgb(17, 140, 145);
+  color: white;
+  height: 50px;
+  box-shadow: none;
+  padding: 0 20px;
+  border: none;
+  display: flex; /* Añadido para centrar el texto del botón */
+  align-items: center; /* Añadido para centrar verticalmente */
+  justify-content: center; /* Añadido para centrar horizontalmente */
+  font-size: 20px;
+}
+
+.navbar-profile {
+  display: flex; /* Añadido para centrar la imagen */
+  align-items: center; /* Añadido para centrar verticalmente */
+}
+
+.navbar-profile img {
+  margin-right: 50px;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}

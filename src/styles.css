@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+
 html, body {
   height: 100%;
   width: 100%;
@@ -16,5 +17,9 @@ html, body {
 
   background-color: rgb(14, 114, 101) !important;
   color: rgb(226, 225, 225) !important;
+
+
+:root {
+  font-family: 'Poppins', sans-serif;
 
 }

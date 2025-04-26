@@ -1,0 +1,86 @@
+.footer {
+  background-color: #d4fffd;
+  color: #333;
+  padding: 40px 90px;
+  font-size: 14px;
+  flex-shrink: 0; /* Asegura que el footer no se encoja */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-links p {
+  margin: 5px 0;
+}
+
+.footer-links a {
+  color: #00c4b3;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-contact h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.footer-contact p {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+}
+
+.footer-contact .icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.footer-contact .location {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/684/684908.png');
+}
+
+.footer-contact .phone {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/724/724715.png');
+}
+
+.footer-contact .email {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/561/561127.png');
+}
+
+.social-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin: 0 5px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.social-icon.linkedin {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/174/174857.png');
+}
+
+.social-icon.instagram {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/2111/2111463.png');
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+  color: #777;
+}

@@ -1,0 +1,322 @@
+/* Estilos existentes */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #e6f7fa; /* Fondo celeste claro, ajusta según el color exacto */
+}
+
+app-home {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  position: relative;
+}
+
+.titulo-home {
+  padding-left: 100px;
+  position: relative;
+  margin-top: 20px;
+}
+
+.titulo-home h1 {
+  font-size: 75px;
+  margin: 0;
+}
+
+.titulo-home h2 {
+  letter-spacing: 1.5px;
+  font-weight: lighter;
+  color: rgb(119, 119, 119);
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 50px;
+}
+
+.titulo-home span {
+  color: #00c4b3;
+  font-weight: bold;
+}
+
+.busqueda-cursos {
+  font-weight: bold;
+  margin-top: 70px;
+  margin-left: 180px;
+  position: relative;
+  min-height: 600px; /* Aumentado para dar más espacio al fondo */
+}
+
+.search-form {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 400px;
+}
+
+.search-input {
+  width: 100%;
+  height: 70px;
+  padding: 0 50px 0 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #999;
+  font-weight: normal;
+}
+
+.search-input:focus {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.search-icon {
+  position: absolute;
+  right: 15px;
+  width: 24px;
+  height: 24px;
+  background: url('https://cdn-icons-png.flaticon.com/512/54/54481.png') no-repeat center;
+  background-size: contain;
+}
+
+.imagen-fondo {
+  position: absolute;
+  right: 0;
+  top: 140px;
+  z-index: -1;
+  height: 500px;
+  width: auto;
+}
+
+.imagen-fondo img {
+  margin-right: 200px;
+  margin-top: 200px;
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Contenedor ajustado para que se limite al contenido */
+.contenedor-secciones {
+  background-color: white;
+  padding: 50px 0;
+  max-width: 1200px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 0;
+  margin-top: 0px; /* Asegura que comience después del fondo y la imagen */
+}
+
+/* Sección: A qué nos dedicamos? */
+.dedicamos {
+  padding: 50px 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dedicamos-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.dedicamos-image img {
+  width: 300px;
+  height: auto;
+  margin-right: 50px;
+}
+
+.dedicamos-content {
+  flex: 1;
+}
+
+.dedicamos-content h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.dedicamos-stats {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 48px;
+  font-weight: bold;
+  color: #00c4b3;
+}
+
+.stat p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.dedicamos-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+}
+
+/* Sección: Los últimos cursos ingresados */
+.cursos-recientes {
+  padding: 50px 90px;
+  text-align: center;
+}
+
+.cursos-recientes h2 {
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+
+.cursos-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.curso-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 250px;
+  text-align: center;
+}
+
+.curso-icon {
+  display: block;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.curso-icon-ux {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/1265/1265511.png');
+}
+
+.curso-icon-graphic {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/809/809957.png');
+}
+
+.curso-icon-seo {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/1599/1599017.png');
+}
+
+.curso-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.curso-card p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.curso-card .precio {
+  font-size: 16px;
+  font-weight: bold;
+  color: #00c4b3;
+}
+
+/* Sección: Escoge entre diferentes categorías */
+.categorias {
+  padding: 50px 90px;
+  text-align: center;
+}
+
+.categorias h2 {
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+
+.categorias-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.categoria-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Sección: Tienes alguna duda? */
+.contacto {
+  padding: 50px 90px;
+  text-align: center;
+  background-color: #f0fafa;
+}
+
+.contacto h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.contacto-form {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contacto-form input {
+  width: 100%;
+  max-width: 400px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.contacto-form button {
+  padding: 15px 30px;
+  background-color: #00c4b3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.contacto-form button:hover {
+  background-color: #00a89a;
+}
+
+/* Footer */
+.footer {
+  flex-shrink: 0;
+}
