@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { NavbarComponent } from '../../Components/navbar/navbar.component';
-import { ContainerComponent } from '../../Components/container/container.component';
+import { NavbarComponent } from '../../../Components/navbar/navbar.component';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { FooterComponent } from '../../Components/footer/footer.component';
+import { FooterComponent } from '../../../Components/footer/footer.component';
 
 @Component({
   selector: 'app-home',
-  imports: [NavbarComponent, ContainerComponent, RouterOutlet, FormsModule, FooterComponent], // Añade FormsModule
+  imports: [NavbarComponent, FormsModule, FooterComponent], // Añade FormsModule
   standalone: true,
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

@@ -1,0 +1,309 @@
+/* Estilo general de la sección de cursos */
+.courses {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  background: linear-gradient(to bottom, #001731, #d1d9e0);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Título de la categoría */
+.courses h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a3c4d;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(90deg, #1a3c4d, #2c7873);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+/* Contenedor de las cards de cursos */
+.courses-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Estilo de las cards de cursos */
+.course-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 1rem;
+  border: 2px solid #e0e6ed;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(44, 120, 115, 0.2);
+  border-color: #2c7873;
+}
+
+.course-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.course-card:hover img {
+  transform: scale(1.05);
+}
+
+.course-info {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.course-info h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a3c4d;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.course-info .description {
+  font-size: 0.95rem;
+  color: #4a6572;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.course-info .instructor,
+.course-info .duration,
+.course-info .price {
+  font-size: 0.9rem;
+  color: #4a6572;
+  font-family: 'Roboto', sans-serif;
+}
+
+.course-info .price {
+  font-weight: 600;
+  color: #2c7873;
+}
+
+.enroll-btn {
+  background: linear-gradient(90deg, #2c7873, #1a3c4d);
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.25rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  margin-top: 0.5rem;
+  align-self: flex-start;
+}
+
+.enroll-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #1a3c4d, #2c7873);
+}
+
+/* Sección de Preguntas Frecuentes */
+.faq {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.faq h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a3c4d;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(90deg, #1a3c4d, #2c7873);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e0e6ed;
+}
+
+.faq-item summary {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a3c4d;
+  font-family: 'Montserrat', sans-serif;
+  padding: 1rem 0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.faq-item summary:hover {
+  color: #2c7873;
+}
+
+.faq-item p {
+  font-size: 0.95rem;
+  color: #4a6572;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  padding: 0 1rem 1rem 1rem;
+}
+
+/* Animaciones (solo float, sin rotate) */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+/* Media Queries para Responsividad */
+
+/* Tablets (768px y menos) */
+@media (max-width: 768px) {
+  .courses {
+    padding: 2rem 1rem;
+  }
+
+  .courses h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .courses-container {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .course-card img {
+    height: 180px;
+  }
+
+  .course-info {
+    padding: 1rem;
+  }
+
+  .course-info h3 {
+    font-size: 1.1rem;
+  }
+
+  .course-info .description {
+    font-size: 0.9rem;
+  }
+
+  .course-info .instructor,
+  .course-info .duration,
+  .course-info .price {
+    font-size: 0.85rem;
+  }
+
+  .enroll-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .faq {
+    margin-top: 2rem;
+    padding: 1.5rem 0;
+  }
+
+  .faq h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .faq-item summary {
+    font-size: 1rem;
+    padding: 0.8rem 0;
+  }
+
+  .faq-item p {
+    font-size: 0.9rem;
+    padding: 0 0.8rem 0.8rem 0.8rem;
+  }
+}
+
+/* Móviles (480px y menos) */
+@media (max-width: 480px) {
+  .courses {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .courses h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .courses-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .course-card img {
+    height: 160px;
+  }
+
+  .course-info {
+    padding: 0.8rem;
+  }
+
+  .course-info h3 {
+    font-size: 1rem;
+  }
+
+  .course-info .description {
+    font-size: 0.85rem;
+  }
+
+  .course-info .instructor,
+  .course-info .duration,
+  .course-info .price {
+    font-size: 0.8rem;
+  }
+
+  .enroll-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .faq {
+    margin-top: 1.5rem;
+    padding: 1rem 0;
+  }
+
+  .faq h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .faq-item summary {
+    font-size: 0.95rem;
+    padding: 0.6rem 0;
+  }
+
+  .faq-item p {
+    font-size: 0.85rem;
+    padding: 0 0.6rem 0.6rem 0.6rem;
+  }
+}

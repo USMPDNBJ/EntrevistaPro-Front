@@ -1,19 +1,57 @@
-<nav class="navbar">
-  <!-- Logo -->
-  <div class="navbar-logo">
-    <img src="img/Logo-entrevistapro.PNG" alt="Logo de la empresa" />
+<div class="sidebar-wrapper">
+  <div class="sidebar-strip" [class.hidden]="isExpanded">
+      <button id="toggle" (click)="toggleSidebar()">
+          <i [class]="isExpanded ? 'fi-rr-arrow-left' : 'fi-rr-menu-burger'"></i>
+      </button>
   </div>
-
-  <!-- Navegacion -->
-  <ul class="navbar-menu" style="padding-right: 100px;">
-    <li><a routerLink="/inicio">Inicio</a></li>
-    <li><a routerLink="/cursos">Cursos</a></li>
-    <li><a routerLink="/sesiones">Sesiones de Preparación</a></li>
-    <button routerLink="/login">Cerrar Sesión</button>
-  </ul>
-
-  <!-- Perfil -->
-  <div class="navbar-profile">
-    <img src="img/perfil.png" alt="Perfil del usuario" />
-  </div>
-</nav>
+  <aside [class.expanded]="isExpanded">
+      <div class="toggle-container">
+          <button id="toggle-sidebar" (click)="toggleSidebar()">
+              <i [class]="isExpanded ? 'fi-rr-arrow-left' : 'fi-rr-menu-burger'"></i>
+          </button>
+      </div>
+      <div class="link">
+          <ul>
+              <li class="active">
+                  <i class="fi-rr-home"></i>
+                  <label>Home</label>
+              </li>
+              <li>
+                  <i class="fi-rr-apps"></i>
+                  <label>Dashboard</label>
+              </li>
+              <li>
+                  <i class="fi-rr-envelope"></i>
+                  <label>Message</label>
+              </li>
+              <li>
+                  <i class="fi-rr-credit-card"></i>
+                  <label>Payment</label>
+              </li>
+              <li>
+                  <i class="fi-rr-search"></i>
+                  <label>Search</label>
+              </li>
+              <li>
+                  <i class="fi-rr-shield"></i>
+                  <label>Privacy</label>
+              </li>
+          </ul>
+      </div>
+      <div class="user">
+          <ul>
+              <li>
+                  <i>
+                      <img src="img/perfil.png" alt="User" />
+                  </i>
+                  <label>Perfil</label>
+              </li>
+              <li>
+                  <i class="fi-rr-settings"></i>
+                  <label>Settings</label>
+              </li>
+          </ul>
+      </div>
+  </aside>
+  <div class="overlay" (click)="toggleSidebar()"></div>
+</div>
