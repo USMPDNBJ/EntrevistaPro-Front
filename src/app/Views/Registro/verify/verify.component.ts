@@ -1,30 +1,25 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-verify',
+  standalone: true,
+  imports: [RouterLink, ReactiveFormsModule, CommonModule],
   templateUrl: './verify.component.html',
   styleUrls: ['./verify.component.css']
 })
 export class VerifyComponent {
-  code: string = '';
+  verificationGroup: FormGroup;
 
-  constructor(private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router) {
+    this.verificationGroup = this.fb.group({
+      codigo: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]]
+    });
+  }
 
-  goBack() {
+  goBack(): void {
     this.router.navigate(['/login']);
-  }
-
-  resendCode() {
-    // Lógica para reenviar código (a implementar según backend)
-    console.log('Código reenviado');
-  }
-
-  verifyCode() {
-    if (this.code) {
-      // Lógica para verificar código (a implementar según backend)
-      console.log('Código verificado:', this.code);
-      this.router.navigate(['/dashboard']);
-    }
   }
 }

@@ -1,68 +1,134 @@
-<div class="container mt-5">
-  <div class="row shadow rounded overflow-hidden">
-
-    <!-- Columna de la imagen -->
-    <div class="col-md-6 d-none d-md-block p-0">
-      <img src="img/registro.png" alt="Imagen de registro" class="img-fluid h-80 w-80" style="object-fit: cover;">
-      <p class="titForm">Prepárate para destacar: practica, mejora </p>
-      <p class="titForm">y domina tus entrevistas con</p>
-      <p class="info2">EntrevistaPro</p>
+<div class="register-container">
+  <svg style="display: none;">
+    <symbol id="icon-user" viewBox="0 0 24 24">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </symbol>
+    <symbol id="icon-family" viewBox="0 0 24 24">
+      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+      <polyline points="10 17 15 12 10 7"></polyline>
+    </symbol>
+    <symbol id="icon-email" viewBox="0 0 24 24">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+      <polyline points="22,6 12,13 2,6"></polyline>
+    </symbol>
+    <symbol id="icon-password" viewBox="0 0 24 24">
+      <path d="M12 2a3 3 0 0 0-3 3v4H6v10h12V9h-3V5a3 3 0 0 0-3-3z"></path>
+    </symbol>
+    <symbol id="icon-dni" viewBox="0 0 24 24">
+      <rect x="3" y="4" width="18" height="14" rx="2" ry="2"></rect>
+      <line x1="16" y1="10" x2="16" y2="10"></line>
+    </symbol>
+    <symbol id="icon-phone" viewBox="0 0 24 24">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </symbol>
+    <symbol id="icon-skills" viewBox="0 0 24 24">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+    </symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24">
+      <path d="M5 12h14"></path>
+      <polyline points="12 5 19 12 12 19"></polyline>
+    </symbol>
+  </svg>
+  <div class="register-form">
+    <div class="form-header">
+      <img src="img/logo.jpg" class="logo-card" alt="Logo de EntrevistaPro">
+      <h2>Únete a EntrevistaPro</h2>
+      <p>Prepárate para brillar en tus entrevistas</p>
     </div>
 
-    <!-- Columna del formulario -->
-    <div class="col-md-6 bg-white p-4">
-      <div class="row">
-        <div class="col-9 bordx">
-          <h2 class="mb-4 titReg">Registrate Aquí!</h2>
-          <p class="txtReg">Vamos a prepararlos para que puedan acceder a su cuenta personal.</p>
+    <form [formGroup]="userGroup" class="form-content" role="form" aria-labelledby="form-header">
+      <div class="input-row">
+        <div class="input-field">
+          <label for="nombres" id="nombres-label">
+            <svg class="input-icon"><use href="#icon-user"></use></svg>
+            Nombres
+          </label>
+          <input type="text" id="nombres" formControlName="nombres" placeholder="Ingresa tus nombres" required aria-labelledby="nombres-label" aria-describedby="nombres-error">
+          <span class="error-message" id="nombres-error" *ngIf="userGroup.get('nombres')?.invalid && userGroup.get('nombres')?.touched">
+            Por favor, ingresa un nombre válido
+          </span>
         </div>
-        <div class="col-3 bordx">
-          <img src="img/Logo-entrevistapro.PNG" alt="Imagen de registro" class="imgLogo">
+        <div class="input-field">
+          <label for="apellidos" id="apellidos-label">
+            <svg class="input-icon"><use href="#icon-family"></use></svg>
+            Apellidos
+          </label>
+          <input type="text" id="apellidos" formControlName="apellidos" placeholder="Ingresa tus apellidos" required aria-labelledby="apellidos-label" aria-describedby="apellidos-error">
+          <span class="error-message" id="apellidos-error" *ngIf="userGroup.get('apellidos')?.invalid && userGroup.get('apellidos')?.touched">
+            Por favor, ingresa un apellido válido
+          </span>
         </div>
       </div>
-      <form class="bordx" [formGroup]="userGroup">
-        <div class="mb-3 row">
-          <div class="col w-50 ">
-            <label for="nombres" class="form-label">Nombres</label>
-            <input type="text" class="form-control" id="nombres" required formControlName="nombres">
-          </div>
-          <div class="col w-50 ">
-            <label for="apellidos" class="form-label">Apellidos</label>
-            <input type="text" class="form-control" id="apellidos" required formControlName="apellidos">
-          </div>
-        </div>
 
-        <div class="mb-3">
-          <label for="correo" class="form-label">Correo Electrónico</label>
-          <input type="email" class="form-control" id="correo" required formControlName="correo">
+      <div class="input-row">
+        <div class="input-field">
+          <label for="correo" id="correo-label">
+            <svg class="input-icon"><use href="#icon-email"></use></svg>
+            Correo Electrónico
+          </label>
+          <input type="email" id="correo" formControlName="correo" placeholder="tu@correo.com" required aria-labelledby="correo-label" aria-describedby="correo-error">
+          <span class="error-message" id="correo-error" *ngIf="userGroup.get('correo')?.invalid && userGroup.get('correo')?.touched">
+            Por favor, ingresa un correo válido
+          </span>
         </div>
-
-        <div class="mb-3">
-          <label for="dni" class="form-label">Numero DNI</label>
-          <input type="text" class="form-control" id="dni" required formControlName="dni">
+        <div class="input-field">
+          <label for="contrasena" id="contrasena-label">
+            <svg class="input-icon"><use href="#icon-password"></use></svg>
+            Contraseña
+          </label>
+          <input type="password" id="contrasena" formControlName="contrasena" placeholder="Crea una contraseña" required aria-labelledby="contrasena-label" aria-describedby="contrasena-error">
+          <span class="error-message" id="contrasena-error" *ngIf="userGroup.get('contrasena')?.invalid && userGroup.get('contrasena')?.touched">
+            Por favor, ingresa una contraseña válida
+          </span>
         </div>
+      </div>
 
-        <div class="mb-3">
-          <label for="celular" class="form-label">Numero Celular</label>
-          <input type="tel" class="form-control" id="celular" required formControlName="celular">
+      <div class="input-row">
+        <div class="input-field">
+          <label for="dni" id="dni-label">
+            <svg class="input-icon"><use href="#icon-dni"></use></svg>
+            DNI
+          </label>
+          <input type="text" id="dni" formControlName="dni" placeholder="Ingresa tu DNI" required aria-labelledby="dni-label" aria-describedby="dni-error">
+          <span class="error-message" id="dni-error" *ngIf="userGroup.get('dni')?.invalid && userGroup.get('dni')?.touched">
+            Por favor, ingresa un DNI válido
+          </span>
         </div>
-
-        <div class="mb-3">
-          <label for="contrasena" class="form-label">Contraseña</label >
-          <input type="password" class="form-control" id="contrasena" required formControlName="contrasena">
+        <div class="input-field">
+          <label for="celular" id="celular-label">
+            <svg class="input-icon"><use href="#icon-phone"></use></svg>
+            Celular
+          </label>
+          <input type="tel" id="celular" formControlName="celular" placeholder="Ingresa tu número" required aria-labelledby="celular-label" aria-describedby="celular-error">
+          <span class="error-message" id="celular-error" *ngIf="userGroup.get('celular')?.invalid && userGroup.get('celular')?.touched">
+            Por favor, ingresa un número válido
+          </span>
         </div>
+      </div>
 
-        <div class="mb-3">
-          <label for="verificarContrasena" class="form-label">Repetir Contraseña</label>
-          <input type="password" class="form-control" id="verificarContrasena" required>
+      <div class="skills-section">
+        <h3>
+          <svg class="section-icon"><use href="#icon-skills"></use></svg>
+          Selecciona hasta 3 habilidades
+        </h3>
+        <div class="skills-grid">
+          <span class="skill-chip" *ngFor="let skill of ['Comunicación', 'Trabajo en equipo', 'Resolución de problemas', 'Adaptabilidad', 'Liderazgo', 'Creatividad']"
+                (click)="toggleSkill(skill)" [ngClass]="{'selected': selectedSkills.includes(skill)}" tabindex="0">
+            {{skill}}
+          </span>
         </div>
+        <p class="skills-note" *ngIf="selectedSkills.length >= 3">Has alcanzado el máximo de 3 habilidades</p>
+      </div>
 
-        <div class="d-grid">
-          <button type="submit" class="btn" routerLink="/home">Registrarse</button>
-        </div>
-        <a class="linkLog bordx" routerLink="/login">Ya tengo una cuenta</a>
-      </form>
-    </div>
-
+      <div class="form-actions">
+        <button type="submit" class="register-btn" [disabled]="userGroup.invalid" routerLink="/login">
+          Crear Cuenta
+          <svg class="button-icon"><use href="#icon-arrow"></use></svg>
+        </button>
+        <a class="login-link" routerLink="/login">¿Ya tienes cuenta? Inicia sesión</a>
+      </div>
+    </form>
   </div>
 </div>

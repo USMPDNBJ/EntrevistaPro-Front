@@ -3,13 +3,12 @@
   max-width: 1600px;
   margin: 0 auto;
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, #2c3e50, #3498db);
+  background: linear-gradient(180deg, #04303b, #021e25);
   position: relative;
   overflow: hidden;
   text-align: center;
 }
 
-/* Título de la categoría */
 .courses h2 {
   font-size: 2.5rem;
   font-weight: 700;
@@ -20,12 +19,13 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   position: relative;
   z-index: 1;
+  animation: fadeIn 0.6s ease-out;
 }
 
 /* Contenedor de las cards de cursos */
 .courses-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   position: relative;
   z-index: 1;
@@ -33,61 +33,76 @@
 
 /* Estilo de las cards de cursos */
 .course-card {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.6s ease-out, shadowPulse 6s infinite ease-in-out;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
-  border-radius: 1.5rem;
-  border: 1px solid #ecf0f1;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  overflow: hidden;
+  margin: 0; /* Eliminar márgenes para evitar bordes */
 }
 
 .course-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 20px rgba(231, 76, 60, 0.2);
-  border-color: #e74c3c;
+  box-shadow: 0 20px 50px rgba(74, 144, 226, 0.3);
 }
 
-.course-card img {
+.course-card .image-container {
+  position: relative;
   width: 100%;
-  height: 160px;
+  height: 220px; /* Aumentado para más cobertura */
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.course-card .image-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  transform: scale(1.1); /* Zoom inicial leve */
   transition: transform 0.3s ease;
 }
 
-.course-card:hover img {
-  transform: scale(1.1);
+.course-card:hover .image-container img {
+  transform: scale(1.15); /* Mayor zoom al hover */
 }
 
 .course-info {
-  padding: 1.2rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  flex-grow: 1;
 }
 
 .course-info h3 {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  color: #2c3e50;
+  color: #333;
   font-family: 'Montserrat', sans-serif;
   margin: 0;
 }
 
 .course-info .description {
-  font-size: 0.9rem;
-  color: #7f8c8d;
+  font-size: 1rem;
+  color: #555;
   font-family: 'Roboto', sans-serif;
-  line-height: 1.4;
+  line-height: 1.5;
   margin: 0;
 }
 
 .course-info .instructor,
 .course-info .duration,
 .course-info .price {
-  font-size: 0.85rem;
-  color: #7f8c8d;
+  font-size: 0.9rem;
+  color: #555;
   font-family: 'Roboto', sans-serif;
   margin: 0;
 }
@@ -95,24 +110,60 @@
 .course-info .price {
   font-weight: 600;
   color: #e74c3c;
+  margin-top: auto;
 }
 
 .enroll-btn {
-  background: #e74c3c;
-  color: #ffffff;
-  border: none;
-  padding: 0.7rem 1.5rem;
-  border-radius: 0.5rem;
-  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  background: white;
+  color: #333;
+  padding: 12px 24px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
-  margin-top: 0.8rem;
-  align-self: flex-start;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
 }
 
-.enroll-btn:hover {
-  background: #c0392b;
+.enroll-btn:not(:disabled) {
+  background: linear-gradient(135deg, #21094e 0%, #1e328a 100%);
+  color: white;
+  border-color: transparent;
+}
+
+.enroll-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5600f5 0%, #1e328a 100%);
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.enroll-btn:disabled {
+  background: #b3b3b3;
+  color: #666;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  border-color: transparent;
+}
+
+.enroll-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: 0.5s;
+}
+
+.enroll-btn:hover:not(:disabled)::before {
+  animation: shine 1s;
 }
 
 /* Sección de Preguntas Frecuentes */
@@ -120,14 +171,14 @@
   margin-top: 4rem;
   padding: 2rem 0;
   background: #ffffff;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .faq h2 {
   font-size: 2rem;
   font-weight: 700;
-  color: #2c3e50;
+  color: #333;
   text-align: center;
   margin-bottom: 2rem;
   font-family: 'Montserrat', sans-serif;
@@ -140,13 +191,13 @@
 
 .faq-item {
   margin-bottom: 1.5rem;
-  border-bottom: 1px solid #ecf0f1;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .faq-item summary {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #2c3e50;
+  color: #333;
   font-family: 'Montserrat', sans-serif;
   padding: 1rem 0;
   cursor: pointer;
@@ -154,27 +205,35 @@
 }
 
 .faq-item summary:hover {
-  color: #e74c3c;
+  color: #4a90e2;
 }
 
 .faq-item p {
   font-size: 0.95rem;
-  color: #7f8c8d;
+  color: #555;
   font-family: 'Roboto', sans-serif;
   line-height: 1.6;
   padding: 0 1rem 1rem 1rem;
 }
 
 /* Animaciones */
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-  100% { transform: translateY(0); }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shadowPulse {
+  0% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); }
+  50% { box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); }
+  100% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); }
+}
+
+@keyframes shine {
+  0% { background-position: -200%; }
+  100% { background-position: 200%; }
 }
 
 /* Media Queries para Responsividad */
-
-/* Tablets (768px y menos) */
 @media (max-width: 768px) {
   .courses {
     padding: 2rem 1rem;
@@ -186,12 +245,88 @@
   }
 
   .courses-container {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
   }
 
-  .course-card img {
-    height: 140px;
+  .course-card .image-container {
+    height: 180px;
+  }
+
+  .course-card .image-container img {
+    transform: scale(1.1);
+  }
+
+  .course-card:hover .image-container img {
+    transform: scale(1.15);
+  }
+
+  .course-info {
+    padding: 1.2rem;
+  }
+
+  .course-info h3 {
+    font-size: 1.3rem;
+  }
+
+  .course-info .description {
+    font-size: 0.9rem;
+  }
+
+  .course-info .instructor,
+  .course-info .duration,
+  .course-info .price {
+    font-size: 0.85rem;
+  }
+
+  .enroll-btn {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+
+  .faq {
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+  }
+
+  .faq h2 {
+    font-size: 1.8rem;
+  }
+
+  .faq-item summary {
+    font-size: 1rem;
+  }
+
+  .faq-item p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .courses {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .courses h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .courses-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .course-card .image-container {
+    height: 150px;
+  }
+
+  .course-card .image-container img {
+    transform: scale(1.1);
+  }
+
+  .course-card:hover .image-container img {
+    transform: scale(1.15);
   }
 
   .course-info {
@@ -213,69 +348,8 @@
   }
 
   .enroll-btn {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.85rem;
-  }
-
-  .faq {
-    margin-top: 3rem;
-    padding: 1.5rem 0;
-  }
-
-  .faq h2 {
-    font-size: 1.8rem;
-  }
-
-  .faq-item summary {
-    font-size: 1rem;
-  }
-
-  .faq-item p {
+    padding: 8px 16px;
     font-size: 0.9rem;
-  }
-}
-
-/* Móviles (480px y menos) */
-@media (max-width: 480px) {
-  .courses {
-    padding: 1.5rem 0.5rem;
-  }
-
-  .courses h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .courses-container {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .course-card img {
-    height: 120px;
-  }
-
-  .course-info {
-    padding: 0.8rem;
-  }
-
-  .course-info h3 {
-    font-size: 1rem;
-  }
-
-  .course-info .description {
-    font-size: 0.8rem;
-  }
-
-  .course-info .instructor,
-  .course-info .duration,
-  .course-info .price {
-    font-size: 0.75rem;
-  }
-
-  .enroll-btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
   }
 
   .faq {

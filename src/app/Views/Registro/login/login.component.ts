@@ -1,38 +1,22 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { LoginService } from '../../../services/login.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink,ReactiveFormsModule],
+  imports: [RouterLink,ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  loginGroup: FormGroup;
 
-  loginForm: FormGroup;
-  email: FormControl;
-  password: FormControl;
-  constructor() {
-    this.email = new FormControl('', [Validators.required]);
-    this.password = new FormControl('', [Validators.required]);
-
-    this.loginForm = new FormGroup({
-      email: this.email,
-      password: this.password,
-
-    })
-  }
-  // postLogin(){
-  //   this.loginService.login(this.loginForm.value).subscribe({
-  //     next: (data) =>{
-  //       console.log(data);
-  //     },
-  //     error: (e)=>{
-  //       console.log(e);
-  //     }
-  //   })
-  // }
+    constructor(private fb: FormBuilder) {
+      this.loginGroup = this.fb.group({
+        correo: ['', [Validators.required, Validators.email]],
+        contrasena: ['', [Validators.required, Validators.minLength(6)]]
+      });
+    }
 }

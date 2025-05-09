@@ -1,62 +1,55 @@
-<div class="fondoPage">
-  <div class="container fondoForm">
-    <div class="row formPad ">
-      <div class="col-6 divImgForm">
-        <img src="img/1.png" alt="imagen" class="imgForm">
-        <div class="infoTot">
-          <p class="titForm">Prepárate para destacar: practica, mejora y domina tus entrevistas con</p>
-          <p class="info2">EntrevistaPro</p>
+<div class="login-container">
+  <svg style="display: none;">
+    <symbol id="icon-email" viewBox="0 0 24 24">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+      <polyline points="22,6 12,13 2,6"></polyline>
+    </symbol>
+    <symbol id="icon-password" viewBox="0 0 24 24">
+      <path d="M12 2a3 3 0 0 0-3 3v4H6v10h12V9h-3V5a3 3 0 0 0-3-3z"></path>
+    </symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24">
+      <path d="M5 12h14"></path>
+      <polyline points="12 5 19 12 12 19"></polyline>
+    </symbol>
+  </svg>
+  <div class="login-form">
+    <div class="form-header">
+      <img src="img/logo.jpg" class="logo-card" alt="Logo de EntrevistaPro">
+      <h2>Inicia sesión en EntrevistaPro</h2>
+      <p>Accede a tu cuenta para continuar</p>
+    </div>
+
+    <form [formGroup]="loginGroup" class="form-content" role="form" aria-labelledby="form-header">
+      <div class="input-row">
+        <div class="input-field">
+          <label for="correo" id="correo-label">
+            <svg class="input-icon"><use href="#icon-email"></use></svg>
+            Correo Electrónico
+          </label>
+          <input type="email" id="correo" formControlName="correo" placeholder="tu@correo.com" required aria-labelledby="correo-label" aria-describedby="correo-error">
+          <span class="error-message" id="correo-error" *ngIf="loginGroup.get('correo')?.invalid && loginGroup.get('correo')?.touched">
+            Por favor, ingresa un correo válido
+          </span>
+        </div>
+        <div class="input-field">
+          <label for="contrasena" id="contrasena-label">
+            <svg class="input-icon"><use href="#icon-password"></use></svg>
+            Contraseña
+          </label>
+          <input type="password" id="contrasena" formControlName="contrasena" placeholder="Ingresa tu contraseña" required aria-labelledby="contrasena-label" aria-describedby="contrasena-error">
+          <span class="error-message" id="contrasena-error" *ngIf="loginGroup.get('contrasena')?.invalid && loginGroup.get('contrasena')?.touched">
+            Por favor, ingresa una contraseña válida
+          </span>
         </div>
       </div>
-      <div class="col-6 form divImgForm">
 
-        <form [formGroup]="loginForm" class="form2">
-          <div class="row tits">
-            <div class="col-9">
-              <p class="titForm">Bienvenidos a</p><br>
-              <p class="titForm2">EntrevistaPro</p>
-            </div>
-            <div class="col-3">
-              <img src="img/Logo-entrevistapro.PNG" alt="logo" class="imgLogo">
-            </div>
-          </div>
-          <fieldset>
-            <div class="input-group mb-3">
-              <span class="input-group-text">📧</span>
-              <div class="form-floating">
-                <input type="text" class="form-control colInp" id="floatingInputGroup1" placeholder="Correo Electrónico" formControlName="email">
-                <label for="floatingInputGroup1">Correo Electrónico</label>
-              </div>
-            </div>
-            @if (email.invalid && email.touched) {
-            <p class="error">Rellene el campo</p>
-            }
-          </fieldset>
-          <fieldset>
-            <div class="input-group mb-3">
-              <span class="input-group-text">🔑</span>
-              <div class="form-floating">
-                <input type="password" class="form-control colInp" id="floatingInputGroup1" placeholder="Contraseña" formControlName="password">
-                <label for="floatingInputGroup1">Contraseña</label>
-              </div>
-            </div>
-            @if (password.invalid && password.touched) {
-            <p class="error">Rellene el campo</p>
-            }
-          </fieldset>
-
-          <div class="d-grid gap-2">
-            <button class="btn btnForm" type="submit" routerLink="/home">Ingresar</button>
-          </div>
-
-          <div class="divReg">
-            <p class="txtReg linkReg">No tienes una cuenta registrada? </p><a class="linkReg"
-              routerLink="/register">Registrate</a>
-          </div>
-
-        </form>
+      <div class="form-actions">
+        <button type="submit"  routerLink="/verify" class="login-btn" [disabled]="loginGroup.invalid">
+          Iniciar Sesión
+          <svg class="button-icon"><use href="#icon-arrow"></use></svg>
+        </button>
+        <a class="register-link" routerLink="/register">¿No tienes cuenta? Regístrate</a>
       </div>
-    </div>
+    </form>
   </div>
-
 </div>
