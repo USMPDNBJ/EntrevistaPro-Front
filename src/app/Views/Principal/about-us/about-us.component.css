@@ -80,11 +80,16 @@ nav a:hover {
 }
 
 .header-visual {
+  text-align: center;
   flex: 1;
   position: relative;
   height: 300px;
 }
 
+.header-visual img{
+  width: 500px;
+  height: auto;
+}
 .visual-circle {
   position: absolute;
   top: 50%;
