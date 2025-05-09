@@ -1,26 +1,23 @@
 /* Estilo general de la sección de cursos */
 .courses {
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 4rem 2rem;
-  background: linear-gradient(to bottom, #001731, #d1d9e0);
+  background: linear-gradient(135deg, #2c3e50, #3498db);
   position: relative;
   overflow: hidden;
+  text-align: center;
 }
 
 /* Título de la categoría */
 .courses h2 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  color: #1a3c4d;
+  color: #ffffff;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   font-family: 'Montserrat', sans-serif;
-  background: linear-gradient(90deg, #1a3c4d, #2c7873);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   position: relative;
   z-index: 1;
 }
@@ -28,7 +25,7 @@
 /* Contenedor de las cards de cursos */
 .courses-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
   position: relative;
   z-index: 1;
@@ -39,104 +36,101 @@
   display: flex;
   flex-direction: column;
   background: #ffffff;
-  border-radius: 1rem;
-  border: 2px solid #e0e6ed;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border-radius: 1.5rem;
+  border: 1px solid #ecf0f1;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   overflow: hidden;
 }
 
 .course-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(44, 120, 115, 0.2);
-  border-color: #2c7873;
+  transform: translateY(-8px);
+  box-shadow: 0 12px 20px rgba(231, 76, 60, 0.2);
+  border-color: #e74c3c;
 }
 
 .course-card img {
   width: 100%;
-  height: 200px;
+  height: 160px;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
 .course-card:hover img {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .course-info {
-  padding: 1.5rem;
+  padding: 1.2rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.8rem;
 }
 
 .course-info h3 {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 600;
-  color: #1a3c4d;
+  color: #2c3e50;
   font-family: 'Montserrat', sans-serif;
+  margin: 0;
 }
 
 .course-info .description {
-  font-size: 0.95rem;
-  color: #4a6572;
+  font-size: 0.9rem;
+  color: #7f8c8d;
   font-family: 'Roboto', sans-serif;
-  line-height: 1.5;
-  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  margin: 0;
 }
 
 .course-info .instructor,
 .course-info .duration,
 .course-info .price {
-  font-size: 0.9rem;
-  color: #4a6572;
+  font-size: 0.85rem;
+  color: #7f8c8d;
   font-family: 'Roboto', sans-serif;
+  margin: 0;
 }
 
 .course-info .price {
   font-weight: 600;
-  color: #2c7873;
+  color: #e74c3c;
 }
 
 .enroll-btn {
-  background: linear-gradient(90deg, #2c7873, #1a3c4d);
+  background: #e74c3c;
   color: #ffffff;
   border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 0.25rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 0.5rem;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: transform 0.3s ease;
-  margin-top: 0.5rem;
+  transition: background 0.3s ease, transform 0.3s ease;
+  margin-top: 0.8rem;
   align-self: flex-start;
 }
 
 .enroll-btn:hover {
-  transform: scale(1.05);
-  background: linear-gradient(90deg, #1a3c4d, #2c7873);
+  background: #c0392b;
+  transform: translateY(-2px);
 }
 
 /* Sección de Preguntas Frecuentes */
 .faq {
   margin-top: 4rem;
   padding: 2rem 0;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 1rem;
+  background: #ffffff;
+  border-radius: 1.5rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .faq h2 {
   font-size: 2rem;
   font-weight: 700;
-  color: #1a3c4d;
+  color: #2c3e50;
   text-align: center;
   margin-bottom: 2rem;
   font-family: 'Montserrat', sans-serif;
-  background: linear-gradient(90deg, #1a3c4d, #2c7873);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .faq-container {
@@ -145,14 +139,14 @@
 }
 
 .faq-item {
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #e0e6ed;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #ecf0f1;
 }
 
 .faq-item summary {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #1a3c4d;
+  color: #2c3e50;
   font-family: 'Montserrat', sans-serif;
   padding: 1rem 0;
   cursor: pointer;
@@ -160,21 +154,21 @@
 }
 
 .faq-item summary:hover {
-  color: #2c7873;
+  color: #e74c3c;
 }
 
 .faq-item p {
   font-size: 0.95rem;
-  color: #4a6572;
+  color: #7f8c8d;
   font-family: 'Roboto', sans-serif;
   line-height: 1.6;
   padding: 0 1rem 1rem 1rem;
 }
 
-/* Animaciones (solo float, sin rotate) */
+/* Animaciones */
 @keyframes float {
   0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-5px); }
   100% { transform: translateY(0); }
 }
 
@@ -187,17 +181,17 @@
   }
 
   .courses h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    margin-bottom: 2rem;
   }
 
   .courses-container {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.5rem;
   }
 
   .course-card img {
-    height: 180px;
+    height: 140px;
   }
 
   .course-info {
@@ -209,38 +203,35 @@
   }
 
   .course-info .description {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .course-info .instructor,
   .course-info .duration,
   .course-info .price {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 
   .enroll-btn {
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
     font-size: 0.85rem;
   }
 
   .faq {
-    margin-top: 2rem;
+    margin-top: 3rem;
     padding: 1.5rem 0;
   }
 
   .faq h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
   }
 
   .faq-item summary {
     font-size: 1rem;
-    padding: 0.8rem 0;
   }
 
   .faq-item p {
     font-size: 0.9rem;
-    padding: 0 0.8rem 0.8rem 0.8rem;
   }
 }
 
@@ -251,8 +242,8 @@
   }
 
   .courses h2 {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .courses-container {
@@ -261,7 +252,7 @@
   }
 
   .course-card img {
-    height: 160px;
+    height: 120px;
   }
 
   .course-info {
@@ -273,37 +264,34 @@
   }
 
   .course-info .description {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 
   .course-info .instructor,
   .course-info .duration,
   .course-info .price {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 
   .enroll-btn {
-    padding: 0.4rem 0.8rem;
+    padding: 0.5rem 1rem;
     font-size: 0.8rem;
   }
 
   .faq {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     padding: 1rem 0;
   }
 
   .faq h2 {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
+    font-size: 1.5rem;
   }
 
   .faq-item summary {
-    font-size: 0.95rem;
-    padding: 0.6rem 0;
+    font-size: 0.9rem;
   }
 
   .faq-item p {
     font-size: 0.85rem;
-    padding: 0 0.6rem 0.6rem 0.6rem;
   }
 }
