@@ -12,43 +12,61 @@
       </div>
       <div class="link">
           <ul>
-              <li class="active">
+              <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                   <i class="fi-rr-home"></i>
-                  <label>Home</label>
+                  <label routerLink="/home">Inicio</label>
               </li>
-              <li>
+              <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                   <i class="fi-rr-apps"></i>
-                  <label>Dashboard</label>
+                  <label routerLink="/cursos">Catalogo</label>
               </li>
-              <li>
-                  <i class="fi-rr-envelope"></i>
-                  <label>Message</label>
+              <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <i>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                  </i>
+                  <label routerLink="/cursos-en-progreso">Cursos en progreso</label>
               </li>
-              <li>
-                  <i class="fi-rr-credit-card"></i>
-                  <label>Payment</label>
+              <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <i>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M3 12H21M12 3V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M7 7L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                  </i>
+                  <label routerLink="/simulaciones">Simulaciones</label>
               </li>
-              <li>
-                  <i class="fi-rr-search"></i>
-                  <label>Search</label>
+              <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <i>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M3 10H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                  </i>
+                  <label routerLink="/agendar-sesiones">Agendar Sesiones</label>
               </li>
-              <li>
+              <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                   <i class="fi-rr-shield"></i>
-                  <label>Privacy</label>
+                  <label routerLink="/sobre-nosotros">Sobre Nosotros</label>
               </li>
           </ul>
       </div>
       <div class="user">
           <ul>
-              <li>
+              <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                   <i>
                       <img src="img/perfil.png" alt="User" />
                   </i>
-                  <label>Perfil</label>
+                  <label routerLink="/perfil">Perfil</label>
               </li>
-              <li>
+              <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                   <i class="fi-rr-settings"></i>
-                  <label>Settings</label>
+                  <label routerLink="/settings">Settings</label>
               </li>
           </ul>
       </div>
