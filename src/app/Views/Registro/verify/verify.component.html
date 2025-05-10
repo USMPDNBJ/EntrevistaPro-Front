@@ -1,4 +1,4 @@
-<div class="verification-container">
+<div class="form-container">
   <svg style="display: none;">
     <symbol id="icon-code" viewBox="0 0 24 24">
       <path d="M9 21c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4zM21 21c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4zM15 3v4c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h8c1.1 0 2 .9 2 2z"></path>
@@ -30,11 +30,11 @@
       </div>
 
       <div class="form-actions">
-        <button type="submit" class="verify-btn" routerLink="/home" [disabled]="verificationGroup.invalid">
+        <button type="submit" class="action-btn" routerLink="/home" [disabled]="verificationGroup.invalid">
           Verificar Código
           <svg class="button-icon"><use href="#icon-arrow"></use></svg>
         </button>
-        <a class="login-link">¿No recibiste el código? Reenviar</a>
+        <a class="router-link">¿No recibiste el código? Reenviar</a>
       </div>
     </form>
   </div>

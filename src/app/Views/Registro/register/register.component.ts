@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   imports: [RouterLink, ReactiveFormsModule, CommonModule],
   standalone: true,
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   selectedSkills: string[] = [];

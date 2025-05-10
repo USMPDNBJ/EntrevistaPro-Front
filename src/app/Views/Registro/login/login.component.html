@@ -1,4 +1,4 @@
-<div class="login-container">
+<div class="auth form-container">
   <svg style="display: none;">
     <symbol id="icon-email" viewBox="0 0 24 24">
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
@@ -44,11 +44,11 @@
       </div>
 
       <div class="form-actions">
-        <button type="submit"  routerLink="/verify" class="login-btn" [disabled]="loginGroup.invalid">
+        <button type="submit"  routerLink="/verify" class="action-btn" [disabled]="loginGroup.invalid">
           Iniciar Sesión
           <svg class="button-icon"><use href="#icon-arrow"></use></svg>
         </button>
-        <a class="register-link" routerLink="/register">¿No tienes cuenta? Regístrate</a>
+        <a class="router-link" routerLink="/auth/register">¿No tienes cuenta? Regístrate</a>
       </div>
     </form>
   </div>
