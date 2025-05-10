@@ -1,34 +1,15 @@
-# Etapa 1: Construcción de la aplicación Angular
-FROM node:22 AS builder
-
+# Etapa de construcción
+FROM node:22.13.1-alpine AS build
 WORKDIR /app
-
-# Copiar archivos de configuración
 COPY package*.json ./
-
-# Instalar dependencias
 RUN npm install
-
-# Copiar el código fuente de la aplicación
 COPY . .
+RUN npm run build -- --output-path=/app/dist/public
 
-# Construir la aplicación
-RUN npm run build --prod
-
-# Etapa 2: Nginx
-FROM nginx:alpine
-
-# Eliminar la configuración predeterminada de Nginx
+# Etapa de producción
+FROM nginx:1.27-alpine
 RUN rm /etc/nginx/conf.d/default.conf
-
-# Copiar la configuración personalizada de Nginx
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Copiar la aplicación construida desde la etapa anterior
-COPY --from=builder /app/dist/entrevista-pro-front /usr/share/nginx/html
-
-# Exponer el puerto 80
+COPY --from=build /app/dist/public /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/
 EXPOSE 80
-
-# Comando para iniciar Nginx
 CMD ["nginx", "-g", "daemon off;"]
