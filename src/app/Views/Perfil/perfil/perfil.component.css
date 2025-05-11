@@ -1,0 +1,40 @@
+.profile-content {
+  background: linear-gradient(135deg, #bcddd6, #e4e3eb);
+}
+
+.profile-field input {
+  font-weight: 500;
+}
+
+.profile-field:hover input {
+  background: rgba(30, 64, 175, 0.05);
+}
+
+.interests-field .interests-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.interests-field .interest-pill {
+  background: rgba(30, 64, 175, 0.1);
+  color: #1e40af;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.interests-field .interest-pill:hover {
+  background: rgba(30, 64, 175, 0.2);
+  transform: scale(1.05);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+}

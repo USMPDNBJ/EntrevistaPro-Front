@@ -1,0 +1,233 @@
+:root {
+  --primary: #1e40af;
+  --accent: #ffffff;
+  --text: #1f2937;
+  --background: #f3f4f6;
+  --card-bg: linear-gradient(180deg, #bcddd6 10%, #e4e3eb 90%);
+  --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.404);
+}
+
+@keyframes lift {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.perfil {
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  background: var(--background);
+  padding: 60px 20px;
+  position: relative;
+  overflow: auto;
+}
+
+.perfil .profile-container {
+  display: flex;
+  max-width: 1100px;
+  margin: 0 auto;
+  gap: 0;
+  position: relative;
+}
+
+.perfil .profile-sidebar {
+  width: 200px;
+  background: linear-gradient(180deg, #053761, #00130d);
+  border-radius: 15px 0 0 15px;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: var(--shadow-light);
+  animation: slideIn 0.6s ease-out;
+}
+
+.perfil .sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  color: white; /* Color explícito para el texto */
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+.perfil .sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.perfil .sidebar-item.active {
+  background: rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+}
+
+.perfil .sidebar-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.perfil .profile-content {
+  background: var(--card-bg);
+  border-radius: 0 15px 15px 0;
+  box-shadow: var(--shadow-light);
+  padding: 35px;
+  width: 100%;
+  max-width: 600px;
+  transition: all 0.4s ease;
+  animation: slideIn 0.6s ease-out 0.2s;
+}
+
+.perfil .avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.perfil .profile-header {
+  text-align: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--accent);
+}
+
+.perfil .profile-header h2 {
+  font-size: 24px;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.perfil .profile-header p {
+  color: #4b5563;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.perfil .avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--accent);
+  transition: transform 0.3s ease;
+}
+
+.perfil .avatar:hover {
+  transform: rotate(5deg) scale(1.05);
+}
+
+.perfil .profile-field {
+  margin-bottom: 18px;
+  padding-left: 15px;
+  position: relative;
+}
+
+.perfil .profile-field::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  background: var(--primary);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.perfil .profile-field label {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 4px;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.perfil .profile-field input {
+  padding: 8px 12px;
+  border: none;
+  border-bottom: 1px solid var(--accent);
+  border-radius: 0;
+  font-size: 15px;
+  width: 100%;
+  background: transparent;
+  color: var(--text);
+  transition: border-bottom 0.3s ease;
+}
+
+.perfil .profile-field input:hover {
+  border-bottom-color: var(--primary);
+}
+
+.perfil .edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary);
+  color: white;
+  padding: 10px 22px;
+  border-radius: 50px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.perfil .edit-btn:hover {
+  background: #1e3a8a;
+  transform: scale(1.05);
+}
+
+.perfil .edit-icon {
+  width: 16px;
+  height: 16px;
+  fill: white;
+}
+
+.perfil .action-btn {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  padding: 10px 22px;
+  border-radius: 50px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.perfil .action-btn:hover {
+  background: #1e3a8a;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .perfil .profile-container {
+    flex-direction: column;
+  }
+  .perfil .profile-sidebar {
+    width: 100%;
+    border-radius: 15px 15px 0 0;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 15px;
+  }
+  .perfil .profile-content {
+    border-radius: 0 0 15px 15px;
+    padding: 25px;
+  }
+  .perfil .profile-header h2 {
+    font-size: 20px;
+  }
+  .perfil .avatar {
+    width: 90px;
+    height: 90px;
+  }
+}

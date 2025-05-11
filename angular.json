@@ -32,7 +32,8 @@
             "styles": [
               "src/styles.css",
               "src/assets/styles/auth/auth-global.css",
-              "src/assets/styles/main/main-global.css"
+              "src/assets/styles/main/main-global.css",
+              "src/assets/styles/perfil/perfil-global.css"
             ],
             "scripts": ["node_modules/bootstrap/dist/js/bootstrap.js"],
             "server": "src/main.server.ts",
@@ -100,7 +101,8 @@
             "styles": [
               "src/styles.css",
               "src/assets/styles/auth/auth-global.css",
-              "src/assets/styles/main/main-global.css"
+              "src/assets/styles/main/main-global.css",
+              "src/assets/styles/perfil/perfil-global.css"
             ],
             "scripts": []
           }

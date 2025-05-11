@@ -1,0 +1,66 @@
+<app-navbar></app-navbar>
+<div class="perfil">
+  <div class="profile-container">
+    <nav class="profile-sidebar">
+      <a class="sidebar-item" [routerLink]="['/perfil']">
+        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="white">
+          <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Perfil
+      </a>
+      <a class="sidebar-item active" [routerLink]="['/perfil/historial']">
+        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="white">
+          <path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Historial
+      </a>
+      <a class="sidebar-item" [routerLink]="['/perfil/configuracion']">
+        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="white">
+          <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.56-1.62.94l-2.39-.96c-.22-.07-.47 0-.59.22L2.74 8.87c-.12.21-.07.47.12.61l2.03 1.58c-.04.3-.06.62-.06.94s.02.64.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.07.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.03-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Configuración
+      </a>
+    </nav>
+    <div class="profile-content">
+      <div class="avatar-container">
+        <img src="img/perfil.png" alt="Avatar" class="avatar" />
+      </div>
+      <div class="profile-header">
+        <h2>Historial</h2>
+        <p>Tus actividades recientes</p>
+      </div>
+      <div class="history-table">
+        <div class="history-row header">
+          <span>Fecha</span>
+          <span>Actividad</span>
+          <span>Estado</span>
+        </div>
+        <div class="history-row">
+          <span>2025-05-01</span>
+          <span>Curso de Programación</span>
+          <span>Completado</span>
+        </div>
+        <div class="history-row">
+          <span>2025-04-15</span>
+          <span>Simulación de Proyecto</span>
+          <span>En Progreso</span>
+        </div>
+        <div class="history-row">
+          <span>2025-03-20</span>
+          <span>Taller de Habilidades Blandas</span>
+          <span>Completado</span>
+        </div>
+      </div>
+      <div class="action-buttons">
+        <a class="edit-btn" [routerLink]="['/perfil/editar']">
+          <svg class="edit-icon" viewBox="0 0 24 24">
+            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+          </svg>
+          Editar Perfil
+        </a>
+        <a class="edit-btn" [routerLink]="['/perfil']">Volver</a>
+      </div>
+    </div>
+  </div>
+</div>
