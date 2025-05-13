@@ -1,10 +1,3 @@
-# Etapa de construcción
-FROM node:22.13.1-alpine AS build
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build -- --output-path=/app/dist/public
 
 # Etapa de producción
 FROM nginx:1.27-alpine
