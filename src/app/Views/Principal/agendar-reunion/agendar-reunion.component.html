@@ -1,0 +1,46 @@
+<!-- src/app/Views/Agendar/agendar-reunion/agendar-reunion.component.html -->
+<div class="section">
+  <div class="card-dark calendar-card">
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <button class="btn btn-primary" (click)="prevPeriod()">←</button>
+        <h2 class="calendar-title">{{ displayPeriod }}</h2>
+        <button class="btn btn-primary" (click)="nextPeriod()">→</button>
+      </div>
+      <div class="calendar-controls">
+        <button class="btn btn-yellow" [class.active]="view === 'month'" (click)="changeView('month')">Mes</button>
+        <button class="btn btn-yellow" [class.active]="view === 'week'" (click)="changeView('week')">Semana</button>
+        <button class="btn btn-yellow" [class.active]="view === 'year'" (click)="changeView('year')">Año</button>
+      </div>
+      <div class="calendar-grid" *ngIf="view === 'month'">
+        <div class="calendar-day-name" *ngFor="let day of daysOfWeek">{{ day }}</div>
+        <div class="calendar-day empty" *ngFor="let empty of emptyDaysBefore"></div>
+        <div class="calendar-day" *ngFor="let day of days" [class.selected]="day === selectedDay && selectedMonth === currentMonth && selectedYear === currentYear" (click)="selectDay(day)">
+          {{ day }}
+        </div>
+      </div>
+      <div class="calendar-grid week-view" *ngIf="view === 'week'">
+        <div class="calendar-day" *ngFor="let day of weekDays" [class.selected]="day.day === selectedDay && day.month === selectedMonth && day.year === selectedYear" (click)="selectDay(day.day, day.month, day.year)">
+          <span class="week-day-label">{{ day.label }}</span>
+          {{ day.day }}
+        </div>
+      </div>
+      <div class="calendar-grid year-view" *ngIf="view === 'year'">
+        <div class="calendar-month" *ngFor="let month of yearMonths" (click)="selectMonth(month)">
+          {{ month }}
+        </div>
+      </div>
+    </div>
+    <div class="schedule-section" *ngIf="selectedDay && view === 'month'">
+      <h3>Agendar Reunión</h3>
+      <div class="time-selection">
+        <label>Selecciona una hora:</label>
+        <select [(ngModel)]="selectedTime" (change)="updateTime()">
+          <option value="" disabled>Selecciona una hora</option>
+          <option *ngFor="let time of timeSlots" [value]="time">{{ time }}</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" [disabled]="!selectedDay || !selectedTime" (click)="scheduleMeeting()">Agendar Reunión</button>
+    </div>
+  </div>
+</div>

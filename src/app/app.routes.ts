@@ -22,6 +22,7 @@ export const routes: Routes = [
       { path: 'home', loadComponent: () => import('./Views/Principal/home/home.component').then(m => m.HomeComponent), },
       { path: 'about-us', loadComponent: () => import('./Views/Principal/about-us/about-us.component').then(m => m.AboutUsComponent),},
       { path: 'cursos', loadComponent: () => import('./Views/Principal/cursos/cursos.component').then(m => m.CursosComponent),},
+      { path: 'agendar-reunion', loadComponent: () => import('./Views/Principal/agendar-reunion/agendar-reunion.component').then(m => m.AgendarReunionComponent),},
     ],
   }, // Ruta por defecto
   {
