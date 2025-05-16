@@ -10,6 +10,7 @@ import {HomeComponent} from './Views/Principal/home/home.component';
 import {AgendarReunionComponent} from './Views/Principal/agendar-reunion/agendar-reunion.component';
 import { PerfilComponent } from './Views/Perfil/perfil/perfil.component';
 import { HistorialComponent } from './Views/Perfil/historial/historial.component';
+import { MisSesionesComponent } from './Views/Principal/mis-sesiones/mis-sesiones.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,7 @@ export const routes: Routes = [
       { path: 'about-us', component:AboutUsComponent },
       { path: 'cursos', component:CursosComponent},
       { path: 'agendar-reunion', component:AgendarReunionComponent},
+      { path: 'mis-sesiones', component:MisSesionesComponent},
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ],
   }, // Ruta por defecto

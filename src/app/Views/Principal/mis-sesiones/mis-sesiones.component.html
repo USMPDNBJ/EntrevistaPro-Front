@@ -1,0 +1,66 @@
+<app-navbar></app-navbar>
+<div class="sesiones-container">
+  <div class="header">
+    <h2>MIS SESIONES</h2>
+  </div>
+  <div class="search-bar">
+    <mat-form-field appearance="outline">
+      <mat-label>Buscar Sesión</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ej. ID, Fecha, Estado..." #input>
+    </mat-form-field>
+  </div>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="usuario_id">
+      <th mat-header-cell *matHeaderCellDef> Usuario ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.usuario_id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="profesional_id">
+      <th mat-header-cell *matHeaderCellDef> Profesional ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.profesional_id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef> Fecha </th>
+      <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="hora_inicio">
+      <th mat-header-cell *matHeaderCellDef> Hora Inicio </th>
+      <td mat-cell *matCellDef="let element"> {{element.hora_inicio}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="hora_fin">
+      <th mat-header-cell *matHeaderCellDef> Hora Fin </th>
+      <td mat-cell *matCellDef="let element"> {{element.hora_fin}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="getStatusClass(element.estado)">
+        {{element.estado}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="notas">
+      <th mat-header-cell *matHeaderCellDef> Notas </th>
+      <td mat-cell *matCellDef="let element"> {{element.notas}} </td>
+    </ng-container>
+    <ng-container matColumnDef="enlace">
+      <th mat-header-cell *matHeaderCellDef> Enlace </th>
+      <td mat-cell *matCellDef="let element"> <a href=""> Enlace</a> </td>
+    </ng-container>
+    <ng-container matColumnDef="created_at">
+      <th mat-header-cell *matHeaderCellDef> Creado en </th>
+      <td mat-cell *matCellDef="let element"> {{element.created_at}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
