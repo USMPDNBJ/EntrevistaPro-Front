@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { LoginService } from '../../../services/login.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private loginService: LoginService,
+    private authService: AuthService,
     private router: Router
   ) {
     this.loginGroup = this.fb.group({
@@ -34,31 +34,32 @@ export class LoginComponent {
       this.successMessage = null;
       this.errorMessage = null;
 
-      const credentials = {
-        correo: this.loginGroup.get('correo')?.value,
-        contrasena: this.loginGroup.get('contrasena')?.value
-      };
-
-      this.loginService.login(credentials).subscribe({
+      const credentials = this.loginGroup.value;
+      this.authService.login(credentials).subscribe({
         next: (response) => {
+          console.log('Login success:', response);
+          console.log('User ID after login:', this.authService.getUserId());
           this.isLoading = false;
-          this.successMessage = '¡Login exitoso! Redirigiendo...';
-          localStorage.setItem('user', JSON.stringify(response.data));
+          this.successMessage = response.message;
           setTimeout(() => {
-            this.router.navigate(['/']);
-          }, 1000); // Aumenta a 3 segundos para mayor visibilidad
+            console.log('Navigating to /perfil'); // Changed to /perfil for testing
+            this.router.navigate(['/perfil']).then(() => {
+              console.log('Navigation to /perfil completed');
+            });
+          }, 3000);
         },
         error: (error) => {
           this.isLoading = false;
-          // Personaliza el mensaje según el error
-          if (error.status === 401 ) {
-            this.errorMessage = 'Credenciales incorrectas. Por favor, intenta de nuevo.';
+          console.error('Login error:', error);
+          if (error.status === 401) {
+            this.errorMessage = 'Correo o contraseña incorrectos.';
           } else {
-            this.errorMessage = `Credenciales incorrectas. Por favor, intenta de nuevo.`;
+            this.errorMessage = `Error: ${error.status} - ${error.message}`;
           }
-          console.error('Error en login:', error);
         }
       });
+    } else {
+      this.errorMessage = 'Por favor, completa todos los campos correctamente.';
     }
   }
 }

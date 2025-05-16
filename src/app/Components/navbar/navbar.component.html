@@ -1,5 +1,5 @@
 <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
-<nav [ngClass]="{ 'home-nav': isHomePage }">
+<nav>
   <div class="sidebar-wrapper">
     <div class="sidebar-strip" [class.hidden]="isExpanded">
       <button id="toggle" (click)="toggleSidebar()">
@@ -106,7 +106,7 @@
           </li>
         </ul>
       </div>
-      <div class="nav-links" *ngIf="isHomePage">
+      <div class="nav-links">
         <div class="user">
           <ul>
             <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
@@ -135,7 +135,7 @@
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </i>
-              <label routerLink="/settings">Settings</label>
+              <label routerLink="/auth/login">Cerrar Sesion</label>
             </li>
           </ul>
         </div>

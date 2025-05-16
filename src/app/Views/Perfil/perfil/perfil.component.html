@@ -14,53 +14,51 @@
         </svg>
         Historial
       </a>
-      <a class="sidebar-item" [routerLink]="['/perfil/configuracion']">
-        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="white">
-          <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.56-1.62.94l-2.39-.96c-.22-.07-.47 0-.59.22L2.74 8.87c-.12.21-.07.47.12.61l2.03 1.58c-.04.3-.06.62-.06.94s.02.64.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.07.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.03-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
-        </svg>
-        Configuración
-      </a>
     </nav>
     <div class="profile-content">
-      <div class="avatar-container">
-        <img src="img/perfil.png" alt="Avatar" class="avatar" />
-      </div>
-      <div class="profile-header">
-        <h2>Juan Pérez</h2>
-        <p>Candidato</p>
-      </div>
-      <div class="profile-field">
-        <label>Nombres</label>
-        <input type="text" value="Juan" readonly />
-      </div>
-      <div class="profile-field">
-        <label>Apellidos</label>
-        <input type="text" value="Pérez" readonly />
-      </div>
-      <div class="profile-field interests-field">
-        <label>Intereses (Habilidades Blandas)</label>
-        <div class="interests-container">
-          <span class="interest-pill">Comunicación</span>
-          <span class="interest-pill">Trabajo en equipo</span>
-          <span class="interest-pill">Adaptabilidad</span>
+      <div *ngIf="isLoading" class="loading">Cargando...</div>
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <div *ngIf="user && !isLoading && !errorMessage">
+        <div class="avatar-container">
+          <img src="img/perfil.png" alt="Avatar" class="avatar" />
         </div>
-      </div>
-      <div class="profile-field">
-        <label>Correo Electrónico</label>
-        <input type="email" value="juan.perez@example.com" readonly />
-      </div>
-      <div class="action-buttons">
-        <a class="edit-btn" [routerLink]="['/perfil/editar']">
-          <svg class="edit-icon" viewBox="0 0 24 24">
-            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-          </svg>
-          Editar Perfil
-        </a>
-        <a class="edit-btn" [routerLink]="['/perfil/historial']">
-          <svg class="edit-icon" viewBox="0 0 24 24">
-            <path d="M13 3a9 9 0 1 0 8.94 10.15 1 1 0 1 0-1.98-.3A7 7 0 1 1 12 5v2l3-3-3-3v2a9 9 0 0 0 1 18c4.97 0 9-4.03 9-9h-2a7 7 0 1 1-7-7z"/>
-            <path d="M12 8v5l4.3 2.6.7-1.1-3.5-2.1V8z"/>
-          </svg>Ver Historial</a>
+        <div class="profile-header">
+          <h2>{{ user.nombres }} {{ user.apellidos }}</h2>
+          <p>Candidato</p>
+        </div>
+        <div class="profile-field">
+          <label>Nombres</label>
+          <input type="text" [value]="user.nombres" readonly />
+        </div>
+        <div class="profile-field">
+          <label>Apellidos</label>
+          <input type="text" [value]="user.apellidos" readonly />
+        </div>
+        <div class="profile-field interests-field">
+          <label>Intereses (Habilidades Blandas)</label>
+          <div class="interests-container">
+            <span *ngFor="let skill of user.habilidades" class="interest-pill">{{ skill }}</span>
+          </div>
+        </div>
+        <div class="profile-field">
+          <label>Correo Electrónico</label>
+          <input type="email" [value]="user.correo" readonly />
+        </div>
+        <div class="action-buttons">
+          <a class="edit-btn" [routerLink]="['/perfil']">
+            <svg class="edit-icon" viewBox="0 0 24 24">
+              <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+            </svg>
+            Editar Perfil
+          </a>
+          <a class="edit-btn" [routerLink]="['/perfil/historial']">
+            <svg class="edit-icon" viewBox="0 0 24 24">
+              <path d="M13 3a9 9 0 1 0 8.94 10.15 1 1 0 1 0-1.98-.3A7 7 0 1 1 12 5v2l3-3-3-3v2a9 9 0 0 0 1 18c4.97 0 9-4.03 9-9h-2a7 7 0 1 1-7-7z"/>
+              <path d="M12 8v5l4.3 2.6.7-1.1-3.5-2.1V8z"/>
+            </svg>
+            Ver Historial
+          </a>
+        </div>
       </div>
     </div>
   </div>
