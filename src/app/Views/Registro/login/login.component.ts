@@ -61,4 +61,7 @@ export class LoginComponent {
       });
     }
   }
+    goHome() {
+    this.router.navigate(['/home']);
+  }
 }

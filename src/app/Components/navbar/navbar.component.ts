@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterModule } from '@angular/router';
-import { Router, RouterLinkActive,NavigationEnd } from '@angular/router';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { RouterLink, RouterModule, ActivatedRoute} from '@angular/router';
+import { Router, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -11,27 +11,24 @@ import { filter } from 'rxjs/operators';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
+
 export class NavbarComponent implements OnInit {
+
   isExpanded = false;
   isHomePage: boolean = false;
-  constructor(private router: Router) { }
+  isLoggedIn = false;
+  userId: string | null = null;
+  constructor(private route: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) { }
+
   toggleSidebar() {
     this.isExpanded = !this.isExpanded;
     const mainContent = document.querySelector('main');
+  }
 
-  }
   ngOnInit() {
-    console.log('Suscribiendo a router.events');
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        console.log('NavigationEnd:', event.urlAfterRedirects);
-        this.isHomePage = event.urlAfterRedirects === '/' || event.urlAfterRedirects === '/home';
-        console.log('isHomePage:', this.isHomePage)
-      });
-  }
-  logout() {
-    this.router.navigate(['/']);
+      if (isPlatformBrowser(this.platformId)) {
+      this.isLoggedIn = localStorage.getItem('message') === 'Realizado';
+    }
   }
 
 }
