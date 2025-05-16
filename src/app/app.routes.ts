@@ -2,15 +2,6 @@ import { Routes } from '@angular/router';
 import { AuthWrapperComponent } from './auth/auth-wrapper.component';
 import { MainWrapperComponent } from './main/main-wrapper.component';
 import { PerfilWrapperComponent } from './perfil/perfil-wrapper.component';
-import { LoginComponent } from './Views/Registro/login/login.component';
-import { RegisterComponent } from './Views/Registro/register/register.component';
-import { VerifyComponent } from './Views/Registro/verify/verify.component';
-import {AboutUsComponent} from './Views/Principal/about-us/about-us.component';
-import {CursosComponent} from './Views/Principal/cursos/cursos.component';
-import {HomeComponent} from './Views/Principal/home/home.component';
-import {AgendarReunionComponent} from './Views/Principal/agendar-reunion/agendar-reunion.component';
-import { PerfilComponent } from './Views/Perfil/perfil/perfil.component';
-import { HistorialComponent } from './Views/Perfil/historial/historial.component';
 
 export const routes: Routes = [
   {
@@ -19,7 +10,6 @@ export const routes: Routes = [
     children: [
       { path: 'login', loadComponent: () => import('./Views/Registro/login/login.component').then(m => m.LoginComponent),},
       { path: 'register',loadComponent: () => import('./Views/Registro/register/register.component').then(m => m.RegisterComponent),},
-      { path: 'verify', loadComponent: () => import('./Views/Registro/verify/verify.component').then(m => m.VerifyComponent),},
       { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirige /auth a /auth/login
     ],
   },
