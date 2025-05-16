@@ -12,4 +12,4 @@ import { RouterOutlet } from '@angular/router';
   `,
   styleUrls: ['../../assets/styles/auth/auth-global.css'],
 })
-export class AuthWrapperComponent { }
+export class AuthWrapperComponent {}
