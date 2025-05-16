@@ -1,34 +1,30 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { RouterLink, RouterModule, ActivatedRoute} from '@angular/router';
-import { Router, RouterLinkActive, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { RouterLink, RouterModule, RouterLinkActive, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [RouterLink, RouterLinkActive, CommonModule, RouterModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css']
 })
-
 export class NavbarComponent implements OnInit {
-
   isExpanded = false;
-  isHomePage: boolean = false;
-  isLoggedIn = false;
-  userId: string | null = null;
-  constructor(private route: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) { }
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {}
 
   toggleSidebar() {
     this.isExpanded = !this.isExpanded;
     const mainContent = document.querySelector('main');
+    // Ajustes de contenido principal si es necesario
   }
 
-  ngOnInit() {
-      if (isPlatformBrowser(this.platformId)) {
-      this.isLoggedIn = localStorage.getItem('message') === 'Realizado';
-    }
+  logout() {
+    this.authService.clearUserId();
+    this.router.navigate(['/auth/login']);
   }
-
 }

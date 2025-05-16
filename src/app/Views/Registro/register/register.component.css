@@ -130,7 +130,7 @@
 }
 
 .skills-note {
-  color: var(--error);
+  color: blue;
   font-size: 12px;
   margin-top: 16px;
   text-align: center;

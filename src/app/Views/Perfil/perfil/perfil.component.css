@@ -1,9 +1,16 @@
 .profile-content {
   background: linear-gradient(135deg, #bcddd6, #e4e3eb);
+  padding: 20px;
+  border-radius: 8px;
 }
 
 .profile-field input {
   font-weight: 500;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
 }
 
 .profile-field:hover input {
