@@ -2,9 +2,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from '../../../Components/navbar/navbar.component';
 
 @Component({
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   selector: 'app-agendar-reunion',
   templateUrl: './agendar-reunion.component.html',
   styleUrls: ['./agendar-reunion.component.css']

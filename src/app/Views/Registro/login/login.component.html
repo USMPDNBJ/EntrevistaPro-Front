@@ -52,11 +52,6 @@
         </button>
         <a class="router-link" routerLink="/auth/register">¿No tienes cuenta? Regístrate</a>
 
-        <!-- Botón para regresar a la página de inicio -->
-        <button type="button" class="action-btn back-btn" (click)="goHome()">
-          Regresar a Inicio
-        </button>
-
         <div class="message-container">
           <p class="success-message" *ngIf="successMessage">{{ successMessage }}</p>
           <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
