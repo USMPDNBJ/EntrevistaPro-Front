@@ -45,7 +45,7 @@
             <label routerLink="/cursos">Catálogo</label>
           </li>
 
-          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <li *ngIf="isLoggedIn" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <i>
               <!-- Cursos en progreso -->
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,7 +60,7 @@
             <label routerLink="/cursos-en-progreso">Cursos en progreso</label>
           </li>
 
-          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <li *ngIf="isLoggedIn" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <i>
               <!-- Simulaciones -->
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +73,7 @@
             <label routerLink="/simulaciones">Simulaciones</label>
           </li>
 
-          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <li *ngIf="isLoggedIn" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <i>
               <!-- Agendar Sesiones -->
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,9 +104,33 @@
             </i>
             <label routerLink="/about-us">Sobre Nosotros</label>
           </li>
+
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i>
+
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Círculo que representa la figura de un usuario -->
+                <path
+                  d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3431 6 9 7.34315 9 9C9 10.6569 10.3431 12 12 12Z"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+
+                <!-- Línea que representa el cuerpo (como un perfil o usuario con línea de inicio) -->
+                <path d="M3 21V19C3 16.7909 4.79086 15 7 15H17C19.2091 15 21 16.7909 21 19V21" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+
+                <!-- Flecha apuntando hacia la derecha, representando el inicio de sesión -->
+                <path d="M17 11L21 7L17 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+
+
+            </i>
+            <label routerLink="/auth/login">Iniciar Sesion</label>
+          </li>
         </ul>
       </div>
       <div class="nav-links">
+      <div class="nav-links" *ngIf="isLoggedIn">
         <div class="user">
           <ul>
             <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">

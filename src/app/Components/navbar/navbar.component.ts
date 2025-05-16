@@ -1,6 +1,8 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterModule, RouterLinkActive } from '@angular/router';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { RouterLink, RouterModule, ActivatedRoute} from '@angular/router';
+import { Router, RouterLinkActive, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -9,18 +11,24 @@ import { RouterLink, RouterModule, RouterLinkActive } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
+
 export class NavbarComponent implements OnInit {
+
   isExpanded = false;
-
-  constructor() {}
-
-  ngOnInit() {
-    // No navigation logic needed for link visibility
-  }
+  isHomePage: boolean = false;
+  isLoggedIn = false;
+  userId: string | null = null;
+  constructor(private route: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) { }
 
   toggleSidebar() {
     this.isExpanded = !this.isExpanded;
     const mainContent = document.querySelector('main');
-    // Add any main content adjustments if needed
   }
+
+  ngOnInit() {
+      if (isPlatformBrowser(this.platformId)) {
+      this.isLoggedIn = localStorage.getItem('message') === 'Realizado';
+    }
+  }
+
 }

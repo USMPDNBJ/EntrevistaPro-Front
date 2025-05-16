@@ -62,4 +62,7 @@ export class LoginComponent {
       this.errorMessage = 'Por favor, completa todos los campos correctamente.';
     }
   }
+    goHome() {
+    this.router.navigate(['/home']);
+  }
 }

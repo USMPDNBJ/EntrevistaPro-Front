@@ -12,6 +12,7 @@
       <polyline points="12 5 19 12 12 19"></polyline>
     </symbol>
   </svg>
+
   <div class="login-form">
     <div class="form-header">
       <img src="img/logo.jpg" class="logo-card" alt="Logo de EntrevistaPro">
@@ -50,6 +51,12 @@
           <svg class="button-icon" *ngIf="!isLoading"><use href="#icon-arrow"></use></svg>
         </button>
         <a class="router-link" routerLink="/auth/register">¿No tienes cuenta? Regístrate</a>
+
+        <!-- Botón para regresar a la página de inicio -->
+        <button type="button" class="action-btn back-btn" (click)="goHome()">
+          Regresar a Inicio
+        </button>
+
         <div class="message-container">
           <p class="success-message" *ngIf="successMessage">{{ successMessage }}</p>
           <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
