@@ -47,7 +47,7 @@
           </label>
           <input type="text" id="nombres" formControlName="nombres" placeholder="Ingresa tus nombres" required aria-labelledby="nombres-label" aria-describedby="nombres-error">
           <span class="error-message" id="nombres-error" *ngIf="userGroup.get('nombres')?.invalid && userGroup.get('nombres')?.touched">
-            Por favor, ingresa un nombre válido
+            Por favor, ingresa un nombre válido (mínimo 2 caracteres)
           </span>
         </div>
         <div class="input-field">
@@ -57,7 +57,7 @@
           </label>
           <input type="text" id="apellidos" formControlName="apellidos" placeholder="Ingresa tus apellidos" required aria-labelledby="apellidos-label" aria-describedby="apellidos-error">
           <span class="error-message" id="apellidos-error" *ngIf="userGroup.get('apellidos')?.invalid && userGroup.get('apellidos')?.touched">
-            Por favor, ingresa un apellido válido
+            Por favor, ingresa un apellido válido (mínimo 2 caracteres)
           </span>
         </div>
       </div>
@@ -80,7 +80,7 @@
           </label>
           <input type="password" id="contrasena" formControlName="contrasena" placeholder="Crea una contraseña" required aria-labelledby="contrasena-label" aria-describedby="contrasena-error">
           <span class="error-message" id="contrasena-error" *ngIf="userGroup.get('contrasena')?.invalid && userGroup.get('contrasena')?.touched">
-            Por favor, ingresa una contraseña válida
+            La contraseña debe tener al menos 6 caracteres
           </span>
         </div>
       </div>
@@ -93,7 +93,7 @@
           </label>
           <input type="text" id="dni" formControlName="dni" placeholder="Ingresa tu DNI" required aria-labelledby="dni-label" aria-describedby="dni-error">
           <span class="error-message" id="dni-error" *ngIf="userGroup.get('dni')?.invalid && userGroup.get('dni')?.touched">
-            Por favor, ingresa un DNI válido
+            El DNI debe tener 8 dígitos
           </span>
         </div>
         <div class="input-field">
@@ -103,7 +103,7 @@
           </label>
           <input type="tel" id="celular" formControlName="celular" placeholder="Ingresa tu número" required aria-labelledby="celular-label" aria-describedby="celular-error">
           <span class="error-message" id="celular-error" *ngIf="userGroup.get('celular')?.invalid && userGroup.get('celular')?.touched">
-            Por favor, ingresa un número válido
+            El celular debe tener 9 dígitos
           </span>
         </div>
       </div>
@@ -119,15 +119,21 @@
             {{skill}}
           </span>
         </div>
-        <p class="skills-note" *ngIf="selectedSkills.length >= 3">Has alcanzado el máximo de 3 habilidades</p>
+        <p class="skills-note" *ngIf="selectedSkills.length >= 3">Maximo de 3 habilidades</p>
+        <p class="error-message" *ngIf="selectedSkills.length === 0 && userGroup.touched">Debes seleccionar al menos una habilidad</p>
       </div>
 
       <div class="form-actions">
-        <button type="submit" class="action-btn" [disabled]="userGroup.invalid" routerLink="/login">
-          Crear Cuenta
-          <svg class="button-icon"><use href="#icon-arrow"></use></svg>
+        <button type="submit" (click)="onSubmit()" class="action-btn" [ngClass]="{ loading: isLoading }" [disabled]="userGroup.invalid || selectedSkills.length === 0 || isLoading">
+          <span *ngIf="!isLoading">Crear Cuenta</span>
+          <span *ngIf="isLoading">Cargando...</span>
+          <svg class="button-icon" *ngIf="!isLoading"><use href="#icon-arrow"></use></svg>
         </button>
         <a class="router-link" routerLink="/auth/login">¿Ya tienes cuenta? Inicia sesión</a>
+        <div class="message-container">
+          <p class="success-message" *ngIf="successMessage">{{ successMessage }}</p>
+          <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+        </div>
       </div>
     </form>
   </div>

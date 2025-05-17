@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VerifyComponent } from './verify.component';
+import { MisSesionesComponent } from './mis-sesiones.component';
 
-describe('VerifyComponent', () => {
-  let component: VerifyComponent;
-  let fixture: ComponentFixture<VerifyComponent>;
+describe('MisSesionesComponent', () => {
+  let component: MisSesionesComponent;
+  let fixture: ComponentFixture<MisSesionesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VerifyComponent]
+      imports: [MisSesionesComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(VerifyComponent);
+    fixture = TestBed.createComponent(MisSesionesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -21,3 +21,4 @@ describe('VerifyComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

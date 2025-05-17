@@ -12,6 +12,7 @@
       <polyline points="12 5 19 12 12 19"></polyline>
     </symbol>
   </svg>
+
   <div class="login-form">
     <div class="form-header">
       <img src="img/logo.jpg" class="logo-card" alt="Logo de EntrevistaPro">
@@ -19,7 +20,7 @@
       <p>Accede a tu cuenta para continuar</p>
     </div>
 
-    <form [formGroup]="loginGroup" class="form-content" role="form" aria-labelledby="form-header">
+    <form [formGroup]="loginGroup" class="form-content" role="form" aria-labelledby="form-header" (ngSubmit)="onSubmit()">
       <div class="input-row">
         <div class="input-field">
           <label for="correo" id="correo-label">
@@ -44,11 +45,17 @@
       </div>
 
       <div class="form-actions">
-        <button type="submit"  routerLink="/verify" class="action-btn" [disabled]="loginGroup.invalid">
-          Iniciar Sesión
-          <svg class="button-icon"><use href="#icon-arrow"></use></svg>
+        <button type="submit" class="action-btn" [ngClass]="{ loading: isLoading }" [disabled]="loginGroup.invalid || isLoading">
+          <span *ngIf="!isLoading">Iniciar Sesión</span>
+          <span *ngIf="isLoading">Cargando...</span>
+          <svg class="button-icon" *ngIf="!isLoading"><use href="#icon-arrow"></use></svg>
         </button>
         <a class="router-link" routerLink="/auth/register">¿No tienes cuenta? Regístrate</a>
+
+        <div class="message-container">
+          <p class="success-message" *ngIf="successMessage">{{ successMessage }}</p>
+          <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+        </div>
       </div>
     </form>
   </div>
