@@ -1,6 +1,6 @@
 .section {
   background: linear-gradient(180deg, #010f1d, #2e0352); /* Fondo oscuro para contraste */
-  padding: 4rem 2rem;
+  padding: 4rem 0rem 2rem 4rem;
   min-height: 100vh; /* Asegura que el fondo cubra toda la altura */
 }
 
@@ -173,7 +173,7 @@
   text-align: center;
   background: linear-gradient(135deg, #f9fafb, #e0e6ed);
   border-top: 2px solid #040225;
-  animation: fadeIn 0.5s ease-out 0.2s;
+  /* animation: fadeIn 0.5s ease-out 0.5s; */
 }
 
 .schedule-section h3 {
