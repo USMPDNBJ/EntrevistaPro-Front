@@ -5,5 +5,5 @@ export const environment = {
 
 export const environmentSession = {
   production: false,
-  apiUrl: 'https://entrevistapro-back.onrender.com/api/user'
+  apiUrl: 'https://entrevistapro-back.onrender.com/api/session'
 };
