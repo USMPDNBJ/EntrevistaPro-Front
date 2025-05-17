@@ -10,6 +10,6 @@ import { RouterOutlet } from '@angular/router';
       <router-outlet></router-outlet>
     </div>
   `,
-  styleUrls: ['../../assets/styles/main/main-global.css'],
+  styleUrls: ['../../../assets/styles/main/main-global.css'],
 })
 export class MainWrapperComponent { }

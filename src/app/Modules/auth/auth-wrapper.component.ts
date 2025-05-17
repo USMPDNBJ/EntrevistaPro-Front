@@ -10,6 +10,6 @@ import { RouterOutlet } from '@angular/router';
       <router-outlet></router-outlet>
     </div>
   `,
-  styleUrls: ['../../assets/styles/auth/auth-global.css'],
+  styleUrls: ['../../../assets/styles/auth/auth-global.css'],
 })
 export class AuthWrapperComponent {}

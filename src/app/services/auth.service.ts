@@ -10,7 +10,7 @@ interface LoginResponse {
   message: string;
   data: {
     id: number;
-    rol: string;
+    rol: string; // "User" o "Admin"
   };
 }
 
@@ -31,9 +31,9 @@ export class AuthService {
     if (isPlatformBrowser(this.platformId)) {
       const userId = localStorage.getItem('userId');
       const rol = localStorage.getItem('rol');
+      console.log('AuthService: Inicializando desde localStorage', { userId, rol });
       this.userIdSubject.next(userId ? Number(userId) : null);
       this.rolSubject.next(rol);
-      console.log(`Loaded from localStorage - userId: ${userId}, rol: ${rol}`);
     }
   }
 
@@ -42,14 +42,14 @@ export class AuthService {
       tap(response => {
         const userId = response.data.id;
         const rol = response.data.rol.toLowerCase();
-        console.log(`Login - userId: ${userId}, rol: ${rol}`);
+        console.log('AuthService: Login exitoso', { userId, rol });
         if (userId && rol) {
           this.userIdSubject.next(userId);
           this.rolSubject.next(rol);
           if (isPlatformBrowser(this.platformId)) {
             localStorage.setItem('userId', userId.toString());
             localStorage.setItem('rol', rol);
-            console.log(`Saved to localStorage - userId: ${userId}, rol: ${rol}`);
+            console.log('AuthService: Guardado en localStorage', { userId, rol });
           }
         }
       })
@@ -70,11 +70,13 @@ export class AuthService {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('userId');
       localStorage.removeItem('rol');
-      console.log(`localStorage cleared`);
+      console.log('AuthService: localStorage limpiado');
     }
   }
 
   isAuthenticated(): boolean {
-    return !!this.userIdSubject.value;
+    const isAuth = !!this.userIdSubject.value;
+    console.log('AuthService: isAuthenticated', isAuth);
+    return isAuth;
   }
 }

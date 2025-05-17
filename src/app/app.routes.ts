@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { AuthWrapperComponent } from './auth/auth-wrapper.component';
-import { MainWrapperComponent } from './main/main-wrapper.component';
 import { PerfilWrapperComponent } from './perfil/perfil-wrapper.component';
 import { LoginComponent } from './Views/Registro/login/login.component';
 import { RegisterComponent } from './Views/Registro/register/register.component';
@@ -12,6 +10,9 @@ import { PerfilComponent } from './Views/Perfil/perfil/perfil.component';
 import { HistorialComponent } from './Views/Perfil/historial/historial.component';
 import { AuthGuard } from './services/auth.guard';
 import { MisSesionesComponent } from './Views/Principal/mis-sesiones/mis-sesiones.component';
+import { AuthWrapperComponent } from './Modules/auth/auth-wrapper.component';
+import { MainWrapperComponent } from './Modules/main/main-wrapper.component';
+import { AdminWrapperComponent } from './Modules/admin/admin-wrapper.component';
 
 export const routes: Routes = [
   {
@@ -27,11 +28,11 @@ export const routes: Routes = [
     path: '',
     component: MainWrapperComponent,
     children: [
-      { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+      { path: 'home', component: HomeComponent },
       { path: 'about-us', component: AboutUsComponent },
-      { path: 'cursos', component: CursosComponent, canActivate: [AuthGuard] },
-      { path: 'agendar-reunion', component: AgendarReunionComponent, canActivate: [AuthGuard] },
-      { path: 'mis-sesiones', component: MisSesionesComponent, canActivate: [AuthGuard] },
+      { path: 'cursos', component: CursosComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
+      { path: 'agendar-reunion', component: AgendarReunionComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
+      { path: 'mis-sesiones', component: MisSesionesComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ],
   },
@@ -39,6 +40,7 @@ export const routes: Routes = [
     path: 'perfil',
     component: PerfilWrapperComponent,
     canActivate: [AuthGuard],
+    data: { roles: ['user', 'admin'] },
     children: [
       { path: '', component: PerfilComponent },
       { path: 'historial', component: HistorialComponent },
@@ -46,13 +48,15 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    component: MainWrapperComponent,
+    component: AdminWrapperComponent,
     canActivate: [AuthGuard],
+    data: { roles: ['admin'] },
     children: [
-      //{ path: 'usuarios', component: UsuariosComponent, canActivate: [AuthGuard] },
-      //{ path: 'trabajadores', component: TrabajadoresComponent, canActivate: [AuthGuard] },
-      //{ path: 'gestionar-sesiones', component: GestionarSesionesComponent, canActivate: [AuthGuard] },
-    ],
+      {
+        path: '',
+        loadChildren: () => import('./Modules/admin/admin.module').then(m => m.AdminModule)
+      }
+    ]
   },
   { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },
 ];

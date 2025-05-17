@@ -35,7 +35,8 @@
               "src/styles.css",
               "src/assets/styles/auth/auth-global.css",
               "src/assets/styles/main/main-global.css",
-              "src/assets/styles/perfil/perfil-global.css"
+              "src/assets/styles/perfil/perfil-global.css",
+              "src/assets/styles/admin/admin-global.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -114,7 +115,8 @@
               "src/styles.css",
               "src/assets/styles/auth/auth-global.css",
               "src/assets/styles/main/main-global.css",
-              "src/assets/styles/perfil/perfil-global.css"
+              "src/assets/styles/perfil/perfil-global.css",
+              "src/assets/styles/admin/admin-global.css"
             ],
             "scripts": []
           }

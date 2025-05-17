@@ -1,0 +1,117 @@
+<div class="gestionar-container">
+  <h2>GESTIONAR TRABAJADORES</h2>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+  <div class="form-card">
+    <h3>{{ isEditing ? 'Editar Trabajador' : 'Crear Trabajador' }}</h3>
+    <form [formGroup]="workerForm" (ngSubmit)="onSubmit()" class="worker-form">
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="correo">Correo</label>
+          <input id="correo" type="email" formControlName="correo" required />
+          <span class="error" *ngIf="workerForm.get('correo')?.invalid && workerForm.get('correo')?.touched">
+            Correo inválido
+          </span>
+        </div>
+        <div class="form-field" *ngIf="!isEditing">
+          <label for="contrasena">Contraseña</label>
+          <input id="contrasena" type="password" formControlName="contrasena" required />
+          <span class="error" *ngIf="workerForm.get('contrasena')?.invalid && workerForm.get('contrasena')?.touched">
+            Mínimo 6 caracteres
+          </span>
+        </div>
+        <div class="form-field">
+          <label for="nombres">Nombres</label>
+          <input id="nombres" type="text" formControlName="nombres" required />
+          <span class="error" *ngIf="workerForm.get('nombres')?.invalid && workerForm.get('nombres')?.touched">
+            Requerido
+          </span>
+        </div>
+        <div class="form-field">
+          <label for="apellidos">Apellidos</label>
+          <input id="apellidos" type="text" formControlName="apellidos" required />
+          <span class="error" *ngIf="workerForm.get('apellidos')?.invalid && workerForm.get('apellidos')?.touched">
+            Requerido
+          </span>
+        </div>
+        <div class="form-field">
+          <label for="dni">DNI</label>
+          <input id="dni" type="text" formControlName="dni" required />
+          <span class="error" *ngIf="workerForm.get('dni')?.invalid && workerForm.get('dni')?.touched">
+            8 dígitos
+          </span>
+        </div>
+        <div class="form-field">
+          <label for="celular">Celular</label>
+          <input id="celular" type="text" formControlName="celular" required />
+          <span class="error" *ngIf="workerForm.get('celular')?.invalid && workerForm.get('celular')?.touched">
+            9 dígitos
+          </span>
+        </div>
+        <div class="form-field full-width">
+          <label for="habilidades">Habilidades</label>
+          <input id="habilidades" type="text" formControlName="habilidades" required />
+          <span class="error" *ngIf="workerForm.get('habilidades')?.invalid && workerForm.get('habilidades')?.touched">
+            Requerido
+          </span>
+        </div>
+        <div class="form-field">
+          <label for="rol">Rol</label>
+          <select id="rol" formControlName="rol" required>
+            <option value="Worker">Worker</option>
+            <option value="Admin">Admin</option>
+          </select>
+          <span class="error" *ngIf="workerForm.get('rol')?.invalid && workerForm.get('rol')?.touched">
+            Requerido
+          </span>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" [disabled]="workerForm.invalid || isLoading" class="action-btn">
+          {{ isEditing ? 'Actualizar' : 'Crear' }}
+        </button>
+        <button type="button" *ngIf="isEditing" class="cancel-btn" (click)="cancelEdit()" [disabled]="isLoading">Cancelar</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="table-card">
+    <h3>Lista de Trabajadores</h3>
+    <button class="reload-btn" (click)="reloadWorkers()" [disabled]="isLoading">Recargar</button>
+    <div *ngIf="isLoading" class="loading">Cargando trabajadores...</div>
+    <table class="workers-table" *ngIf="!isLoading && workers.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Correo</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>DNI</th>
+          <th>Celular</th>
+          <th>Habilidades</th>
+          <th>Rol</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let worker of workers; trackBy: trackByWorkerId; let i = index">
+          <td>{{ worker.id }}</td>
+          <td>{{ worker.correo }}</td>
+          <td>{{ worker.nombres }}</td>
+          <td>{{ worker.apellidos }}</td>
+          <td>{{ worker.dni }}</td>
+          <td>{{ worker.celular }}</td>
+          <td>{{ worker.habilidades.join(', ') }}</td>
+          <td>{{ worker.rol }}</td>
+          <td>
+            <button class="edit-btn" (click)="editWorker(worker)" [disabled]="isLoading">Editar</button>
+            <button class="delete-btn" (click)="deleteWorker(worker.id)" [disabled]="isLoading">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!isLoading && workers.length === 0" class="no-data">No hay trabajadores registrados.</div>
+    <div *ngIf="!isLoading && workers.length < 5" class="warning">Cargando más trabajadores, por favor espera...</div>
+  </div>
+</div>
