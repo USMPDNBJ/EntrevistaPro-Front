@@ -12,15 +12,19 @@ import { AuthService } from '../../services/auth.service';
 })
 export class NavbarComponent implements OnInit {
   isExpanded = false;
+  rol: string | null = null;
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.rol$.subscribe(rol => {
+      this.rol = rol;
+      console.log('Rol en Navbar:', rol, 'userId:', this.authService.getUserId());
+    });
+  }
 
   toggleSidebar() {
     this.isExpanded = !this.isExpanded;
-    const mainContent = document.querySelector('main');
-    // Ajustes de contenido principal si es necesario
   }
 
   logout() {

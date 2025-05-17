@@ -10,8 +10,9 @@ import { HomeComponent } from './Views/Principal/home/home.component';
 import { AgendarReunionComponent } from './Views/Principal/agendar-reunion/agendar-reunion.component';
 import { PerfilComponent } from './Views/Perfil/perfil/perfil.component';
 import { HistorialComponent } from './Views/Perfil/historial/historial.component';
-import { MisSesionesComponent } from './Views/Principal/mis-sesiones/mis-sesiones.component';
 import { AuthGuard } from './services/auth.guard';
+import { MisSesionesComponent } from './Views/Principal/mis-sesiones/mis-sesiones.component';
+
 export const routes: Routes = [
   {
     path: 'auth',
@@ -26,15 +27,11 @@ export const routes: Routes = [
     path: '',
     component: MainWrapperComponent,
     children: [
-      { path: 'home', component: HomeComponent},
-      { path: 'about-us', component:AboutUsComponent },
-      { path: 'cursos', component:CursosComponent},
-      { path: 'agendar-reunion', component:AgendarReunionComponent},
-      { path: 'mis-sesiones', component:MisSesionesComponent},
-      { path: 'home', component: HomeComponent },
+      { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
       { path: 'about-us', component: AboutUsComponent },
-      { path: 'cursos', component: CursosComponent },
+      { path: 'cursos', component: CursosComponent, canActivate: [AuthGuard] },
       { path: 'agendar-reunion', component: AgendarReunionComponent, canActivate: [AuthGuard] },
+      { path: 'mis-sesiones', component: MisSesionesComponent, canActivate: [AuthGuard] },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ],
   },
@@ -47,5 +44,15 @@ export const routes: Routes = [
       { path: 'historial', component: HistorialComponent },
     ],
   },
-  { path: '**', redirectTo: '/home', pathMatch: 'full' },
+  {
+    path: 'admin',
+    component: MainWrapperComponent,
+    canActivate: [AuthGuard],
+    children: [
+      //{ path: 'usuarios', component: UsuariosComponent, canActivate: [AuthGuard] },
+      //{ path: 'trabajadores', component: TrabajadoresComponent, canActivate: [AuthGuard] },
+      //{ path: 'gestionar-sesiones', component: GestionarSesionesComponent, canActivate: [AuthGuard] },
+    ],
+  },
+  { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },
 ];

@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -9,12 +10,7 @@ interface LoginResponse {
   message: string;
   data: {
     id: number;
-    correo: string;
-    nombres: string;
-    apellidos: string;
-    dni: string;
-    celular: string;
-    habilidades: string[];
+    rol: string;
   };
 }
 
@@ -24,36 +20,61 @@ interface LoginResponse {
 export class AuthService {
   private apiUrl = environment.apiUrl;
   private userIdSubject = new BehaviorSubject<number | null>(null);
+  private rolSubject = new BehaviorSubject<string | null>(null);
   userId$ = this.userIdSubject.asObservable();
-  private instanceId = Math.random().toString(36).substring(2); // Unique ID for debugging
+  rol$ = this.rolSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    console.log(`AuthService instantiated, instance: ${this.instanceId}`);
-    this.userId$.subscribe(id => console.log(`userIdSubject changed: ${id}, instance: ${this.instanceId}`));
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    if (isPlatformBrowser(this.platformId)) {
+      const userId = localStorage.getItem('userId');
+      const rol = localStorage.getItem('rol');
+      this.userIdSubject.next(userId ? Number(userId) : null);
+      this.rolSubject.next(rol);
+      console.log(`Loaded from localStorage - userId: ${userId}, rol: ${rol}`);
+    }
   }
 
   login(credentials: { correo: string; contrasena: string }): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
-        console.log(`Login response, instance: ${this.instanceId}`, response);
-        if (response.data?.id) {
-          this.userIdSubject.next(response.data.id);
-          console.log(`User ID saved: ${response.data.id}, instance: ${this.instanceId}`);
-        } else {
-          console.warn(`No user ID in response, instance: ${this.instanceId}`);
+        const userId = response.data.id;
+        const rol = response.data.rol.toLowerCase();
+        console.log(`Login - userId: ${userId}, rol: ${rol}`);
+        if (userId && rol) {
+          this.userIdSubject.next(userId);
+          this.rolSubject.next(rol);
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem('userId', userId.toString());
+            localStorage.setItem('rol', rol);
+            console.log(`Saved to localStorage - userId: ${userId}, rol: ${rol}`);
+          }
         }
       })
     );
   }
 
   getUserId(): number | null {
-    const id = this.userIdSubject.value;
-    console.log(`Retrieved user ID: ${id}, instance: ${this.instanceId}`);
-    return id;
+    return this.userIdSubject.value;
+  }
+
+  getRol(): string | null {
+    return this.rolSubject.value;
   }
 
   clearUserId() {
     this.userIdSubject.next(null);
-    console.log(`User ID cleared, instance: ${this.instanceId}`);
+    this.rolSubject.next(null);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('userId');
+      localStorage.removeItem('rol');
+      console.log(`localStorage cleared`);
+    }
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.userIdSubject.value;
   }
 }
