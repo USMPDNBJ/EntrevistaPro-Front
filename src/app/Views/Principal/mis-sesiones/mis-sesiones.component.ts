@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../../Components/navbar/navbar.component";
 import Session from '../../../models/sessions';
- ""
+
 @Component({
   selector: 'app-mis-sesiones',
   standalone: true,
