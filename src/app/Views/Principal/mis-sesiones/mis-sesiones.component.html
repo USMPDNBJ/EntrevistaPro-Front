@@ -14,6 +14,10 @@
       <th mat-header-cell *matHeaderCellDef> ID </th>
       <td mat-cell *matCellDef="let element"> {{element.id}} </td>
     </ng-container>
+        <ng-container matColumnDef="usuario_id">
+      <th mat-header-cell *matHeaderCellDef> Usuario_ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.usuario_id}} </td>
+    </ng-container>
     <ng-container matColumnDef="profesional_id">
       <th mat-header-cell *matHeaderCellDef> Profesional </th>
       <td mat-cell *matCellDef="let element"> {{element.profesional_id}} </td>

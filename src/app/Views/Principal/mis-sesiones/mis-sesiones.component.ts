@@ -6,20 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../../Components/navbar/navbar.component";
-
-export interface Sesion {
-  id: number;
-  usuario_id: number;
-  profesional_id: number;
-  fecha: string;
-  hora_inicio: string;
-  hora_fin: string;
-  estado: string;
-  notas: string;
-  created_at: string;
-  enlace: string;
-}
-
+import Session from '../../../models/sessions';
+ ""
 @Component({
   selector: 'app-mis-sesiones',
   standalone: true,
@@ -34,14 +22,12 @@ export interface Sesion {
   styleUrls: ['./mis-sesiones.component.css']
 })
 export class MisSesionesComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'usuario_id', 'profesional_id', 'fecha', 'hora_inicio', 'hora_fin', 'estado', 'notas', 'created_at','enlace'];
-  dataSource = new MatTableDataSource<Sesion>();
+
+  dataSource = new MatTableDataSource<Session>();
   @ViewChild('input') input!: MatInput;
 
   ngOnInit() {
-    const sesiones: Sesion[] = [
-      { id: 1, usuario_id: 101, profesional_id: 201, fecha: '2025-05-16', hora_inicio: '14:00', hora_fin: '15:00', estado: 'Completada', notas: 'Buena sesión', created_at: '2025-05-15' , enlace:'http://'},
-      { id: 2, usuario_id: 102, profesional_id: 202, fecha: '2025-05-17', hora_inicio: '10:00', hora_fin: '11:00', estado: 'Pendiente', notas: 'Preparar temas', created_at: '2025-05-15', enlace:'http://' },
+    const sesiones: Session[] = [
     ];
     this.dataSource.data = sesiones;
   }
