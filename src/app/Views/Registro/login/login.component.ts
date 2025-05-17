@@ -1,19 +1,20 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, CommonModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginGroup: FormGroup;
-  isLoading: boolean = false;
+  isLoading = false;
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
@@ -28,41 +29,36 @@ export class LoginComponent {
     });
   }
 
+  ngOnInit() {}
+
   onSubmit() {
     if (this.loginGroup.valid) {
       this.isLoading = true;
-      this.successMessage = null;
       this.errorMessage = null;
+      this.successMessage = null;
 
       const credentials = this.loginGroup.value;
       this.authService.login(credentials).subscribe({
         next: (response) => {
-          console.log('Login success:', response);
-          console.log('User ID after login:', this.authService.getUserId());
           this.isLoading = false;
-          this.successMessage = response.message;
-          setTimeout(() => {
-            console.log('Navigating to /perfil'); // Changed to /perfil for testing
-            this.router.navigate(['/perfil']).then(() => {
-              console.log('Navigation to /perfil completed');
-            });
-          }, 3000);
+          const userId = response.data.id;
+          const rol = response.data.rol.toLowerCase();
+          console.log('Login - userId:', userId, 'rol:', rol);
+          if (userId && rol) {
+            this.successMessage = 'Inicio de sesión exitoso';
+            this.router.navigate(['/home']);
+          } else {
+            this.errorMessage = 'Error: Respuesta inválida';
+          }
         },
         error: (error) => {
           this.isLoading = false;
+          this.errorMessage = error.error?.message || 'Credenciales inválidas';
           console.error('Login error:', error);
-          if (error.status === 401) {
-            this.errorMessage = 'Correo o contraseña incorrectos.';
-          } else {
-            this.errorMessage = `Error: ${error.status} - ${error.message}`;
-          }
         }
       });
     } else {
-      this.errorMessage = 'Por favor, completa todos los campos correctamente.';
+      this.loginGroup.markAllAsTouched();
     }
-  }
-    goHome() {
-    this.router.navigate(['/home']);
   }
 }

@@ -20,7 +20,7 @@
       <p>Accede a tu cuenta para continuar</p>
     </div>
 
-    <form [formGroup]="loginGroup" class="form-content" role="form" aria-labelledby="form-header">
+    <form [formGroup]="loginGroup" class="form-content" role="form" aria-labelledby="form-header" (ngSubmit)="onSubmit()">
       <div class="input-row">
         <div class="input-field">
           <label for="correo" id="correo-label">
@@ -45,7 +45,7 @@
       </div>
 
       <div class="form-actions">
-        <button type="submit" (click)="onSubmit()" class="action-btn" [ngClass]="{ loading: isLoading }" [disabled]="loginGroup.invalid || isLoading">
+        <button type="submit" class="action-btn" [ngClass]="{ loading: isLoading }" [disabled]="loginGroup.invalid || isLoading">
           <span *ngIf="!isLoading">Iniciar Sesión</span>
           <span *ngIf="isLoading">Cargando...</span>
           <svg class="button-icon" *ngIf="!isLoading"><use href="#icon-arrow"></use></svg>

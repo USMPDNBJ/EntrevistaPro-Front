@@ -11,13 +11,7 @@ import Session from '../../../models/sessions';
 @Component({
   selector: 'app-mis-sesiones',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatTableModule,
-    MatFormFieldModule,
-    MatInputModule,
-    NavbarComponent
-],
+  imports: [CommonModule, MatTableModule, MatFormFieldModule, MatInputModule, NavbarComponent],
   templateUrl: './mis-sesiones.component.html',
   styleUrls: ['./mis-sesiones.component.css']
 })
