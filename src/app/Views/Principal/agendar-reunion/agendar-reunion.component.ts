@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../../../Components/navbar/navbar.component';
+import Agendar from '../../../models/agendar';
+import { SessionService } from '../../../services/session.service';
 
 @Component({
   imports: [CommonModule, FormsModule, NavbarComponent],
@@ -23,15 +25,28 @@ export class AgendarReunionComponent {
   emptyDaysBefore: number[] = [];
   weekDays: { day: number, month: string, year: number, label: string }[] = [];
   yearMonths: string[] = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-  timeSlots: string[] = Array.from({ length: 24 }, (_, i) => `${i.toString().padStart(2, '0')}:00`);
+  timeSlots: string[] = Array.from({ length: 16 }, (_, i) => {
+    // Comienza desde las 8:00 AM (8:00)
+    const hour = i + 8; // Añadir 8 para que las horas comiencen desde las 8:00
+    return `${hour.toString().padStart(2, '0')}:00`;
+  });
   currentWeekStart: Date = new Date();
-
+  userId: number;
   ngOnInit() {
     this.currentMonth = this.capitalizeFirstLetter(new Date().toLocaleString('default', { month: 'long' }));
     this.generateMonthDays();
     this.generateWeekDays();
   }
 
+  constructor(private userService: SessionService) {
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      this.userId = Number(storedUserId);
+    } else {
+      console.error('No se encontró el userId en localStorage');
+      this.userId = 0;
+    }
+  }
   capitalizeFirstLetter(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
@@ -150,7 +165,36 @@ export class AgendarReunionComponent {
   }
 
   scheduleMeeting() {
-    // Aquí puedes implementar la lógica para agendar la reunión
-    console.log(`Reunión agendada para ${this.selectedDay} de ${this.selectedMonth} de ${this.selectedYear} a las ${this.selectedTime}`);
+    if (!this.selectedDay || !this.selectedMonth || !this.selectedYear || !this.selectedTime) {
+      console.error('Faltan datos para agendar la reunión');
+      return; // Si no se seleccionaron todos los campos, no se agenda la reunión
+    }
+
+    // Crear una cadena de fecha en formato "yyyy-MM-dd"
+    const meetingDate = `${this.selectedYear}-${this.getMonthIndex(this.selectedMonth) + 1}-${this.selectedDay}`;
+
+    // Convertir la cadena meetingDate a un objeto Date
+    const meetingDateObj = new Date(meetingDate);
+    const session: Agendar = {
+      usuario_id: this.userId,
+      profesional_id: 0,
+      fecha: meetingDateObj,
+      hora_inicio: this.selectedTime,
+      hora_fin: this.selectedTime + 1,
+      estado: 'pendiente',
+      evaluacion: 'undefined',
+      enlace: 'undefined'
+    };
+
+    this.userService.postSession(session).subscribe({
+      next: (response) => {
+        console.log('Reunión agendada:', response);
+        alert('Reunión agendada con éxito');
+      },
+      error: (error) => {
+        console.error('Error al agendar la reunión:', error);
+        alert('Ocurrió un error al agendar la reunión');
+      }
+    });
   }
 }

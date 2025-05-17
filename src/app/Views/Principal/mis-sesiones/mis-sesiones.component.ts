@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../../Components/navbar/navbar.component";
 import Session from '../../../models/sessions';
-import { UserService } from '../../../services/session.service';
+import { SessionService } from '../../../services/session.service';
 
 @Component({
   selector: 'app-mis-sesiones',
@@ -23,22 +23,21 @@ import { UserService } from '../../../services/session.service';
   styleUrls: ['./mis-sesiones.component.css']
 })
 export class MisSesionesComponent implements OnInit {
-  sesiones: any[] = [];
-  dataSource = new MatTableDataSource<Session>();
+  sesiones: Session[] = [];
+  dataSource = new MatTableDataSource<Session>([]);
   displayedColumns: string[] = [
     'id', 'trabajador', 'fecha', 'hora_inicio', 'hora_fin', 'estado', 'evaluacion', 'creado en', 'enlace'
   ];
   @ViewChild('input') input!: MatInput;
   userId: string;
 
-  constructor(private userService: UserService) {
-    // Obtener el userId del localStorage
+  constructor(private userService: SessionService) {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
-      this.userId = storedUserId;  // Si existe, lo usamos
+      this.userId = storedUserId;
     } else {
       console.error('No se encontró el userId en localStorage');
-      this.userId = '';  // Manejo de error si no existe en localStorage
+      this.userId = '';
     }
   }
 
@@ -46,7 +45,6 @@ export class MisSesionesComponent implements OnInit {
     if (this.userId) {
       this.loadSessions();
     } else {
-      // Aquí podrías manejar la situación si no hay userId, por ejemplo, redirigir al login
       console.log('No se pudo cargar las sesiones: userId no disponible');
     }
   }
@@ -54,13 +52,10 @@ export class MisSesionesComponent implements OnInit {
   loadSessions() {
     this.userService.getSessionsByUserId(this.userId).subscribe(
       (response: any) => {
-        console.log('Respuesta completa del servidor:', response);
-        console.log('Respuesta keys:', Object.keys(response));
-
         if (response) {
-          this.sesiones = [response];
+        this.sesiones = Array.isArray(response) ? response : [response];
           this.dataSource.data = this.sesiones;
-          console.log('Sesiones asignadas a dataSource:', this.dataSource.data);
+          console.log(this.dataSource.data);
         } else {
           console.error('Error: La respuesta está vacía o mal formada');
         }
@@ -72,11 +67,21 @@ export class MisSesionesComponent implements OnInit {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+
+    // Aquí se define un filtro personalizado para varias columnas
+    this.dataSource.filter = filterValue;  // Actualiza el filtro global de la tabla
+
+    // Sobrescribimos el comportamiento por defecto del filtro
+    this.dataSource.filterPredicate = (data: Session, filter: string) => {
+      const strData = `${data.id} ${data.trabajador} ${data.fecha} ${data.estado}`.toLowerCase();
+      return strData.includes(filter); // Busca en estos campos
+    };
   }
 
-  getStatusClass(estado: string): string {
+  getStatusClass(estado?: string): string {
+    if (!estado) return '';
+
     switch (estado.toLowerCase()) {
       case 'completada': return 'status-completed';
       case 'pendiente': return 'status-pending';
