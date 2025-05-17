@@ -9,54 +9,62 @@
       <input matInput (keyup)="applyFilter($event)" placeholder="Ej. ID, Fecha, Estado..." #input>
     </mat-form-field>
   </div>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-        <ng-container matColumnDef="usuario_id">
-      <th mat-header-cell *matHeaderCellDef> Usuario_ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.usuario_id}} </td>
-    </ng-container>
-    <ng-container matColumnDef="profesional_id">
-      <th mat-header-cell *matHeaderCellDef> Profesional </th>
-      <td mat-cell *matCellDef="let element"> {{element.profesional_id}} </td>
-    </ng-container>
 
-    <ng-container matColumnDef="fecha">
-      <th mat-header-cell *matHeaderCellDef> Fecha </th>
-      <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
-    </ng-container>
 
-    <ng-container matColumnDef="hora_inicio">
-      <th mat-header-cell *matHeaderCellDef> Hora Inicio </th>
-      <td mat-cell *matCellDef="let element"> {{element.hora_inicio}} </td>
-    </ng-container>
+  <mat-table [dataSource]="sesiones">
+  <!-- Columnas de la tabla -->
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+    <mat-cell *matCellDef="let sesiones">{{ sesiones.id }}</mat-cell>
+  </ng-container>
 
-    <ng-container matColumnDef="hora_fin">
-      <th mat-header-cell *matHeaderCellDef> Hora Fin </th>
-      <td mat-cell *matCellDef="let element"> {{element.hora_fin}} </td>
-    </ng-container>
+  <ng-container matColumnDef="trabajador">
+    <mat-header-cell *matHeaderCellDef>Trabajador</mat-header-cell>
+    <mat-cell *matCellDef="let session">{{ session.trabajador }}</mat-cell>
+  </ng-container>
 
-    <ng-container matColumnDef="estado">
-      <th mat-header-cell *matHeaderCellDef> Estado </th>
-      <td mat-cell *matCellDef="let element" [ngClass]="getStatusClass(element.estado)">
-        {{element.estado}}
-      </td>
-    </ng-container>
+  <ng-container matColumnDef="fecha">
+    <mat-header-cell *matHeaderCellDef>Fecha</mat-header-cell>
+    <mat-cell *matCellDef="let session">{{ session.fecha | date: 'short' }}</mat-cell>
+  </ng-container>
 
-    <ng-container matColumnDef="notas">
-      <th mat-header-cell *matHeaderCellDef> Evaluación </th>
-      <td mat-cell *matCellDef="let element"> {{element.notas}} </td>
-    </ng-container>
-    <ng-container matColumnDef="enlace">
-      <th mat-header-cell *matHeaderCellDef> Enlace </th>
-      <td mat-cell *matCellDef="let element"> <a href=""> Enlace</a> </td>
-    </ng-container>
-    <ng-container matColumnDef="created_at">
-      <th mat-header-cell *matHeaderCellDef> Creado en </th>
-      <td mat-cell *matCellDef="let element"> {{element.created_at}} </td>
-    </ng-container>
+  <ng-container matColumnDef="hora_inicio">
+    <mat-header-cell *matHeaderCellDef>Hora Inicio</mat-header-cell>
+    <mat-cell *matCellDef="let session">{{ session.hora_inicio }}</mat-cell>
+  </ng-container>
 
-  </table>
+  <ng-container matColumnDef="hora_fin">
+    <mat-header-cell *matHeaderCellDef>Hora Fin</mat-header-cell>
+    <mat-cell *matCellDef="let session">{{ session.hora_fin }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="estado">
+    <mat-header-cell *matHeaderCellDef>Estado</mat-header-cell>
+    <mat-cell *matCellDef="let session" [ngClass]="getStatusClass(session.estado)">
+      {{ session.estado }}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="evaluacion">
+    <mat-header-cell *matHeaderCellDef>Evaluación</mat-header-cell>
+    <mat-cell *matCellDef="let session">
+      <a *ngIf="session.evaluacion" [href]="session.evaluacion" target="_blank">Ver PDF</a>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="creado en">
+    <mat-header-cell *matHeaderCellDef>Creado en</mat-header-cell>
+    <mat-cell *matCellDef="let session">
+      <a target="_blank">{{ session.creado_en }}</a>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="enlace">
+    <mat-header-cell *matHeaderCellDef>Enlace</mat-header-cell>
+    <mat-cell *matCellDef="let session">
+      <a [href]="session.enlace" target="_blank">{{ session.enlace }}</a>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
 </div>
