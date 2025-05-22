@@ -1,0 +1,39 @@
+.payment-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.payment-container .mat-mdc-card {
+  padding: 1.5rem;
+}
+
+.payment-container .row {
+  display: flex;
+  gap: 1rem;
+}
+
+.payment-container .half-width {
+  flex: 1;
+}
+
+.payment-container .mat-mdc-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.payment-container .mat-mdc-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Estilos para los snackbars */
+:host ::ng-deep .success-snackbar {
+  background-color: #4caf50;
+  color: white;
+}
+
+:host ::ng-deep .error-snackbar {
+  background-color: #f44336;
+  color: white;
+}

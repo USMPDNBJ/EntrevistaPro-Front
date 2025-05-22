@@ -1,0 +1,79 @@
+<div class="payment-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Pasarela de Pago</mat-card-title>
+      <mat-card-subtitle>Ingrese los detalles de su pago</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="paymentForm" (ngSubmit)="processPayment()">
+        <mat-form-field appearance="fill">
+          <mat-label>Número de tarjeta</mat-label>
+          <input matInput formControlName="cardNumber" mask="0000 0000 0000 0000">
+          <mat-error *ngIf="cardNumber?.hasError('required')">
+            El número de tarjeta es requerido
+          </mat-error>
+          <mat-error *ngIf="cardNumber?.hasError('pattern')">
+            Debe ingresar 16 dígitos
+          </mat-error>
+          <mat-error *ngIf="cardNumber?.hasError('invalidCard')">
+            Número de tarjeta inválido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre del titular</mat-label>
+          <input matInput formControlName="cardHolder">
+          <mat-error *ngIf="cardHolder?.hasError('required')">
+            El nombre es requerido
+          </mat-error>
+          <mat-error *ngIf="cardHolder?.hasError('pattern')">
+            Solo se permiten letras y espacios
+          </mat-error>
+        </mat-form-field>
+
+        <div class="row">
+          <mat-form-field appearance="fill" class="half-width">
+            <mat-label>Fecha de expiración (MM/AA)</mat-label>
+            <input matInput formControlName="expiryDate" placeholder="MM/AA">
+            <mat-error *ngIf="expiryDate?.hasError('required')">
+              La fecha es requerida
+            </mat-error>
+            <mat-error *ngIf="expiryDate?.hasError('pattern')">
+              Formato MM/AA inválido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="half-width">
+            <mat-label>CVV</mat-label>
+            <input matInput formControlName="cvv" type="password">
+            <mat-error *ngIf="cvv?.hasError('required')">
+              El CVV es requerido
+            </mat-error>
+            <mat-error *ngIf="cvv?.hasError('pattern')">
+              Debe ser de 3 o 4 dígitos
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Monto (USD)</mat-label>
+          <input matInput formControlName="amount" type="number">
+          <mat-error *ngIf="amount?.hasError('required')">
+            El monto es requerido
+          </mat-error>
+          <mat-error *ngIf="amount?.hasError('min')">
+            El monto debe ser mayor a 0
+          </mat-error>
+        </mat-form-field>
+
+        <mat-card-actions>
+          <button mat-raised-button color="primary" type="submit"
+                  [disabled]="isProcessing || paymentForm.invalid">
+            {{ isProcessing ? 'Procesando...' : 'Pagar' }}
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

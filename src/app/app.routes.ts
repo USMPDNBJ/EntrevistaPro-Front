@@ -13,6 +13,7 @@ import { MisSesionesComponent } from './Views/Principal/mis-sesiones/mis-sesione
 import { AuthWrapperComponent } from './Modules/auth/auth-wrapper.component';
 import { MainWrapperComponent } from './Modules/main/main-wrapper.component';
 import { AdminWrapperComponent } from './Modules/admin/admin-wrapper.component';
+import { pasarelaComponent } from './Views/Principal/pasarela/pasarela.component';
 
 export const routes: Routes = [
   {
@@ -32,6 +33,7 @@ export const routes: Routes = [
       { path: 'about-us', component: AboutUsComponent },
       { path: 'cursos', component: CursosComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
       { path: 'agendar-reunion', component: AgendarReunionComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
+      { path: 'pasarela', component: pasarelaComponent},
       { path: 'mis-sesiones', component: MisSesionesComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ],
