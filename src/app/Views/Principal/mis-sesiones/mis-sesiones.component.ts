@@ -32,7 +32,7 @@ export class MisSesionesComponent implements OnInit {
   userId: string;
 
   constructor(private userService: SessionService) {
-    const storedUserId = localStorage.getItem('userId');
+    const storedUserId = sessionStorage.getItem('userId');
     if (storedUserId) {
       this.userId = storedUserId;
     } else {

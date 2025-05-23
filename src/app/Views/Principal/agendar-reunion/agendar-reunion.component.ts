@@ -5,10 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../../../Components/navbar/navbar.component';
 import Agendar from '../../../models/agendar';
 import { SessionService } from '../../../services/session.service';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [RouterLink, RouterLinkActive,CommonModule, FormsModule, NavbarComponent],
+  imports: [RouterLink, CommonModule, FormsModule, NavbarComponent],
   selector: 'app-agendar-reunion',
   templateUrl: './agendar-reunion.component.html',
   styleUrls: ['./agendar-reunion.component.css']
@@ -40,7 +40,7 @@ export class AgendarReunionComponent {
   }
 
   constructor(private userService: SessionService) {
-    const storedUserId = localStorage.getItem('userId');
+    const storedUserId = sessionStorage.getItem('userId');
     if (storedUserId) {
       this.userId = Number(storedUserId);
     } else {
@@ -186,16 +186,7 @@ export class AgendarReunionComponent {
       evaluacion: 'undefined',
       enlace: 'undefined'
     };
+    sessionStorage.setItem('ss_reunion', JSON.stringify(session));
 
-    this.userService.postSession(session).subscribe({
-      next: (response) => {
-        console.log('Reunión agendada:', response);
-        alert('Reunión agendada con éxito');
-      },
-      error: (error) => {
-        console.error('Error al agendar la reunión:', error);
-        alert('Ocurrió un error al agendar la reunión');
-      }
-    });
   }
 }

@@ -29,8 +29,8 @@ export class AuthService {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     if (isPlatformBrowser(this.platformId)) {
-      const userId = localStorage.getItem('userId');
-      const rol = localStorage.getItem('rol');
+      const userId = sessionStorage.getItem('userId');
+      const rol = sessionStorage.getItem('rol');
       console.log('AuthService: Inicializando desde localStorage', { userId, rol });
       this.userIdSubject.next(userId ? Number(userId) : null);
       this.rolSubject.next(rol);
@@ -47,8 +47,8 @@ export class AuthService {
           this.userIdSubject.next(userId);
           this.rolSubject.next(rol);
           if (isPlatformBrowser(this.platformId)) {
-            localStorage.setItem('userId', userId.toString());
-            localStorage.setItem('rol', rol);
+            sessionStorage.setItem('userId', userId.toString());
+            sessionStorage.setItem('rol', rol);
             console.log('AuthService: Guardado en localStorage', { userId, rol });
           }
         }
@@ -68,8 +68,8 @@ export class AuthService {
     this.userIdSubject.next(null);
     this.rolSubject.next(null);
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem('userId');
-      localStorage.removeItem('rol');
+      sessionStorage.removeItem('userId');
+      sessionStorage.removeItem('rol');
       console.log('AuthService: localStorage limpiado');
     }
   }

@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
           console.log('Login - userId:', userId, 'rol:', rol);
           if (userId && rol) {
             this.successMessage = 'Inicio de sesión exitoso';
+            sessionStorage.setItem('user',JSON.stringify(userId))
             this.router.navigate(['/home']);
           } else {
             this.errorMessage = 'Error: Respuesta inválida';
