@@ -1,0 +1,36 @@
+.users-table .btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.users-table .edit-btn {
+  background-color: var(--accent-color);
+  color: var(--text-on-accent);
+}
+
+.users-table .edit-btn:hover {
+  background-color: var(--accent-hover-color);
+  transform: scale(1.05);
+}
+
+.users-table .delete-btn {
+  background-color: var(--error-color);
+  color: var(--text-on-primary);
+}
+
+.users-table .delete-btn:hover {
+  background-color: #dc2626;
+  transform: scale(1.05);
+}
+
+.reload-btn {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .users-table .btn-action {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+}

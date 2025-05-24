@@ -1,25 +1,25 @@
-.workers-table .btn-action {
+.sessions-table .btn-action {
   display: inline-flex !important;
   align-items: center !important;
   gap: 0.5rem !important;
 }
 
-.workers-table .edit-btn {
+.sessions-table .edit-btn {
   background-color: var(--accent-color, #2563eb) !important;
   color: var(--text-on-accent, #ffffff) !important;
 }
 
-.workers-table .edit-btn:hover {
+.sessions-table .edit-btn:hover {
   background-color: var(--accent-hover-color, #1d4ed8) !important;
   transform: scale(1.05) !important;
 }
 
-.workers-table .delete-btn {
-  background-color: var(--error-color, #0011ff) !important;
+.sessions-table .delete-btn {
+  background-color: var(--error-color, #ef4444) !important;
   color: var(--text-on-primary, #ffffff) !important;
 }
 
-.workers-table .delete-btn:hover {
+.sessions-table .delete-btn:hover {
   background-color: #dc2626 !important;
   transform: scale(1.05) !important;
 }
@@ -29,7 +29,7 @@
 }
 
 @media (max-width: 768px) {
-  .workers-table .btn-action {
+  .sessions-table .btn-action {
     padding: 0.4rem 0.8rem !important;
     font-size: 0.75rem !important;
   }

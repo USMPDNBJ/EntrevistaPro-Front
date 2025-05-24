@@ -14,6 +14,8 @@ import { AuthWrapperComponent } from './Modules/auth/auth-wrapper.component';
 import { MainWrapperComponent } from './Modules/main/main-wrapper.component';
 import { AdminWrapperComponent } from './Modules/admin/admin-wrapper.component';
 import { pasarelaComponent } from './Views/Principal/pasarela/pasarela.component';
+import { GestionarUsuariosComponent } from './Views/Admin/gestionar-usuarios/gestionar-usuarios.component';
+import { GestionarSesionesComponent } from './Views/Admin/gestionar-sesiones/gestionar-sesiones.component';
 
 export const routes: Routes = [
   {
@@ -54,10 +56,9 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ['admin'] },
     children: [
-      {
-        path: '',
-        loadChildren: () => import('./Modules/admin/admin.module').then(m => m.AdminModule)
-      }
+      { path: '', loadChildren: () => import('./Modules/admin/admin.module').then(m => m.AdminModule) },
+      { path: 'admin/usuarios', component: GestionarUsuariosComponent },
+      { path: 'admin/sesiones', component: GestionarSesionesComponent }
     ]
   },
   { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },

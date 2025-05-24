@@ -6,7 +6,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-payment-gateway',
@@ -20,8 +19,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSnackBarModule,
-    RouterLink, RouterLinkActive
+    MatSnackBarModule
   ]
 })
 export class pasarelaComponent implements OnInit {

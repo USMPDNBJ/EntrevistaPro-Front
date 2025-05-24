@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormArray, For
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 
-interface Worker {
+interface User {
   id: number;
   correo: string;
   contrasena?: string;
@@ -17,19 +17,19 @@ interface Worker {
 }
 
 @Component({
-  selector: 'app-gestionar-trabajadores',
+  selector: 'app-gestionar-usuarios',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './gestionar-trabajadores.component.html',
-  styleUrls: ['./gestionar-trabajadores.component.css']
+  templateUrl: './gestionar-usuarios.component.html',
+  styleUrls: ['./gestionar-usuarios.component.css']
 })
-export class GestionarTrabajadoresComponent implements OnInit {
-  private workersSubject = new BehaviorSubject<Worker[]>([]);
-  workers$ = this.workersSubject.asObservable();
-  workers: Worker[] = [];
-  workerForm: FormGroup;
+export class GestionarUsuariosComponent implements OnInit {
+  private usersSubject = new BehaviorSubject<User[]>([]);
+  users$ = this.usersSubject.asObservable();
+  users: User[] = [];
+  userForm: FormGroup;
   isEditing = false;
-  editingWorkerId: number | null = null;
+  editingUserId: number | null = null;
   errorMessage: string | null = null;
   successMessage: string | null = null;
   isLoading = true;
@@ -45,13 +45,12 @@ export class GestionarTrabajadoresComponent implements OnInit {
   ];
 
   private baseUrl = 'https://entrevistapro-back.onrender.com/api/user';
-  private workersUrl = 'https://entrevistapro-back.onrender.com/api/user/workers';
 
   constructor(
     private http: HttpClient,
     private fb: FormBuilder
   ) {
-    this.workerForm = this.fb.group({
+    this.userForm = this.fb.group({
       correo: ['', [Validators.required, Validators.email]],
       contrasena: ['', [Validators.minLength(6)]],
       nombres: ['', Validators.required],
@@ -65,13 +64,13 @@ export class GestionarTrabajadoresComponent implements OnInit {
       rol: ['Worker', Validators.required]
     });
 
-    this.workers$.subscribe(workers => {
-      this.workers = workers;
+    this.users$.subscribe(users => {
+      this.users = users;
     });
   }
 
   get habilidadesFormArray(): FormArray {
-    return this.workerForm.get('habilidades') as FormArray;
+    return this.userForm.get('habilidades') as FormArray;
   }
 
   minSelectedCheckboxes(min: number, max: number): ValidatorFn {
@@ -93,27 +92,27 @@ export class GestionarTrabajadoresComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadWorkers();
+    this.loadUsers();
   }
 
-  trackByWorkerId(index: number, worker: Worker): number {
-    return worker.id;
+  trackByUserId(index: number, user: User): number {
+    return user.id;
   }
 
-  loadWorkers(retryCount = 0) {
+  loadUsers(retryCount = 0) {
     this.isLoading = true;
-    this.http.get<{ status: number; message: string; data: Worker | Worker[] }>(this.workersUrl, { headers: this.getAuthHeaders() }).subscribe({
+    this.http.get<{ status: number; message: string; data: User | User[] }>(this.baseUrl, { headers: this.getAuthHeaders() }).subscribe({
       next: (response) => {
         console.log('Respuesta cruda:', response);
         const data = Array.isArray(response.data) ? response.data : [response.data];
         data.sort((a, b) => a.id - b.id);
-        this.workersSubject.next([...data]);
-        console.log('Trabajadores cargados:', this.workers, 'Cantidad:', this.workers.length);
+        this.usersSubject.next([...data]);
+        console.log('Usuarios cargados:', this.users, 'Cantidad:', this.users.length);
         this.isLoading = false;
 
-        if (this.isInitialLoad && this.workers.length === 0 && retryCount < 3) {
+        if (this.isInitialLoad && this.users.length === 0 && retryCount < 3) {
           console.log(`Lista vacía en carga inicial, reintentando (${retryCount + 1}/3)...`);
-          setTimeout(() => this.loadWorkers(retryCount + 1), 1500);
+          setTimeout(() => this.loadUsers(retryCount + 1), 1500);
         } else {
           this.isInitialLoad = false;
         }
@@ -121,11 +120,11 @@ export class GestionarTrabajadoresComponent implements OnInit {
       error: (error) => {
         this.errorMessage = this.handleError(error);
         this.isLoading = false;
-        console.error('Error al cargar trabajadores:', error);
+        console.error('Error al cargar usuarios:', error);
 
         if (this.isInitialLoad && retryCount < 3) {
           console.log(`Error en carga inicial, reintentando (${retryCount + 1}/3)...`);
-          setTimeout(() => this.loadWorkers(retryCount + 1), 1500);
+          setTimeout(() => this.loadUsers(retryCount + 1), 1500);
         } else {
           this.isInitialLoad = false;
         }
@@ -134,97 +133,97 @@ export class GestionarTrabajadoresComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.workerForm.valid) {
+    if (this.userForm.valid) {
       const selectedHabilidades = this.habilidadesFormArray.controls
         .map((control, i) => control.value ? this.habilidadesDisponibles[i] : null)
         .filter(habilidad => habilidad !== null) as string[];
 
-      const workerData = {
-        ...this.workerForm.value,
+      const userData = {
+        ...this.userForm.value,
         habilidades: selectedHabilidades
       };
 
-      if (this.isEditing && this.editingWorkerId) {
-        this.updateWorker(this.editingWorkerId, workerData);
+      if (this.isEditing && this.editingUserId) {
+        this.updateUser(this.editingUserId, userData);
       } else {
-        this.createWorker(workerData);
+        this.createUser(userData);
       }
     } else {
-      this.workerForm.markAllAsTouched();
+      this.userForm.markAllAsTouched();
     }
   }
 
-  createWorker(workerData: any) {
+  createUser(userData: any) {
     this.isLoading = true;
-    this.http.post<{ status: number; message: string; data: Worker }>(this.baseUrl, workerData, { headers: this.getAuthHeaders() }).subscribe({
+    this.http.post<{ status: number; message: string; data: User }>(this.baseUrl, userData, { headers: this.getAuthHeaders() }).subscribe({
       next: (response) => {
-        this.successMessage = 'Trabajador creado exitosamente';
+        this.successMessage = 'Usuario creado exitosamente';
         this.errorMessage = null;
-        this.workerForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false) });
-        this.loadWorkers();
+        this.userForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false) });
+        this.loadUsers();
       },
       error: (error) => {
         this.errorMessage = this.handleError(error);
         this.isLoading = false;
-        console.error('Error al crear trabajador:', error);
+        console.error('Error al crear usuario:', error);
       }
     });
   }
 
-  updateWorker(workerId: number, workerData: any) {
-    if (!workerData.contrasena) {
-      delete workerData.contrasena;
+  updateUser(userId: number, userData: any) {
+    if (!userData.contrasena) {
+      delete userData.contrasena;
     }
     this.isLoading = true;
-    this.http.put<{ status: number; message: string; data: Worker }>(`${this.baseUrl}/${workerId}`, workerData, { headers: this.getAuthHeaders() }).subscribe({
+    this.http.put<{ status: number; message: string; data: User }>(`${this.baseUrl}/${userId}`, userData, { headers: this.getAuthHeaders() }).subscribe({
       next: (response) => {
-        this.successMessage = 'Trabajador actualizado exitosamente';
+        this.successMessage = 'Usuario actualizado exitosamente';
         this.errorMessage = null;
-        this.workerForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false) });
+        this.userForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false) });
         this.isEditing = false;
-        this.editingWorkerId = null;
-        this.loadWorkers();
+        this.editingUserId = null;
+        this.loadUsers();
       },
       error: (error) => {
         this.errorMessage = this.handleError(error);
         this.isLoading = false;
-        console.error('Error al actualizar trabajador:', error);
+        console.error('Error al actualizar usuario:', error);
       }
     });
   }
 
-  editWorker(worker: Worker) {
-    console.log('Editando trabajador:', worker);
+  editUser(user: User) {
+    console.log('Editando usuario:', user);
     this.isEditing = true;
-    this.editingWorkerId = worker.id;
+    this.editingUserId = user.id;
 
     const habilidadesControls = this.habilidadesDisponibles.map(habilidad =>
-      worker.habilidades.includes(habilidad)
+      user.habilidades.includes(habilidad)
     );
     this.habilidadesFormArray.clear();
     habilidadesControls.forEach(value => this.habilidadesFormArray.push(this.fb.control(value)));
 
-    this.workerForm.patchValue({
-      ...worker,
+    this.userForm.patchValue({
+      ...user,
       contrasena: ''
     });
-    this.workerForm.get('contrasena')?.clearValidators();
-    this.workerForm.get('contrasena')?.updateValueAndValidity();
+    this.userForm.get('contrasena')?.clearValidators();
+    this.userForm.get('contrasena')?.updateValueAndValidity();
   }
 
-  deleteWorker(workerId: number) {
-    if (confirm('¿Estás seguro de que deseas eliminar este trabajador?')) {
+  deleteUser(userId: number) {
+    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
       this.isLoading = true;
-      this.http.delete<{ status: number; message: string }>(`${this.baseUrl}/${workerId}`, { headers: this.getAuthHeaders() }).subscribe({
-      next: () => {
-          this.successMessage = 'Trabajador eliminado exitosamente';
+      this.http.delete<{ status: number; message: string }>(`${this.baseUrl}/${userId}`, { headers: this.getAuthHeaders() }).subscribe({
+        next: () => {
+          this.successMessage = 'Usuario eliminado exitosamente';
           this.errorMessage = null;
-          this.loadWorkers();
+          this.loadUsers();
         },
         error: (error) => {
           this.errorMessage = this.handleError(error);
           this.isLoading = false;
-          console.error('Error al eliminar trabajador:', error);
+          console.error('Error al eliminar usuario:', error);
         }
       });
     }
@@ -232,14 +231,14 @@ export class GestionarTrabajadoresComponent implements OnInit {
 
   cancelEdit() {
     this.isEditing = false;
-    this.editingWorkerId = null;
-    this.workerForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false) });
-    this.workerForm.get('contrasena')?.setValidators([Validators.minLength(6)]);
-    this.workerForm.get('contrasena')?.updateValueAndValidity();
+    this.editingUserId = null;
+    this.userForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false) });
+    this.userForm.get('contrasena')?.setValidators([Validators.minLength(6)]);
+    this.userForm.get('contrasena')?.updateValueAndValidity();
   }
 
-  reloadWorkers() {
-    this.loadWorkers();
+  reloadUsers() {
+    this.loadUsers();
   }
 
   private handleError(error: any): string {
@@ -251,7 +250,7 @@ export class GestionarTrabajadoresComponent implements OnInit {
       case 403:
         return 'Acceso denegado. No tienes permisos para esta acción.';
       case 404:
-        return 'Trabajador no encontrado.';
+        return 'Usuario no encontrado.';
       case 500:
         return 'Error en el servidor. Intenta de nuevo más tarde.';
       default:

@@ -1,23 +1,23 @@
-<div class="container gestionar-container">
+<div class="container usuarios-container">
   <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
   <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
 
   <div class="card">
-    <h3>{{ isEditing ? 'Editar Trabajador' : 'Crear Trabajador' }}</h3>
-    <form [formGroup]="workerForm" (ngSubmit)="onSubmit()" class="worker-form">
+    <h3>{{ isEditing ? 'Editar Usuario' : 'Crear Usuario' }}</h3>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
       <div class="form-grid">
         <!-- Línea 1: Correo y Contraseña -->
         <div class="form-field">
           <label for="correo">Correo</label>
           <input id="correo" type="email" formControlName="correo" required />
-          <span class="error" *ngIf="workerForm.get('correo')?.invalid && workerForm.get('correo')?.touched">
+          <span class="error" *ngIf="userForm.get('correo')?.invalid && userForm.get('correo')?.touched">
             Correo inválido
           </span>
         </div>
         <div class="form-field" *ngIf="!isEditing">
           <label for="contrasena">Contraseña</label>
           <input id="contrasena" type="password" formControlName="contrasena" required />
-          <span class="error" *ngIf="workerForm.get('contrasena')?.invalid && workerForm.get('contrasena')?.touched">
+          <span class="error" *ngIf="userForm.get('contrasena')?.invalid && userForm.get('contrasena')?.touched">
             Mínimo 6 caracteres
           </span>
         </div>
@@ -25,14 +25,14 @@
         <div class="form-field">
           <label for="nombres">Nombres</label>
           <input id="nombres" type="text" formControlName="nombres" required />
-          <span class="error" *ngIf="workerForm.get('nombres')?.invalid && workerForm.get('nombres')?.touched">
+          <span class="error" *ngIf="userForm.get('nombres')?.invalid && userForm.get('nombres')?.touched">
             Requerido
           </span>
         </div>
         <div class="form-field">
           <label for="apellidos">Apellidos</label>
           <input id="apellidos" type="text" formControlName="apellidos" required />
-          <span class="error" *ngIf="workerForm.get('apellidos')?.invalid && workerForm.get('apellidos')?.touched">
+          <span class="error" *ngIf="userForm.get('apellidos')?.invalid && userForm.get('apellidos')?.touched">
             Requerido
           </span>
         </div>
@@ -40,14 +40,14 @@
         <div class="form-field">
           <label for="dni">DNI</label>
           <input id="dni" type="text" formControlName="dni" required />
-          <span class="error" *ngIf="workerForm.get('dni')?.invalid && workerForm.get('dni')?.touched">
+          <span class="error" *ngIf="userForm.get('dni')?.invalid && userForm.get('dni')?.touched">
             8 dígitos
           </span>
         </div>
         <div class="form-field">
           <label for="celular">Celular</label>
           <input id="celular" type="text" formControlName="celular" required />
-          <span class="error" *ngIf="workerForm.get('celular')?.invalid && workerForm.get('celular')?.touched">
+          <span class="error" *ngIf="userForm.get('celular')?.invalid && userForm.get('celular')?.touched">
             9 dígitos
           </span>
         </div>
@@ -74,13 +74,13 @@
             <option value="Worker">Worker</option>
             <option value="Admin">Admin</option>
           </select>
-          <span class="error" *ngIf="workerForm.get('rol')?.invalid && workerForm.get('rol')?.touched">
+          <span class="error" *ngIf="userForm.get('rol')?.invalid && userForm.get('rol')?.touched">
             Requerido
           </span>
         </div>
       </div>
       <div class="form-actions">
-        <button type="submit" [disabled]="workerForm.invalid || isLoading" class="btn-primary">
+        <button type="submit" [disabled]="userForm.invalid || isLoading" class="btn-primary">
           <span class="material-icons">save</span>
           {{ isEditing ? 'Actualizar' : 'Crear' }}
         </button>
@@ -93,13 +93,13 @@
   </div>
 
   <div class="card">
-    <h3>Lista de Trabajadores</h3>
-    <button class="btn-secondary reload-btn" (click)="reloadWorkers()" [disabled]="isLoading">
+    <h3>Lista de Usuarios</h3>
+    <button class="btn-secondary reload-btn" (click)="reloadUsers()" [disabled]="isLoading">
       <span class="material-icons">refresh</span>
       Recargar
     </button>
-    <div *ngIf="isLoading" class="loading">Cargando trabajadores...</div>
-    <table class="table workers-table" *ngIf="!isLoading && workers.length > 0">
+    <div *ngIf="isLoading" class="loading">Cargando usuarios...</div>
+    <table class="table users-table" *ngIf="!isLoading && users.length > 0">
       <thead>
         <tr>
           <th>ID</th>
@@ -114,26 +114,26 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let worker of workers; trackBy: trackByWorkerId">
-          <td>{{ worker.id }}</td>
-          <td>{{ worker.correo }}</td>
-          <td>{{ worker.nombres }}</td>
-          <td>{{ worker.apellidos }}</td>
-          <td>{{ worker.dni }}</td>
-          <td>{{ worker.celular }}</td>
-          <td>{{ worker.habilidades.join(', ') }}</td>
-          <td>{{ worker.rol }}</td>
+        <tr *ngFor="let user of users; trackBy: trackByUserId">
+          <td>{{ user.id }}</td>
+          <td>{{ user.correo }}</td>
+          <td>{{ user.nombres }}</td>
+          <td>{{ user.apellidos }}</td>
+          <td>{{ user.dni }}</td>
+          <td>{{ user.celular }}</td>
+          <td>{{ user.habilidades.join(', ') }}</td>
+          <td>{{ user.rol }}</td>
           <td>
-            <button class="btn-action edit-btn" (click)="editWorker(worker)" [disabled]="isLoading">
+            <button class="btn-action edit-btn" (click)="editUser(user)" [disabled]="isLoading">
               <span class="material-icons">edit</span>
             </button>
-            <button class="btn-action delete-btn" (click)="deleteWorker(worker.id)" [disabled]="isLoading">
+            <button class="btn-action delete-btn" (click)="deleteUser(user.id)" [disabled]="isLoading">
               <span class="material-icons">delete</span>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
-    <div *ngIf="!isLoading && workers.length === 0" class="no-data">No hay trabajadores registrados.</div>
+    <div *ngIf="!isLoading && users.length === 0" class="no-data">No hay usuarios registrados.</div>
   </div>
 </div>

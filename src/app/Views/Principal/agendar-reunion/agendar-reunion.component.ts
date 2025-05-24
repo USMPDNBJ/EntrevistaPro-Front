@@ -5,10 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../../../Components/navbar/navbar.component';
 import Agendar from '../../../models/agendar';
 import { SessionService } from '../../../services/session.service';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  imports: [RouterLink, RouterLinkActive,CommonModule, FormsModule, NavbarComponent],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   selector: 'app-agendar-reunion',
   templateUrl: './agendar-reunion.component.html',
   styleUrls: ['./agendar-reunion.component.css']
