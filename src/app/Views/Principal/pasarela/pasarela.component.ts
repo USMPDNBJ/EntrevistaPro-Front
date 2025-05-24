@@ -38,7 +38,6 @@ import { NavbarComponent } from "../../../Components/navbar/navbar.component";
     MatTooltipModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    RouterLink,
     NavbarComponent
 ]
 })

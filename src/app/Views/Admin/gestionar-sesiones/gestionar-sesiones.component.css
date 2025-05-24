@@ -1,3 +1,32 @@
+.sesiones-container {
+  width: 100%;
+  max-width: 1600px; /* Ancho máximo para 10 columnas sin desbordamiento */
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.sessions-table {
+  width: 100%;
+  min-width: 1200px; /* Mínimo para 10 columnas, ajustable según necesidad */
+  border-collapse: collapse;
+  table-layout: fixed; /* Fija el diseño de la tabla */
+}
+
+.sessions-table th,
+.sessions-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap; /* Evita que el texto se divida */
+  overflow: hidden; /* Oculta texto que exceda */
+  text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es demasiado largo */
+}
+
+.sessions-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
 .sessions-table .btn-action {
   display: inline-flex !important;
   align-items: center !important;
@@ -29,6 +58,16 @@
 }
 
 @media (max-width: 768px) {
+  .sesiones-container {
+    padding: 0.5rem;
+  }
+
+  .sessions-table th,
+  .sessions-table td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
   .sessions-table .btn-action {
     padding: 0.4rem 0.8rem !important;
     font-size: 0.75rem !important;

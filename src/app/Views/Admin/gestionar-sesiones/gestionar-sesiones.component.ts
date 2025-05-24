@@ -2,21 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 
 interface Session {
   id: number;
-  nombre: string;
+  usuario_id: number;
+  profesional_id: number | null;
+  id_pago: number | null;
   fecha: string;
-  hora: string;
-  duracion: number;
+  hora_inicio: string;
+  hora_fin: string;
   estado: string;
+  evaluacion: string | null;
+  creado_en: string;
+  enlace: string | null;
 }
 
 @Component({
   selector: 'app-gestionar-sesiones',
-  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './gestionar-sesiones.component.html',
+  imports: [CommonModule, ReactiveFormsModule],
   styleUrls: ['./gestionar-sesiones.component.css']
 })
 export class GestionarSesionesComponent implements OnInit {
@@ -26,16 +32,19 @@ export class GestionarSesionesComponent implements OnInit {
   isLoading = false;
   errorMessage = '';
   successMessage = '';
-  private apiUrl = '/api/session';
+  private apiUrl = environment.apiUrlSession;
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.sessionForm = this.fb.group({
       id: [null],
-      nombre: ['', [Validators.required, Validators.minLength(3)]],
+      usuario_id: ['', [Validators.required, Validators.min(1)]],
+      profesional_id: [null, Validators.min(1)],
+      id_pago: [null, Validators.min(1)],
       fecha: ['', Validators.required],
-      hora: ['', Validators.required],
-      duracion: [0, [Validators.required, Validators.min(1)]],
-      estado: ['Activa', Validators.required]
+      hora_inicio: ['', Validators.required],
+      hora_fin: ['', Validators.required],
+      estado: ['Programada', Validators.required],
+      enlace: ['']
     });
   }
 
@@ -145,7 +154,7 @@ export class GestionarSesionesComponent implements OnInit {
 
   private getHttpOptions() {
     const token = localStorage.getItem('token');
-    console.log('Token enviado:', token); // Log para depurar
+    console.log('Token enviado:', token);
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -170,11 +179,14 @@ export class GestionarSesionesComponent implements OnInit {
   private resetForm(): void {
     this.sessionForm.reset({
       id: null,
-      nombre: '',
+      usuario_id: '',
+      profesional_id: null,
+      id_pago: null,
       fecha: '',
-      hora: '',
-      duracion: 0,
-      estado: 'Activa'
+      hora_inicio: '',
+      hora_fin: '',
+      estado: 'Programada',
+      enlace: ''
     });
     this.isEditing = false;
   }
