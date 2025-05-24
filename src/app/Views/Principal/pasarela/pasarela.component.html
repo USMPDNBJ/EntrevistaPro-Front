@@ -1,29 +1,43 @@
+<app-navbar></app-navbar>
 <div class="payment-container">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Pasarela de Pago</mat-card-title>
-      <mat-card-subtitle>Ingrese los detalles de su pago</mat-card-subtitle>
+  <mat-card class="payment-card mat-elevation-z8">
+    <mat-card-header class="payment-header">
+      <div class="back-button" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </div>
+      <mat-card-title class="mat-headline-5">Pasarela de Pago</mat-card-title>
+      <mat-card-subtitle class="mat-subtitle-1">Complete los detalles de su transacción</mat-card-subtitle>
+      <mat-icon class="payment-icon">credit_card</mat-icon>
     </mat-card-header>
 
     <mat-card-content>
-      <form [formGroup]="paymentForm" (ngSubmit)="processPayment()">
-        <mat-form-field appearance="fill">
+      <form [formGroup]="paymentForm" (ngSubmit)="processPayment()" class="payment-form">
+        <!-- Tarjeta -->
+        <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>Número de tarjeta</mat-label>
-          <input matInput formControlName="cardNumber" mask="0000 0000 0000 0000">
+          <input matInput formControlName="cardNumber" mask="0000 0000 0000 0000" placeholder="4111 1111 1111 1111"
+            (keyup)="detectCardType(paymentForm.get('cardNumber')?.value)">
+          <mat-icon matSuffix [class.card-type]="true" [class.visa]="cardType === 'visa'"
+            [class.mastercard]="cardType === 'mastercard'" [class.amex]="cardType === 'amex'">
+            {{ cardType ? 'credit_card' : 'attach_money' }}
+          </mat-icon>
+          <mat-hint>Ingrese los 16 dígitos de su tarjeta</mat-hint>
           <mat-error *ngIf="cardNumber?.hasError('required')">
             El número de tarjeta es requerido
           </mat-error>
           <mat-error *ngIf="cardNumber?.hasError('pattern')">
-            Debe ingresar 16 dígitos
+            Debe ingresar 16 dígitos válidos
           </mat-error>
           <mat-error *ngIf="cardNumber?.hasError('invalidCard')">
             Número de tarjeta inválido
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
+        <!-- Titular -->
+        <mat-form-field appearance="outline">
           <mat-label>Nombre del titular</mat-label>
-          <input matInput formControlName="cardHolder">
+          <input matInput formControlName="cardHolder" placeholder="Como aparece en la tarjeta">
+          <mat-icon matSuffix>person</mat-icon>
           <mat-error *ngIf="cardHolder?.hasError('required')">
             El nombre es requerido
           </mat-error>
@@ -32,46 +46,62 @@
           </mat-error>
         </mat-form-field>
 
+        <!-- Fecha y CVV -->
         <div class="row">
-          <mat-form-field appearance="fill" class="half-width">
-            <mat-label>Fecha de expiración (MM/AA)</mat-label>
-            <input matInput formControlName="expiryDate" placeholder="MM/AA">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Fecha de expiración</mat-label>
+            <input matInput formControlName="expiryDate" mask="00/00" placeholder="MM/AA">
+            <mat-icon matSuffix>date_range</mat-icon>
             <mat-error *ngIf="expiryDate?.hasError('required')">
               La fecha es requerida
             </mat-error>
-            <mat-error *ngIf="expiryDate?.hasError('pattern')">
-              Formato MM/AA inválido
+            <mat-error *ngIf="expiryDate?.hasError('pattern') || expiryDate?.hasError('invalidDate')">
+              Formato MM/AA inválido o fecha expirada
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="fill" class="half-width">
+          <mat-form-field appearance="outline" class="half-width">
             <mat-label>CVV</mat-label>
-            <input matInput formControlName="cvv" type="password">
+            <input matInput formControlName="cvv" type="password" mask="0000" placeholder="•••">
+            <mat-icon matSuffix [matTooltip]="cardType === 'amex' ? '4 dígitos' : '3 dígitos'">
+              lock
+            </mat-icon>
             <mat-error *ngIf="cvv?.hasError('required')">
               El CVV es requerido
             </mat-error>
             <mat-error *ngIf="cvv?.hasError('pattern')">
-              Debe ser de 3 o 4 dígitos
+              {{ cardType === 'amex' ? 'Debe ser de 4 dígitos' : 'Debe ser de 3 dígitos' }}
             </mat-error>
           </mat-form-field>
         </div>
 
-        <mat-form-field appearance="fill">
+        <!-- Monto -->
+        <mat-form-field appearance="outline">
           <mat-label>Monto (USD)</mat-label>
-          <input matInput formControlName="amount" type="number">
+          <span matPrefix>$&nbsp;</span>
+          <input matInput formControlName="amount" type="number" min="1">
+          <mat-icon matSuffix>attach_money</mat-icon>
           <mat-error *ngIf="amount?.hasError('required')">
             El monto es requerido
           </mat-error>
           <mat-error *ngIf="amount?.hasError('min')">
-            El monto debe ser mayor a 0
+            El monto mínimo es $1 USD
           </mat-error>
         </mat-form-field>
 
-        <mat-card-actions>
-          <button mat-raised-button color="primary" type="submit"
-                  [disabled]="isProcessing || paymentForm.invalid">
-            {{ isProcessing ? 'Procesando...' : 'Pagar' }}
+        <!-- Botón de pago -->
+        <mat-card-actions class="payment-actions">
+          <button mat-raised-button color="primary" type="submit" class="submit-button"
+            [disabled]="isProcessing || paymentForm.invalid" [class.processing]="isProcessing">
+            <mat-icon *ngIf="!isProcessing">payment</mat-icon>
+            <mat-spinner *ngIf="isProcessing" diameter="20"></mat-spinner>
+            {{ isProcessing ? 'Procesando pago...' : 'Realizar pago' }}
           </button>
+
+          <div class="secure-payment">
+            <mat-icon color="primary">verified_user</mat-icon>
+            <span>Pago seguro SSL</span>
+          </div>
         </mat-card-actions>
       </form>
     </mat-card-content>

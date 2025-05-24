@@ -1,11 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { CommonModule } from '@angular/common';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule, Location } from '@angular/common';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import Sessions from '../../../models/sessions';
+import Pago from '../../../models/pago';
+import { SessionService } from '../../../services/session.service';
+import { NavbarComponent } from "../../../Components/navbar/navbar.component";
+
+
 
 @Component({
   selector: 'app-payment-gateway',
@@ -19,99 +32,200 @@ import { CommonModule } from '@angular/common';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSnackBarModule
-  ]
+    MatSnackBarModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    RouterLink,
+    NavbarComponent
+]
 })
 export class pasarelaComponent implements OnInit {
   paymentForm: FormGroup;
   isProcessing = false;
+  cardType: string | null = null;
+  currentYear = new Date().getFullYear();
+  currentMonth = new Date().getMonth() + 1;
 
   constructor(
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer,
+    private serviceSession: SessionService, private location: Location
   ) {
+    this.iconRegistry.addSvgIcon(
+      'custom-payment',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/payment.svg')
+    );
     this.paymentForm = this.fb.group({
       cardNumber: ['', [
         Validators.required,
-        Validators.pattern('^[0-9]{16}$'),
+        Validators.pattern(/^[0-9\s]{13,19}$/), // Permite espacios y longitud variable
         this.luhnValidator()
       ]],
       cardHolder: ['', [
         Validators.required,
-        Validators.pattern('^[a-zA-Z ]+$')
+        Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/),
+        Validators.maxLength(50)
       ]],
       expiryDate: ['', [
         Validators.required,
-        Validators.pattern('^(0[1-9]|1[0-2])/[0-9]{2}$')
+        Validators.pattern(/^(0[1-9]|1[0-2])\/([0-9]{2})$/),
+        this.expiryDateValidator()
       ]],
       cvv: ['', [
         Validators.required,
-        Validators.pattern('^[0-9]{3,4}$')
+        Validators.pattern(/^[0-9]{3,4}$/)
       ]],
-      amount: ['', [
+      amount: [{ value: 20, disabled: true }, [
         Validators.required,
-        Validators.min(1)
+        Validators.min(1),
+        Validators.max(10000)
       ]]
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.paymentForm.get('cardNumber')?.valueChanges.subscribe(value => {
+      this.detectCardType(value);
+    });
+  }
 
-  private luhnValidator() {
-    return (control: any) => {
-      if (!control.value) return null;
+  private luhnValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value?.replace(/\s+/g, '');
+      if (!value || !/^\d+$/.test(value)) return null;
 
       let sum = 0;
-      let isEven = false;
-      const value = control.value.replace(/\D/g, '');
+      let alternate = false;
 
       for (let i = value.length - 1; i >= 0; i--) {
         let digit = parseInt(value.charAt(i), 10);
 
-        if (isEven) {
+        if (alternate) {
           digit *= 2;
           if (digit > 9) digit -= 9;
         }
 
         sum += digit;
-        isEven = !isEven;
+        alternate = !alternate;
       }
 
-      return (sum % 10) === 0 ? null : { invalidCard: true };
+      return sum % 10 === 0 ? null : { invalidCard: true };
     };
   }
 
-  async processPayment() {
+  private expiryDateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (!value) return null;
+
+      const [monthStr, yearStr] = value.split('/');
+      const month = parseInt(monthStr, 10);
+      const year = 2000 + parseInt(yearStr, 10);
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth() + 1;
+
+      // Verifica mes válido (1-12)
+      if (month < 1 || month > 12) return { invalidDate: true };
+
+      // Verifica año no menor al actual
+      if (year < currentYear) return { expired: true };
+
+      // Si es el mismo año, verifica mes no pasado
+      if (year === currentYear && month < currentMonth) return { expired: true };
+
+      return null;
+    };
+  }
+
+  public detectCardType(cardNumber: string): void {
+    const cleaned = cardNumber?.replace(/\s+/g, '') || '';
+
+    // Visa: 13 o 16 dígitos, empieza con 4
+    if (/^4[0-9]{12}(?:[0-9]{3})?$/.test(cleaned)) {
+      this.cardType = 'visa';
+    }
+    // Mastercard: 16 dígitos, empieza con 51-55 o 2221-2720
+    else if (/^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$/.test(cleaned)) {
+      this.cardType = 'mastercard';
+    }
+    // AMEX: 15 dígitos, empieza con 34 o 37
+    else if (/^3[47][0-9]{13}$/.test(cleaned)) {
+      this.cardType = 'amex';
+    } else {
+      this.cardType = null;
+    }
+  }
+  goBack(): void {
+    this.location.back();
+  }
+  async processPayment(): Promise<void> {
     if (this.paymentForm.invalid) {
       this.paymentForm.markAllAsTouched();
+      this.snackBar.open('Por favor complete todos los campos correctamente', 'Cerrar', {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
       return;
     }
 
     this.isProcessing = true;
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      const isSuccess = Math.random() > 0.2;
+      // Simular llamada a API
 
+      const isSuccess = Math.random() > 0.2;
       if (isSuccess) {
         this.snackBar.open('¡Pago procesado exitosamente!', 'Cerrar', {
-          duration: 3000,
-          panelClass: ['success-snackbar']
+          duration: 5000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
         });
-        this.paymentForm.reset();
+
+        let numeroTarjeta = this.cardNumber?.value;
+        let titular = this.cardHolder?.value;
+        let expiry = this.expiryDate?.value; // ejemplo: "10/25"
+        let [month, year] = expiry.split("/").map((val: string) => parseInt(val));
+        // Corrige el año a formato completo, asumiendo 2000+
+        if (year < 100) year += 2000;
+        let fecExp = new Date(year, month - 1, 1);
+        let cvv = this.cvv?.value;
+        let monto = this.amount?.value;
+        let pago = new Pago(numeroTarjeta, titular, fecExp, cvv, monto)
+        console.log(pago)
+        this.serviceSession.createPago(pago).subscribe({
+          next: (res) => console.log('Pago guardado', res),
+          error: (err) => console.error('Error al guardar el pago', err)
+        });
+        // let y = sessionStorage.getItem('ss_reunion');
+
+        this.paymentForm.reset({
+          amount: { value: 20, disabled: true }
+        });
+        this.cardType = null;
       } else {
         throw new Error('Error en el procesamiento del pago');
       }
     } catch (error) {
-      this.snackBar.open('Error al procesar el pago. Intente nuevamente.', 'Cerrar', {
-        duration: 3000,
-        panelClass: ['error-snackbar']
+      console.error('Payment error:', error);
+      this.snackBar.open('Error al procesar el pago. Por favor intente nuevamente.', 'Cerrar', {
+        duration: 5000,
+        panelClass: ['error-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
       });
     } finally {
       this.isProcessing = false;
     }
   }
 
+  // Getters para acceder fácilmente a los controles del formulario
   get cardNumber() { return this.paymentForm.get('cardNumber'); }
   get cardHolder() { return this.paymentForm.get('cardHolder'); }
   get expiryDate() { return this.paymentForm.get('expiryDate'); }

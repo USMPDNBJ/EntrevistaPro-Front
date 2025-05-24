@@ -37,7 +37,7 @@ export const routes: Routes = [
       { path: 'agendar-reunion', component: AgendarReunionComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
       { path: 'pasarela', component: pasarelaComponent},
       { path: 'mis-sesiones', component: MisSesionesComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '', redirectTo: '/auth', pathMatch: 'full' },
     ],
   },
   {

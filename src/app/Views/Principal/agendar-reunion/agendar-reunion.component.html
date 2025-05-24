@@ -40,7 +40,7 @@
           <option *ngFor="let time of timeSlots" [value]="time">{{ time }}</option>
         </select>
       </div>
-      <button class="btn btn-primary" [disabled]="!selectedDay || !selectedTime" (click)="scheduleMeeting()">Agendar Reunión</button>
+      <button class="btn btn-primary" [disabled]="!selectedDay || !selectedTime" (click)="scheduleMeeting()" routerLink="/pasarela">Agendar Reunión</button>
     </div>
   </div>
 

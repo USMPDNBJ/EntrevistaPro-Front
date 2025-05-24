@@ -57,7 +57,7 @@ export class RegisterComponent {
           console.log('Respuesta de la API:', response);
           this.isLoading = false;
           this.successMessage = '¡Registro exitoso! Redirigiendo al login...';
-          localStorage.setItem('user', JSON.stringify(response.data));
+          sessionStorage.setItem('user', JSON.stringify(response.data));
           setTimeout(() => {
             this.router.navigate(['/auth/login']);
           }, 3000);

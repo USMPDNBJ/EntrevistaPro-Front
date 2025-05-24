@@ -32,7 +32,7 @@ export class MisSesionesComponent implements OnInit {
   userId: string;
 
   constructor(private userService: SessionService) {
-    const storedUserId = localStorage.getItem('userId');
+    const storedUserId = sessionStorage.getItem('userId');
     if (storedUserId) {
       this.userId = storedUserId;
     } else {
@@ -74,7 +74,7 @@ export class MisSesionesComponent implements OnInit {
 
     // Sobrescribimos el comportamiento por defecto del filtro
     this.dataSource.filterPredicate = (data: Session, filter: string) => {
-      const strData = `${data.id} ${data.trabajador} ${data.fecha} ${data.estado}`.toLowerCase();
+      const strData = `${data.id} ${data.profesional_id} ${data.fecha} ${data.estado}`.toLowerCase();
       return strData.includes(filter); // Busca en estos campos
     };
   }

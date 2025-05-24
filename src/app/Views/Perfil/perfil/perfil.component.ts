@@ -46,7 +46,7 @@ export class PerfilComponent implements OnInit {
   }
 
   loadUserProfile(userId: number) {
-    this.http.get<{ status: number; message: string; data: UserProfile }>(`${environment.apiUrl}/${userId}`).subscribe({
+    this.http.get<{ status: number; message: string; data: UserProfile }>(`${environment.apiUrlUser}/${userId}`).subscribe({
       next: (response) => {
         this.user = response.data;
         this.isLoading = false;
