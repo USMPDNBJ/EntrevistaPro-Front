@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../../../Components/navbar/navbar.component';
-import Agendar from '../../../models/agendar';
+import Sessions from '../../../models/sessions';
 import { SessionService } from '../../../services/session.service';
 import { RouterLink } from '@angular/router';
 
@@ -176,9 +176,11 @@ export class AgendarReunionComponent {
 
     // Convertir la cadena meetingDate a un objeto Date
     const meetingDateObj = new Date(meetingDate);
-    const session: Agendar = {
-      usuario_id: this.userId,
+    const session: Sessions = {
+      id: undefined,
       profesional_id: 0,
+      usuario_id: this.userId,
+      id_pago: 0,
       fecha: meetingDateObj,
       hora_inicio: this.selectedTime,
       hora_fin: this.selectedTime + 1,

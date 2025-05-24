@@ -1,17 +1,39 @@
 export default class Sessions {
+  public id?: number;
+  public profesional_id?: number;
+  public usuario_id?: number;
+  public id_pago?: number;
+  public fecha?: Date;
+  public hora_inicio?: string;
+  public hora_fin?: string;
+  public estado?: string;
+  public evaluacion?: string;
+  public creado_en?: string;
+  public enlace?: string;
 
   constructor(
-    public id: number,
-    public profesional_id: number,  // Nombre del trabajador,
-    public usuario_id: number,
-    public id_pago: number,
-    public fecha: Date,      // Fecha en formato ISO 8601
-    public hora_inicio: string, // Hora de inicio de la sesión
-    public hora_fin: string,    // Hora de fin de la sesión
-    public estado: string,      // Estado de la sesión
-    public evaluacion: string,  // URL del archivo PDF de evaluación
-    public creado_en: string,   // Fecha de creación
-    public enlace: string
-  ){ }
-
+    id?: number,
+    profesional_id?: number,
+    usuario_id?: number,
+    id_pago?: number,
+    fecha?: Date,
+    hora_inicio?: string,
+    hora_fin?: string,
+    estado?: string,
+    evaluacion?: string,
+    creado_en?: string,
+    enlace?: string
+  ) {
+    this.id = id;
+    this.profesional_id = profesional_id;
+    this.usuario_id = usuario_id;
+    this.id_pago = id_pago;
+    this.fecha = fecha;
+    this.hora_inicio = hora_inicio;
+    this.hora_fin = hora_fin;
+    this.estado = estado;
+    this.evaluacion = evaluacion;
+    this.creado_en = creado_en;
+    this.enlace = enlace;
+  }
 }
