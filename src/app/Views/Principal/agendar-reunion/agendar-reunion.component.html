@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="section">
-  <div class=" calendar-card">
+  <div class="calendar-card">
     <div class="calendar-container">
       <div class="calendar-header">
         <button class="btn btn-primary" (click)="prevPeriod()">←</button>
@@ -9,24 +9,29 @@
       </div>
       <div class="calendar-controls">
         <button class="btn btn-yellow" [class.active]="view === 'month'" (click)="changeView('month')">Mes</button>
-        <button class="btn btn-yellow" [class.active]="view === 'week'" (click)="changeView('week')">Semana</button>
         <button class="btn btn-yellow" [class.active]="view === 'year'" (click)="changeView('year')">Año</button>
       </div>
       <div class="calendar-grid" *ngIf="view === 'month'">
         <div class="calendar-day-name" *ngFor="let day of daysOfWeek">{{ day }}</div>
         <div class="calendar-day empty" *ngFor="let empty of emptyDaysBefore"></div>
-        <div class="calendar-day" *ngFor="let day of days" [class.selected]="day === selectedDay && selectedMonth === currentMonth && selectedYear === currentYear" (click)="selectDay(day)">
+        <div class="calendar-day" *ngFor="let day of days"
+          [class.selected]="day === selectedDay && selectedMonth === currentMonth && selectedYear === currentYear"
+          [class.disabled]="isSunday(day, currentMonth, currentYear)"
+          (click)="!isSunday(day, currentMonth, currentYear) && selectDay(day)">
           {{ day }}
         </div>
       </div>
       <div class="calendar-grid week-view" *ngIf="view === 'week'">
-        <div class="calendar-day" *ngFor="let day of weekDays" [class.selected]="day.day === selectedDay && day.month === selectedMonth && day.year === selectedYear" (click)="selectDay(day.day, day.month, day.year)">
+        <div class="calendar-day" *ngFor="let day of weekDays"
+          [class.selected]="day.day === selectedDay && day.month === selectedMonth && day.year === selectedYear"
+          [class.disabled]="day.isSunday" (click)="!day.isSunday && selectDay(day.day, day.month, day.year)">
           <span class="week-day-label">{{ day.label }}</span>
           {{ day.day }}
         </div>
       </div>
       <div class="calendar-grid year-view" *ngIf="view === 'year'">
-        <div class="calendar-month" *ngFor="let month of yearMonths" (click)="selectMonth(month)">
+        <div class="calendar-month" *ngFor="let month of yearMonths; let i = index"
+          [class.disabled]="!isMonthSelectable(i)" (click)="isMonthSelectable(i) && selectMonth(month)">
           {{ month }}
         </div>
       </div>
@@ -40,8 +45,8 @@
           <option *ngFor="let time of timeSlots" [value]="time">{{ time }}</option>
         </select>
       </div>
-      <button class="btn btn-primary" [disabled]="!selectedDay || !selectedTime" (click)="scheduleMeeting()" routerLink="/pasarela">Agendar Reunión</button>
+      <button class="btn btn-primary" [disabled]="!selectedDay || !selectedTime" (click)="scheduleMeeting()"
+        routerLink="/pasarela">Agendar Reunión</button>
     </div>
   </div>
-
 </div>

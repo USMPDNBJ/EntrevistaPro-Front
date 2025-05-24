@@ -67,6 +67,7 @@
   letter-spacing: 0.05em;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   user-select: none;
+  display: flex;
 }
 
 /* ===== Controles del calendario ===== */
@@ -384,4 +385,10 @@
     padding: 0.7rem 2rem;
     font-size: 1rem;
   }
+}
+
+.disabled {
+  color: #ccc;
+  pointer-events: none;
+  background-color: #f0f0f0;
 }

@@ -8,7 +8,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule, Location } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -38,7 +38,6 @@ import { NavbarComponent } from "../../../Components/navbar/navbar.component";
     MatTooltipModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    RouterLink,
     NavbarComponent
   ]
 })
@@ -54,7 +53,9 @@ export class pasarelaComponent implements OnInit {
     private snackBar: MatSnackBar,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
-    private serviceSession: SessionService, private location: Location
+    private serviceSession: SessionService,
+    private location: Location,
+    private router: Router
   ) {
     this.iconRegistry.addSvgIcon(
       'custom-payment',
@@ -218,6 +219,7 @@ export class pasarelaComponent implements OnInit {
               this.serviceSession.postSession(c_session).subscribe({
                 next: (res) => {
                   console.log('Pago guardado', res);
+                  this.router.navigate(['/mis-sesiones'])
                 },
                 error: (err) => console.error('Error al guardar el pago', err)
               });
