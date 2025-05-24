@@ -1,9 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://entrevistapro-back.onrender.com/api/user'
-};
-
-export const environmentSession = {
-  production: false,
-  apiUrl: 'https://entrevistapro-back.onrender.com/api/session'
+  apiUrlUser: 'http://localhost:5001/api/user',
+  apiUrlSession: 'http://localhost:5001/api/session',
+  apiUrlPago: 'http://localhost:5001/api/pago'
 };

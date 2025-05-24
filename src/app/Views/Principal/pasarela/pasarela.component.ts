@@ -7,12 +7,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import Sessions from '../../../models/sessions';
+import Pago from '../../../models/pago';
+import { SessionService } from '../../../services/session.service';
+import { NavbarComponent } from "../../../Components/navbar/navbar.component";
+
 
 
 @Component({
@@ -33,8 +38,9 @@ import { DomSanitizer } from '@angular/platform-browser';
     MatTooltipModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    RouterLink
-  ]
+    RouterLink,
+    NavbarComponent
+]
 })
 export class pasarelaComponent implements OnInit {
   paymentForm: FormGroup;
@@ -47,7 +53,8 @@ export class pasarelaComponent implements OnInit {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private serviceSession: SessionService, private location: Location
   ) {
     this.iconRegistry.addSvgIcon(
       'custom-payment',
@@ -154,7 +161,9 @@ export class pasarelaComponent implements OnInit {
       this.cardType = null;
     }
   }
-
+  goBack(): void {
+    this.location.back();
+  }
   async processPayment(): Promise<void> {
     if (this.paymentForm.invalid) {
       this.paymentForm.markAllAsTouched();
@@ -169,7 +178,6 @@ export class pasarelaComponent implements OnInit {
 
     try {
       // Simular llamada a API
-      await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1000));
 
       const isSuccess = Math.random() > 0.2;
       if (isSuccess) {
@@ -180,12 +188,22 @@ export class pasarelaComponent implements OnInit {
           verticalPosition: 'top'
         });
 
-        // Guardar en sessionStorage
-        sessionStorage.setItem('lastPayment', JSON.stringify({
-          amount: this.amount?.value,
-          date: new Date().toISOString(),
-          transactionId: `TXN-${Math.floor(Math.random() * 1000000)}`
-        }));
+        let numeroTarjeta = this.cardNumber?.value;
+        let titular = this.cardHolder?.value;
+        let expiry = this.expiryDate?.value; // ejemplo: "10/25"
+        let [month, year] = expiry.split("/").map((val: string) => parseInt(val));
+        // Corrige el año a formato completo, asumiendo 2000+
+        if (year < 100) year += 2000;
+        let fecExp = new Date(year, month - 1, 1);
+        let cvv = this.cvv?.value;
+        let monto = this.amount?.value;
+        let pago = new Pago(numeroTarjeta, titular, fecExp, cvv, monto)
+        console.log(pago)
+        this.serviceSession.createPago(pago).subscribe({
+          next: (res) => console.log('Pago guardado', res),
+          error: (err) => console.error('Error al guardar el pago', err)
+        });
+        // let y = sessionStorage.getItem('ss_reunion');
 
         this.paymentForm.reset({
           amount: { value: 20, disabled: true }

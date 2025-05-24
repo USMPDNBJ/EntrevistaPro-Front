@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4rem 2rem;
+  padding: 1rem 2rem;
   background: linear-gradient(180deg, #575757, #2c7873);
   min-height: 100vh;
   box-sizing: border-box;
@@ -28,6 +28,7 @@
   padding: 0;
 }
 
+
 .payment-card:hover {
   box-shadow:
     0 20px 48px rgba(44, 120, 115, 0.4),
@@ -45,6 +46,27 @@
   user-select: none;
   margin: 0;
   border-radius: 3.5% 3.5% 0 0;
+  position: relative;
+  /* Añadido para posicionar el botón */
+}
+
+/* ===== Estilos para el botón de regresar ===== */
+.payment-header .back-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.3s ease;
+}
+
+.payment-header .back-button:hover {
+  transform: translateX(-3px);
+}
+
+.payment-header .back-button mat-icon {
+  font-size: 320px;
 }
 
 .payment-header .mat-headline-5 {
@@ -53,8 +75,12 @@
   margin: 0;
   letter-spacing: 0.04em;
   padding: 0;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  flex-grow: 1;
+  /* Añadido para que el título ocupe el espacio restante */
+  text-align: center;
+  /* Centrar el título */
 }
 
 .payment-header .mat-subtitle-1 {
@@ -71,7 +97,7 @@
   flex-shrink: 0;
   margin-left: auto;
   opacity: 0.95;
-  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.25));
   transition: transform 0.4s ease;
 }
 
@@ -161,7 +187,7 @@ mat-icon.card-type {
   height: 24px;
   vertical-align: middle;
   transition: color 0.4s ease;
-  filter: drop-shadow(0 0 3px rgba(0,0,0,0.15));
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.15));
 }
 
 mat-icon.visa {

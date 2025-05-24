@@ -18,7 +18,7 @@ interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrlUser;
   private userIdSubject = new BehaviorSubject<number | null>(null);
   private rolSubject = new BehaviorSubject<string | null>(null);
   userId$ = this.userIdSubject.asObservable();
@@ -38,6 +38,7 @@ export class AuthService {
   }
 
   login(credentials: { correo: string; contrasena: string }): Observable<LoginResponse> {
+    console.log(credentials.correo,'→')
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
         const userId = response.data.id;

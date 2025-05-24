@@ -24,7 +24,7 @@ interface ApiResponse {
   providedIn: 'root'
 })
 export class PerfilService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrlUser;
 
   constructor(private http: HttpClient) {}
 

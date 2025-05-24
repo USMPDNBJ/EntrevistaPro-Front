@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class RegisterService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrlUser;
 
   constructor(private http: HttpClient) {}
 

@@ -1,7 +1,7 @@
 /* ===== Sección principal ===== */
 .section {
   background: linear-gradient(180deg, #575757, #2c7873);
-  padding: 5rem 2rem 3rem 5rem;
+  padding: 2rem 2rem 3rem 5rem;
   min-height: 100vh;
   box-sizing: border-box;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

@@ -1,9 +1,13 @@
+<app-navbar></app-navbar>
 <div class="payment-container">
   <mat-card class="payment-card mat-elevation-z8">
     <mat-card-header class="payment-header">
+      <div class="back-button" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </div>
       <mat-card-title class="mat-headline-5">Pasarela de Pago</mat-card-title>
       <mat-card-subtitle class="mat-subtitle-1">Complete los detalles de su transacción</mat-card-subtitle>
-      <mat-icon class="payment-icon" svgIcon="payment"></mat-icon>
+      <mat-icon class="payment-icon">credit_card</mat-icon>
     </mat-card-header>
 
     <mat-card-content>
