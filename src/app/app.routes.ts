@@ -16,6 +16,8 @@ import { AdminWrapperComponent } from './Modules/admin/admin-wrapper.component';
 import { pasarelaComponent } from './Views/Principal/pasarela/pasarela.component';
 import { GestionarUsuariosComponent } from './Views/Admin/gestionar-usuarios/gestionar-usuarios.component';
 import { GestionarSesionesComponent } from './Views/Admin/gestionar-sesiones/gestionar-sesiones.component';
+import { VerSesionesComponent } from './Views/Profesional/ver-sesiones/ver-sesiones.component';
+import { ProfesionalWrapperComponent } from './Modules/profesional/profesional-wrapper.component';
 
 export const routes: Routes = [
   {
@@ -35,7 +37,7 @@ export const routes: Routes = [
       { path: 'about-us', component: AboutUsComponent },
       { path: 'cursos', component: CursosComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
       { path: 'agendar-reunion', component: AgendarReunionComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
-      { path: 'pasarela', component: pasarelaComponent},
+      { path: 'pasarela', component: pasarelaComponent },
       { path: 'mis-sesiones', component: MisSesionesComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
       { path: '', redirectTo: '/auth', pathMatch: 'full' },
     ],
@@ -44,7 +46,7 @@ export const routes: Routes = [
     path: 'perfil',
     component: PerfilWrapperComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['user', 'admin'] },
+    data: { roles: ['user', 'admin', 'worker'] },
     children: [
       { path: '', component: PerfilComponent },
       { path: 'historial', component: HistorialComponent },
@@ -62,4 +64,14 @@ export const routes: Routes = [
     ]
   },
   { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },
+  {
+    path: '',
+    component: ProfesionalWrapperComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['worker'] },
+    children: [
+      { path: '', loadChildren: () => import('./Modules/profesional/profesional.module').then(m => m.ProfesionalModule) },
+      { path: 'ver-sesiones', component: VerSesionesComponent }
+    ]
+  }
 ];

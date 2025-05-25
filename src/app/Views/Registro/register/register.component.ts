@@ -50,7 +50,10 @@ export class RegisterComponent {
       const userData = {
         ...this.userGroup.value,
         habilidades: this.selectedSkills,
+        rol: 'user' // Rol fijo como "Usuario"
       };
+
+      console.log('Datos enviados a la API:', userData);
 
       this.registerService.register(userData).subscribe({
         next: (response) => {

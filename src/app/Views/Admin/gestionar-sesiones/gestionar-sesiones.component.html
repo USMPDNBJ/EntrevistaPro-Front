@@ -6,20 +6,27 @@
     <h3>{{ isEditing ? 'Editar Sesión' : 'Crear Sesión' }}</h3>
     <form [formGroup]="sessionForm" (ngSubmit)="onSubmit()" class="session-form">
       <div class="form-grid">
-        <!-- Línea 1: Usuario ID y Profesional ID -->
+        <!-- Línea 1: Usuario y Profesional -->
         <div class="form-field">
-          <label for="usuario_id">Usuario ID</label>
-          <input id="usuario_id" type="number" formControlName="usuario_id" required />
+          <label for="usuario_id">Usuario</label>
+          <select id="usuario_id" formControlName="usuario_id" required>
+            <option value="" disabled>Selecciona un usuario</option>
+            <option *ngFor="let user of users" [ngValue]="user.id">
+              {{ user.nombres + ' ' + user.apellidos }}
+            </option>
+          </select>
           <span class="error" *ngIf="sessionForm.get('usuario_id')?.invalid && sessionForm.get('usuario_id')?.touched">
-            ID requerido
+            Requerido
           </span>
         </div>
         <div class="form-field">
-          <label for="profesional_id">Profesional ID</label>
-          <input id="profesional_id" type="number" formControlName="profesional_id" />
-          <span class="error" *ngIf="sessionForm.get('profesional_id')?.invalid && sessionForm.get('profesional_id')?.touched">
-            ID inválido
-          </span>
+          <label for="profesional_id">Profesional</label>
+          <select id="profesional_id" formControlName="profesional_id">
+            <option [ngValue]="null">Ninguno</option>
+            <option *ngFor="let worker of workers" [ngValue]="worker.id">
+              {{ worker.nombres + ' ' + worker.apellidos }}
+            </option>
+          </select>
         </div>
         <!-- Línea 2: ID Pago y Fecha -->
         <div class="form-field">
@@ -106,8 +113,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let session of sessions; trackBy: trackBySessionId">
-          <td>{{ session.usuario_id }}</td>
-          <td>{{ session.profesional_id || '-' }}</td>
+          <td>{{ session.usuario_nombre }}</td>
+          <td>{{ session.profesional_nombre }}</td>
           <td>{{ session.id_pago || '-' }}</td>
           <td>{{ session.fecha }}</td>
           <td>{{ session.hora_inicio + ' - ' + session.hora_fin }}</td>
