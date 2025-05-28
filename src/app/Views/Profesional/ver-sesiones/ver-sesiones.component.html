@@ -12,23 +12,19 @@
       <thead>
         <tr>
           <th>Usuario</th>
-          <th>Profesional</th>
-          <th>Pago ID</th>
           <th>Fecha</th>
           <th>Hora Inicio - Hora Fin</th>
           <th>Estado</th>
-          <th>Creado En</th>
+          <th>Link</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let session of sessions; trackBy: trackBySessionId">
           <td>{{ session.usuario_nombre }}</td>
-          <td>{{ session.profesional_nombre }}</td>
-          <td>{{ session.id_pago || '-' }}</td>
           <td>{{ session.fecha }}</td>
-          <td>{{ session.hora_inicio + ' - ' + session.hora_fin }}</td>
+          <td>{{ session.hora_inicio + '  ------ ' + session.hora_fin }}</td>
           <td>{{ session.estado }}</td>
-          <td>{{ session.creado_en }}</td>
+          <td></td>
         </tr>
       </tbody>
     </table>

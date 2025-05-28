@@ -63,15 +63,14 @@ export const routes: Routes = [
       { path: 'admin/sesiones', component: GestionarSesionesComponent }
     ]
   },
-  { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },
   {
-    path: '',
+    path: 'profesional',
     component: ProfesionalWrapperComponent,
     canActivate: [AuthGuard],
     data: { roles: ['worker'] },
     children: [
-      { path: '', loadChildren: () => import('./Modules/profesional/profesional.module').then(m => m.ProfesionalModule) },
-      { path: 'ver-sesiones', component: VerSesionesComponent }
+      { path: '', loadChildren: () => import('./Modules/profesional/profesional.module').then(m => m.ProfesionalModule) }
     ]
-  }
+  },
+  { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },
 ];

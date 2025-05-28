@@ -3,12 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../../Components/navbar/navbar.component';
 
 @Component({
-  selector: 'app-admin-wrapper',
+  selector: 'app-profesional-wrapper',
   standalone: true,
   imports: [RouterOutlet, NavbarComponent],
   template: `
     <app-navbar></app-navbar>
-    <div class="admin-container">
+    <div class="profesional-container">
       <router-outlet></router-outlet>
     </div>
   `,
