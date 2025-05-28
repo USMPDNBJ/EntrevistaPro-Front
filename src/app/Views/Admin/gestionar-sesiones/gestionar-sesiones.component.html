@@ -1,99 +1,9 @@
 <div class="container sesiones-container">
   <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
 
   <div class="card">
-    <h3>{{ isEditing ? 'Editar Sesión' : 'Crear Sesión' }}</h3>
-    <form [formGroup]="sessionForm" (ngSubmit)="onSubmit()" class="session-form">
-      <div class="form-grid">
-        <!-- Línea 1: Usuario y Profesional -->
-        <div class="form-field">
-          <label for="usuario_id">Usuario</label>
-          <select id="usuario_id" formControlName="usuario_id" required>
-            <option value="" disabled>Selecciona un usuario</option>
-            <option *ngFor="let user of users" [ngValue]="user.id">
-              {{ user.nombres + ' ' + user.apellidos }}
-            </option>
-          </select>
-          <span class="error" *ngIf="sessionForm.get('usuario_id')?.invalid && sessionForm.get('usuario_id')?.touched">
-            Requerido
-          </span>
-        </div>
-        <div class="form-field">
-          <label for="profesional_id">Profesional</label>
-          <select id="profesional_id" formControlName="profesional_id">
-            <option [ngValue]="null">Ninguno</option>
-            <option *ngFor="let worker of workers" [ngValue]="worker.id">
-              {{ worker.nombres + ' ' + worker.apellidos }}
-            </option>
-          </select>
-        </div>
-        <!-- Línea 2: ID Pago y Fecha -->
-        <div class="form-field">
-          <label for="id_pago">ID Pago</label>
-          <input id="id_pago" type="number" formControlName="id_pago" />
-          <span class="error" *ngIf="sessionForm.get('id_pago')?.invalid && sessionForm.get('id_pago')?.touched">
-            ID inválido
-          </span>
-        </div>
-        <div class="form-field">
-          <label for="fecha">Fecha</label>
-          <input id="fecha" type="date" formControlName="fecha" required />
-          <span class="error" *ngIf="sessionForm.get('fecha')?.invalid && sessionForm.get('fecha')?.touched">
-            Fecha inválida
-          </span>
-        </div>
-        <!-- Línea 3: Hora Inicio y Hora Fin -->
-        <div class="form-field">
-          <label for="hora_inicio">Hora Inicio</label>
-          <input id="hora_inicio" type="time" formControlName="hora_inicio" required />
-          <span class="error" *ngIf="sessionForm.get('hora_inicio')?.invalid && sessionForm.get('hora_inicio')?.touched">
-            Hora inválida
-          </span>
-        </div>
-        <div class="form-field">
-          <label for="hora_fin">Hora Fin</label>
-          <input id="hora_fin" type="time" formControlName="hora_fin" required />
-          <span class="error" *ngIf="sessionForm.get('hora_fin')?.invalid && sessionForm.get('hora_fin')?.touched">
-            Hora inválida
-          </span>
-        </div>
-        <!-- Línea 4: Estado y Enlace -->
-        <div class="form-field">
-          <label for="estado">Estado</label>
-          <select id="estado" formControlName="estado" required>
-            <option value="Programada">Programada</option>
-            <option value="Activa">Activa</option>
-            <option value="Finalizada">Finalizada</option>
-          </select>
-          <span class="error" *ngIf="sessionForm.get('estado')?.invalid && sessionForm.get('estado')?.touched">
-            Requerido
-          </span>
-        </div>
-        <div class="form-field">
-          <label for="enlace">Enlace</label>
-          <input id="enlace" type="text" formControlName="enlace" />
-          <span class="error" *ngIf="sessionForm.get('enlace')?.invalid && sessionForm.get('enlace')?.touched">
-            Enlace inválido
-          </span>
-        </div>
-      </div>
-      <div class="form-actions">
-        <button type="submit" [disabled]="sessionForm.invalid || isLoading" class="btn-primary">
-          <span class="material-icons">save</span>
-          {{ isEditing ? 'Actualizar' : 'Crear' }}
-        </button>
-        <button type="button" *ngIf="isEditing" class="btn-cancel" (click)="cancelEdit()" [disabled]="isLoading">
-          <span class="material-icons">cancel</span>
-          Cancelar
-        </button>
-      </div>
-    </form>
-  </div>
-
-  <div class="card">
-    <h3>Lista de Sesiones</h3>
-    <button class="btn-secondary reload-btn" (click)="reloadSessions()" [disabled]="isLoading">
+    <h3>Gestionar Sesiones</h3>
+    <button class="btn-primary" (click)="reloadSessions()" [disabled]="isLoading">
       <span class="material-icons">refresh</span>
       Recargar
     </button>
@@ -107,7 +17,6 @@
           <th>Fecha</th>
           <th>Hora Inicio - Hora Fin</th>
           <th>Estado</th>
-          <th>Creado En</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -117,20 +26,33 @@
           <td>{{ session.profesional_nombre }}</td>
           <td>{{ session.id_pago || '-' }}</td>
           <td>{{ session.fecha }}</td>
-          <td>{{ session.hora_inicio + ' - ' + session.hora_fin }}</td>
+          <td>{{ session.hora_inicio + ' --- ' + session.hora_fin }}</td>
           <td>{{ session.estado }}</td>
-          <td>{{ session.creado_en }}</td>
           <td>
-            <button class="btn-action edit-btn" (click)="editSession(session)" [disabled]="isLoading">
-              <span class="material-icons">edit</span>
-            </button>
-            <button class="btn-action delete-btn" (click)="deleteSession(session.id)" [disabled]="isLoading">
-              <span class="material-icons">delete</span>
+            <button class="btn-secondary" (click)="openAssignModal(session.id)" [disabled]="session.profesional_id || isLoading">
+              Asignar Trabajador
             </button>
           </td>
         </tr>
       </tbody>
     </table>
-    <div *ngIf="!isLoading && sessions.length === 0" class="no-data">No hay sesiones registradas.</div>
+    <div *ngIf="!isLoading && sessions.length === 0" class="no-data">No hay sesiones.</div>
+  </div>
+
+  <!-- Modal para asignar trabajador -->
+  <div class="modal" *ngIf="showAssignModal" (click)="closeModal($event)">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>Asignar Trabajador</h3>
+      <select [(ngModel)]="selectedWorkerId" *ngIf="workers.length > 0">
+        <option value="">Seleccione un trabajador</option>
+        <option *ngFor="let worker of workers" [value]="worker.id">
+          {{ worker.nombres }} {{ worker.apellidos }}
+        </option>
+      </select>
+      <div class="modal-actions">
+        <button class="btn-primary" (click)="saveAssignment()" [disabled]="!selectedWorkerId || isLoading">Guardar</button>
+        <button class="btn-secondary" (click)="showAssignModal = false" [disabled]="isLoading">Cancelar</button>
+      </div>
+    </div>
   </div>
 </div>
