@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cursos',
-  imports: [FooterComponent, NavbarComponent, CommonModule],
+  imports: [NavbarComponent, CommonModule],
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.css'
 })
