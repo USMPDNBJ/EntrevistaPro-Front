@@ -1,69 +1,9 @@
 <div class="container sesiones-container">
   <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
 
   <div class="card">
-    <h3>{{ isEditing ? 'Editar Sesión' : 'Crear Sesión' }}</h3>
-    <form [formGroup]="sessionForm" (ngSubmit)="onSubmit()" class="session-form">
-      <div class="form-grid">
-        <!-- Línea 1: Nombre -->
-        <div class="form-field">
-          <label for="nombre">Nombre</label>
-          <input id="nombre" type="text" formControlName="nombre" required />
-          <span class="error" *ngIf="sessionForm.get('nombre')?.invalid && sessionForm.get('nombre')?.touched">
-            Requerido
-          </span>
-        </div>
-        <!-- Línea 2: Fecha y Hora -->
-        <div class="form-field">
-          <label for="fecha">Fecha</label>
-          <input id="fecha" type="date" formControlName="fecha" required />
-          <span class="error" *ngIf="sessionForm.get('fecha')?.invalid && sessionForm.get('fecha')?.touched">
-            Fecha inválida
-          </span>
-        </div>
-        <div class="form-field">
-          <label for="hora">Hora</label>
-          <input id="hora" type="time" formControlName="hora" required />
-          <span class="error" *ngIf="sessionForm.get('hora')?.invalid && sessionForm.get('hora')?.touched">
-            Hora inválida
-          </span>
-        </div>
-        <!-- Línea 3: Duración y Estado -->
-        <div class="form-field">
-          <label for="duracion">Duración (min)</label>
-          <input id="duracion" type="number" formControlName="duracion" required />
-          <span class="error" *ngIf="sessionForm.get('duracion')?.invalid && sessionForm.get('duracion')?.touched">
-            Mínimo 1
-          </span>
-        </div>
-        <div class="form-field">
-          <label for="estado">Estado</label>
-          <select id="estado" formControlName="estado" required>
-            <option value="Activa">Activa</option>
-            <option value="Finalizada">Finalizada</option>
-          </select>
-          <span class="error" *ngIf="sessionForm.get('estado')?.invalid && sessionForm.get('estado')?.touched">
-            Requerido
-          </span>
-        </div>
-      </div>
-      <div class="form-actions">
-        <button type="submit" [disabled]="sessionForm.invalid || isLoading" class="btn-primary">
-          <span class="material-icons">save</span>
-          {{ isEditing ? 'Actualizar' : 'Crear' }}
-        </button>
-        <button type="button" *ngIf="isEditing" class="btn-cancel" (click)="cancelEdit()" [disabled]="isLoading">
-          <span class="material-icons">cancel</span>
-          Cancelar
-        </button>
-      </div>
-    </form>
-  </div>
-
-  <div class="card">
-    <h3>Lista de Sesiones</h3>
-    <button class="btn-secondary reload-btn" (click)="reloadSessions()" [disabled]="isLoading">
+    <h3>Gestionar Sesiones</h3>
+    <button class="btn-primary" (click)="reloadSessions()" [disabled]="isLoading">
       <span class="material-icons">refresh</span>
       Recargar
     </button>
@@ -71,34 +11,48 @@
     <table class="table sessions-table" *ngIf="!isLoading && sessions.length > 0">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Nombre</th>
+          <th>Usuario</th>
+          <th>Profesional</th>
+          <th>Pago ID</th>
           <th>Fecha</th>
-          <th>Hora</th>
-          <th>Duración (min)</th>
+          <th>Hora Inicio - Hora Fin</th>
           <th>Estado</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let session of sessions; trackBy: trackBySessionId">
-          <td>{{ session.id }}</td>
-          <td>{{ session.nombre }}</td>
+          <td>{{ session.usuario_nombre }}</td>
+          <td>{{ session.profesional_nombre }}</td>
+          <td>{{ session.id_pago || '-' }}</td>
           <td>{{ session.fecha }}</td>
-          <td>{{ session.hora }}</td>
-          <td>{{ session.duracion }}</td>
+          <td>{{ session.hora_inicio + ' --- ' + session.hora_fin }}</td>
           <td>{{ session.estado }}</td>
           <td>
-            <button class="btn-action edit-btn" (click)="editSession(session)" [disabled]="isLoading">
-              <span class="material-icons">edit</span>
-            </button>
-            <button class="btn-action delete-btn" (click)="deleteSession(session.id)" [disabled]="isLoading">
-              <span class="material-icons">delete</span>
+            <button class="btn-secondary" (click)="openAssignModal(session.id)" [disabled]="session.profesional_id || isLoading">
+              Asignar Trabajador
             </button>
           </td>
         </tr>
       </tbody>
     </table>
-    <div *ngIf="!isLoading && sessions.length === 0" class="no-data">No hay sesiones registradas.</div>
+    <div *ngIf="!isLoading && sessions.length === 0" class="no-data">No hay sesiones.</div>
+  </div>
+
+  <!-- Modal para asignar trabajador -->
+  <div class="modal" *ngIf="showAssignModal" (click)="closeModal($event)">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>Asignar Trabajador</h3>
+      <select [(ngModel)]="selectedWorkerId" *ngIf="workers.length > 0">
+        <option value="">Seleccione un trabajador</option>
+        <option *ngFor="let worker of workers" [value]="worker.id">
+          {{ worker.nombres }} {{ worker.apellidos }}
+        </option>
+      </select>
+      <div class="modal-actions">
+        <button class="btn-primary" (click)="saveAssignment()" [disabled]="!selectedWorkerId || isLoading">Guardar</button>
+        <button class="btn-secondary" (click)="showAssignModal = false" [disabled]="isLoading">Cancelar</button>
+      </div>
+    </div>
   </div>
 </div>

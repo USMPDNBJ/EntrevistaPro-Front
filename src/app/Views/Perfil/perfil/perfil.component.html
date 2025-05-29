@@ -28,11 +28,11 @@
         </div>
         <div class="profile-field">
           <label>Nombres</label>
-          <input type="text" [value]="user.nombres" readonly />
+          <input type="text" [(ngModel)]="user.nombres" [disabled]="!isEditing" />
         </div>
         <div class="profile-field">
           <label>Apellidos</label>
-          <input type="text" [value]="user.apellidos" readonly />
+          <input type="text" [(ngModel)]="user.apellidos" [disabled]="!isEditing" />
         </div>
         <div class="profile-field interests-field">
           <label>Intereses (Habilidades Blandas)</label>
@@ -42,16 +42,28 @@
         </div>
         <div class="profile-field">
           <label>Correo Electrónico</label>
-          <input type="email" [value]="user.correo" readonly />
+          <input type="email" [(ngModel)]="user.correo" [disabled]="!isEditing" />
         </div>
         <div class="action-buttons">
-          <a class="edit-btn" routerLink="/perfil">
+          <button *ngIf="!isEditing" class="edit-btn" (click)="toggleEdit(true)">
             <svg class="edit-icon" viewBox="0 0 24 24">
               <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
             </svg>
             Editar Perfil
-          </a>
-          <a class="edit-btn" routerLink="/perfil/historial">
+          </button>
+          <button *ngIf="isEditing" class="save-btn" (click)="saveProfile()">
+            <svg class="edit-icon" viewBox="0 0 24 24">
+              <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+            </svg>
+            Guardar
+          </button>
+          <button *ngIf="isEditing" class="cancel-btn" (click)="toggleEdit(false)">
+            <svg class="edit-icon" viewBox="0 0 24 24">
+              <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>
+            </svg>
+            Cancelar
+          </button>
+          <a class="history-btn" routerLink="/perfil/historial">
             <svg class="edit-icon" viewBox="0 0 24 24">
               <path d="M13 3a9 9 0 1 0 8.94 10.15 1 1 0 1 0-1.98-.3A7 7 0 1 1 12 5v2l3-3-3-3v2a9 9 0 0 0 1 18c4.97 0 9-4.03 9-9h-2a7 7 0 1 1-7-7z"/>
               <path d="M12 8v5l4.3 2.6.7-1.1-3.5-2.1V8z"/>

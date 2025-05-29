@@ -1,56 +1,83 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
 
 interface Session {
   id: number;
-  nombre: string;
+  usuario_id: number;
+  usuario_nombre?: string;
+  profesional_id: number | null;
+  profesional_nombre?: string;
+  id_pago: number | null;
   fecha: string;
-  hora: string;
-  duracion: number;
+  hora_inicio: string;
+  hora_fin: string;
   estado: string;
+  evaluacion: string | null;
+  creado_en: string;
+  enlace: string | null;
+}
+
+interface User {
+  id: number;
+  nombres: string;
+  apellidos: string;
+  rol: string;
 }
 
 @Component({
   selector: 'app-gestionar-sesiones',
-  imports: [ReactiveFormsModule, CommonModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './gestionar-sesiones.component.html',
   styleUrls: ['./gestionar-sesiones.component.css']
 })
 export class GestionarSesionesComponent implements OnInit {
-  sessionForm: FormGroup;
   sessions: Session[] = [];
-  isEditing = false;
+  workers: User[] = [];
+  allUsers: User[] = [];
   isLoading = false;
   errorMessage = '';
-  successMessage = '';
-  private apiUrl = '/api/session';
+  selectedSessionId: number | null = null;
+  selectedWorkerId: number | null = null;
+  showAssignModal = false;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
-    this.sessionForm = this.fb.group({
-      id: [null],
-      nombre: ['', [Validators.required, Validators.minLength(3)]],
-      fecha: ['', Validators.required],
-      hora: ['', Validators.required],
-      duracion: [0, [Validators.required, Validators.min(1)]],
-      estado: ['Activa', Validators.required]
-    });
-  }
+  private apiUrl = environment.apiUrlSession;
+  private apiUrlUsers = environment.apiUrlUser;
+  private workersUrl = `${environment.apiUrlUser}/workers`;
+
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.loadSessions();
+    this.loadSessionsAndWorkers();
   }
 
-  loadSessions(): void {
+  loadSessionsAndWorkers(): void {
     this.isLoading = true;
     this.errorMessage = '';
-    this.getSessions().subscribe({
-      next: (response: any) => {
-        console.log('Respuesta cruda:', response);
-        this.sessions = Array.isArray(response) ? response : response.data || [];
-        console.log('Sesiones cargadas:', this.sessions, 'Cantidad:', this.sessions.length);
+    forkJoin({
+      sessions: this.getSessions(),
+      workers: this.getWorkers(),
+      users: this.getAllUsers()
+    }).subscribe({
+      next: ({ sessions, workers, users }) => {
+        console.log('Sessions received:', sessions);
+        console.log('Workers received:', workers);
+        console.log('All users received:', users);
+        const sessionsData = Array.isArray(sessions) ? sessions : sessions.data || [];
+        const workersData = Array.isArray(workers.data) ? workers.data : workers.data || [];
+        const usersData = Array.isArray(users.data) ? users.data : users.data || [];
+        this.sessions = sessionsData.map((session: Session) => ({
+          ...session,
+          usuario_nombre: this.getUserName(usersData, session.usuario_id),
+          profesional_nombre: session.profesional_id ? this.getUserName(usersData, session.profesional_id) : '-'
+        }));
+        this.workers = workersData;
+        this.allUsers = usersData;
         this.isLoading = false;
       },
       error: (error) => {
@@ -60,92 +87,80 @@ export class GestionarSesionesComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
-    if (this.sessionForm.invalid) {
-      this.sessionForm.markAllAsTouched();
-      return;
-    }
-
-    this.isLoading = true;
-    this.errorMessage = '';
-    this.successMessage = '';
-
-    const sessionData = this.sessionForm.value;
-    console.log('Datos enviados:', sessionData);
-
-    const request = this.isEditing
-      ? this.updateSession(sessionData.id, sessionData)
-      : this.createSession(sessionData);
-
-    request.subscribe({
-      next: () => {
-        this.successMessage = this.isEditing ? 'Sesión actualizada con éxito' : 'Sesión creada con éxito';
-        this.isLoading = false;
-        this.resetForm();
-        this.loadSessions();
-      },
-      error: (error) => {
-        this.errorMessage = this.handleError(error);
-        this.isLoading = false;
-      }
-    });
-  }
-
-  editSession(session: Session): void {
-    this.isEditing = true;
-    this.sessionForm.patchValue(session);
-  }
-
-  cancelEdit(): void {
-    this.isEditing = false;
-    this.resetForm();
-  }
-
-  deleteSession(id: number): void {
-    if (!confirm('¿Estás seguro de eliminar esta sesión?')) return;
-
-    this.isLoading = true;
-    this.errorMessage = '';
-    this.deleteSessionRequest(id).subscribe({
-      next: () => {
-        this.successMessage = 'Sesión eliminada con éxito';
-        this.isLoading = false;
-        this.loadSessions();
-      },
-      error: (error) => {
-        this.errorMessage = this.handleError(error);
-        this.isLoading = false;
-      }
-    });
+  getUserName(users: User[], id: number): string {
+    const user = users.find(u => u.id === id);
+    return user ? `${user.nombres} ${user.apellidos}` : 'No encontrado';
   }
 
   reloadSessions(): void {
-    this.loadSessions();
+    this.loadSessionsAndWorkers();
   }
 
   trackBySessionId(index: number, session: Session): number {
     return session.id;
   }
 
+  openAssignModal(sessionId: number) {
+    this.selectedSessionId = sessionId;
+    this.selectedWorkerId = null;
+    this.showAssignModal = true;
+  }
+
+  closeModal(event: MouseEvent) {
+    event.stopPropagation();
+    this.showAssignModal = false;
+  }
+
+  saveAssignment() {
+    if (this.selectedSessionId && this.selectedWorkerId) {
+      this.isLoading = true;
+      const session = this.sessions.find(s => s.id === this.selectedSessionId);
+      if (!session) {
+        this.errorMessage = 'Sesión no encontrada';
+        this.isLoading = false;
+        return;
+      }
+      const sessionData = {
+        usuario_id: session.usuario_id,
+        profesional_id: this.selectedWorkerId,
+        id_pago: session.id_pago,
+        fecha: session.fecha,
+        hora_inicio: session.hora_inicio,
+        hora_fin: session.hora_fin,
+        estado: session.estado,
+        evaluacion: session.evaluacion,
+        enlace: session.enlace
+      };
+      console.log('Sending PUT request to:', `${this.apiUrl}/${this.selectedSessionId}`, 'with data:', sessionData);
+      this.http.put(`${this.apiUrl}/${this.selectedSessionId}`, sessionData, this.getHttpOptions()).subscribe({
+        next: (response) => {
+          console.log('PUT response:', response);
+          this.loadSessionsAndWorkers();
+          this.showAssignModal = false;
+        },
+        error: (error) => {
+          console.error('PUT error:', error);
+          this.errorMessage = this.handleError(error);
+          this.isLoading = false;
+        }
+      });
+    }
+  }
+
   private getSessions(): Observable<any> {
     return this.http.get(this.apiUrl, this.getHttpOptions());
   }
 
-  private createSession(session: Session): Observable<any> {
-    return this.http.post(this.apiUrl, session, this.getHttpOptions());
+  private getWorkers(): Observable<any> {
+    return this.http.get(this.workersUrl, this.getHttpOptions());
   }
 
-  private updateSession(id: number, session: Session): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, session, this.getHttpOptions());
-  }
-
-  private deleteSessionRequest(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`, this.getHttpOptions());
+  private getAllUsers(): Observable<any> {
+    return this.http.get(this.apiUrlUsers, this.getHttpOptions());
   }
 
   private getHttpOptions() {
     const token = localStorage.getItem('token');
-    console.log('Token enviado:', token); // Log para depurar
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -155,27 +170,11 @@ export class GestionarSesionesComponent implements OnInit {
   }
 
   private handleError(error: any): string {
-    console.error('Error completo:', error);
-    if (error.status === 401 || error.url?.includes('/auth/login')) {
+    if (error.status === 401) {
       localStorage.removeItem('token');
       window.location.href = '/auth/login';
       return 'Sesión expirada. Por favor, inicia sesión nuevamente.';
     }
-    if (error.error instanceof SyntaxError && error.error.message.includes('JSON')) {
-      return 'Error en la respuesta del servidor: se esperaba JSON, pero se recibió HTML.';
-    }
-    return error.error?.message || 'Ocurrió un error. Intenta de nuevo.';
-  }
-
-  private resetForm(): void {
-    this.sessionForm.reset({
-      id: null,
-      nombre: '',
-      fecha: '',
-      hora: '',
-      duracion: 0,
-      estado: 'Activa'
-    });
-    this.isEditing = false;
+    return error.status ? `Error ${error.status}: ${error.error?.message || 'Algo salió mal'}` : 'Ocurrió un error. Intenta de nuevo.';
   }
 }

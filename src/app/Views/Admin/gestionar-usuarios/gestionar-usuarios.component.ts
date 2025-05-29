@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormArray, FormControl, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 interface User {
   id: number;
@@ -44,7 +45,7 @@ export class GestionarUsuariosComponent implements OnInit {
     'Gestión del tiempo'
   ];
 
-  private baseUrl = 'https://entrevistapro-back.onrender.com/api/user';
+  private baseUrl = environment.apiUrlUser;
 
   constructor(
     private http: HttpClient,
