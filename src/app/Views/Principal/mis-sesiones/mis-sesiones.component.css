@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: flex-start;
   min-height: 100vh;
-  background: linear-gradient(180deg, #182549 15%, #2c7873 80%);
+  background: linear-gradient(90deg, #242a3f 5%, #5cb0e7 100%);
   padding: 40px 20px;
 }
 
@@ -24,7 +24,7 @@
 /* Título y encabezado */
 .header h2 {
   text-align: center;
-  color: #2c7873;
+  color: #131e42;
   font-size: 26px;
   font-weight: bold;
   text-shadow: 2px 2px 4px rgba(44, 120, 115, 0.5);
@@ -67,7 +67,7 @@ mat-header-cell {
   font-size: 18px;
   padding: 10px;
   background: rgba(44, 120, 115, 0.2);
-  border-bottom: 2px solid #2c7873;
+  border-bottom: 2px solid #131e42;
 }
 
 mat-cell {

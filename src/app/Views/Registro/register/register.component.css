@@ -111,7 +111,7 @@
 }
 
 .skill-chip.selected {
-    background: linear-gradient(135deg, #2c2c33 0%, #2b3e9c 100%) !important;
+    background: linear-gradient(135deg, #2c2c33 0%, #2b589c 100%) !important;
   font-weight: bolder;
   color: rgb(255, 255, 255);
   border-color: transparent;

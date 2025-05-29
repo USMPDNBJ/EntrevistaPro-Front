@@ -53,7 +53,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(180deg, #05223f 0%, #132c1e 100%);
+  background: linear-gradient(90deg, #182549, #5cb0e7);
   padding: 30px;
   overflow: auto;
 }

@@ -4,11 +4,11 @@
   justify-content: center;
   align-items: center;
   padding: 1rem 2rem;
-  background: linear-gradient(180deg, #182549, #2c7873);
+  background: linear-gradient(90deg, #182549, #5cb0e7);
   min-height: 100vh;
   box-sizing: border-box;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #2c7873;
+  color: #5cb0e7;
 }
 
 /* ===== Tarjeta principal ===== */
@@ -37,7 +37,7 @@
 
 /* ===== Header de la tarjeta ===== */
 .payment-header {
-  background: linear-gradient(180deg, #324e81 35%, #324e81 35%);
+  background: linear-gradient(180deg, #7fd6f8 , #325d96 , #5c9de7 );
   color: white;
   padding: 1rem 2rem 2.5rem 2.5rem;
   display: flex;
@@ -121,7 +121,7 @@ mat-form-field {
   margin-bottom: 25px;
   transition: box-shadow 0.3s ease;
   --mat-form-field-underline-color: transparent;
-  --mat-form-field-ripple-color: #2c7873;
+  --mat-form-field-ripple-color: #5cb0e7;
   border-radius: 1rem;
   box-shadow: 0 3px 10px rgba(44, 120, 115, 0.12);
   background: #ffffff;
@@ -151,19 +151,19 @@ input.mat-input-element::placeholder {
 /* Etiquetas */
 mat-label {
   font-weight: 700;
-  color: #2c7873;
+  color: #131e42;
   letter-spacing: 0.05em;
 }
 
 /* Sufijos iconos */
 mat-icon.mat-suffix {
-  color: #2c7873;
+  color: #131e42;
   font-size: 22px;
   transition: color 0.3s ease;
 }
 
 mat-form-field.mat-focused mat-icon.mat-suffix {
-  color: #144d47;
+  color: #5cb0e7;
 }
 
 /* ===== Campos mitad de ancho para fila ===== */
@@ -222,7 +222,7 @@ mat-icon.amex {
   align-items: center;
   gap: 0.85rem;
   border-radius: 2.5rem;
-  background: linear-gradient(135deg, #2c7873, #144d47);
+  background: linear-gradient(135deg, #131e42, #5cb0e7);
   color: white !important;
   box-shadow:
     0 8px 20px rgba(44, 120, 115, 0.5);
@@ -235,7 +235,7 @@ mat-icon.amex {
 }
 
 .submit-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #1f5c57, #0e3a33);
+  background: linear-gradient(135deg, #09153f, #2b94da);
   box-shadow:
     0 12px 30px rgba(31, 92, 87, 0.7);
   transform: translateY(-4px);
@@ -264,7 +264,7 @@ mat-spinner {
   align-items: center;
   gap: 0.6rem;
   font-size: 1rem;
-  color: #2c7873;
+  color: #5cb0e7;
   font-weight: 700;
   user-select: none;
   letter-spacing: 0.04em;
@@ -297,7 +297,7 @@ mat-hint {
 /* ===== Animaciones suaves para inputs ===== */
 input.mat-input-element:focus {
   outline: none;
-  color: #144d47;
+  color: #5cb0e7;
   transition: color 0.3s ease;
 }
 

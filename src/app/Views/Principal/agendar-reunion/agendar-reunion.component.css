@@ -1,6 +1,6 @@
 /* ===== Sección principal ===== */
 .section {
-  background: linear-gradient(180deg, #182549, #2c7873);
+  background: linear-gradient(90deg, #242a3f 5%, #5cb0e7 100%);
   padding: 2rem 2rem 3rem 5rem;
   min-height: 100vh;
   box-sizing: border-box;
@@ -101,12 +101,12 @@
   background: #01201e;
   color: #ffffff;
   box-shadow: 0 6px 20px rgba(0, 32, 30, 0.6);
-  border-color: #1f5c57;
+  border-color: #27302f;
 }
 
 .calendar-controls .btn.active:hover {
-  background: #1f5c57;
-  border-color: #144d47;
+  background: #5cb0e7;
+  border-color: #5cb0e7;
 }
 
 /* ===== Grid del calendario ===== */
@@ -169,10 +169,10 @@
 }
 
 .calendar-day.selected {
-  background: #1f5c57;
+  background: #5cb0e7;
   color: #ffffff;
   font-weight: 700;
-  box-shadow: 0 6px 20px rgba(44, 120, 115, 0.6);
+  box-shadow: 0 6px 20px #5cb0e7;
   transform: scale(1.1);
   z-index: 3;
 }
@@ -235,7 +235,7 @@
   font-size: 1.75rem;
   margin-bottom: 2rem;
   font-weight: 700;
-  color: #2c7873;
+  color: #5cb0e7;
   letter-spacing: 0.04em;
 }
 
@@ -259,7 +259,7 @@
 .time-selection select {
   padding: 0.6rem 1.2rem;
   border-radius: 0.6rem;
-  border: 2px solid #2c7873;
+  border: 2px solid #5cb0e7;
   background: #ffffff;
   color: #555;
   font-size: 1.1rem;
@@ -271,7 +271,7 @@
 
 .time-selection select:focus {
   outline: none;
-  border-color: #1f5c57;
+  border-color: #5cb0e7;
   box-shadow: 0 0 14px rgba(44, 120, 115, 0.4);
 }
 
@@ -281,7 +281,7 @@
   font-size: 1.1rem;
   border-radius: 2.5rem;
   box-shadow: 0 6px 20px rgba(44, 120, 115, 0.35);
-  background: linear-gradient(135deg, #2c7873, #1f5c57);
+  background: linear-gradient(135deg, #131e42, #5cb0e7);
   color: #fff;
   font-weight: 700;
   border: none;

@@ -70,10 +70,10 @@
 }
 
 .action-btn:enabled {
-  background: linear-gradient(135deg, #2c2c33 0%, #2b3e9c 100%) !important;
+  background: linear-gradient(135deg, #161616 0%, #66a4ce 100%);
 }
 .action-btn:enabled:hover{
-  background: linear-gradient(135deg, #2c2c33 0%, #0044ff 100%) !important;
+  background: linear-gradient(135deg, #3d3d3d 0%, #1389d8 100%);
 }
 
 @keyframes spin {
