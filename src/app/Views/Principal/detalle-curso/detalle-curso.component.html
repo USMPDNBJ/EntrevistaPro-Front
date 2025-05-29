@@ -1,0 +1,50 @@
+<app-navbar></app-navbar>
+
+<div class="principal-container">
+<main class="curso-detalle" role="main">
+  <!-- Mensaje de error -->
+  <section *ngIf="errorMessage" class="error-message" role="alert">
+    {{ errorMessage }}
+  </section>
+
+  <!-- Estado de carga -->
+  <section *ngIf="isLoading" class="loading" aria-busy="true">
+    <p>Cargando curso...</p>
+  </section>
+
+  <!-- Contenido del curso -->
+  <section *ngIf="!isLoading && course" class="curso-contenido">
+    <div class="curso-grid">
+      <!-- Columna izquierda: Nombre y descripción -->
+      <div class="curso-texto">
+        <h1>{{ course.nombre }}</h1>
+        <p class="descripcion"><strong>Descripción:</strong> {{ course.descripcion2 }}</p>
+      </div>
+
+      <!-- Columna derecha: Imagen y atributos adicionales -->
+      <div class="curso-imagen-atributos">
+        <figure>
+          <img [src]="course.url" [alt]="course.nombre" class="curso-imagen">
+          <button class="enroll-btn" >Inscribirse</button>
+        </figure>
+        <div class="curso-atributos">
+          <p><strong>Profesor:</strong> {{ course.profesional }}</p>
+          <p><strong>Duración:</strong> {{ course.duracion }}</p>
+          <p><strong>Precio:</strong> {{ course.precio }}</p>
+          <p><strong>Categoría:</strong> {{ course.categoria | lowercase }}</p>
+          <h3>Etapas del curso:</h3>
+          <ul>
+            <li *ngFor="let etapa of course.etapas">{{ etapa }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Si no hay curso y no hay error -->
+  <section *ngIf="!isLoading && !course && !errorMessage" class="curso-contenido">
+    <p>No se encontró información del curso.</p>
+  </section>
+</main>
+
+</div>

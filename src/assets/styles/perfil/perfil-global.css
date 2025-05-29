@@ -1,28 +1,12 @@
 :root {
-  --primary: #1e40af;
-  --accent: #ffffff;
-  --text: #1f2937;
-  --background: #f3f4f6;
-  --card-bg: linear-gradient(180deg, #bcddd6 10%, #e4e3eb 90%);
-  --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.404);
-}
-
-@keyframes lift {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-  100% { transform: translateY(0); }
-}
-
-@keyframes slideIn {
-  from { transform: translateX(-20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+background: linear-gradient(90deg, #182549, #5cb0e7);
 }
 
 .perfil {
+  width: 100%;
   font-family: "Poppins", sans-serif;
   min-height: 100vh;
   background: var(--background);
-  padding: 60px 20px;
   position: relative;
   overflow: auto;
 }
@@ -33,6 +17,7 @@
   margin: 0 auto;
   gap: 0;
   position: relative;
+  padding-top: 100px;
 }
 
 .perfil .profile-sidebar {

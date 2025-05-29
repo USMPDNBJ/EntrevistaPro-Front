@@ -30,7 +30,7 @@
               <p class="duration"><span>Duración:</span> {{ course.duracion }}</p>
               <p class="price"><span>Precio:</span> S/{{ course.precio }}</p>
             </div>
-            <button class="enroll-btn">Inscribirse</button>
+            <button class="enroll-btn" [routerLink]="['/detalle-curso', course.id_course]">Inscribirse</button>
           </div>
         </div>
       </div>

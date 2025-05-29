@@ -4,10 +4,11 @@ import { NavbarComponent } from "../../../Components/navbar/navbar.component";
 import Course from '../../../models/course';
 import { CourseService } from '../../../services/course.service';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cursos',
-  imports: [FooterComponent, NavbarComponent, CommonModule],
+  imports: [ NavbarComponent, CommonModule, RouterLink],
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.css'
 })

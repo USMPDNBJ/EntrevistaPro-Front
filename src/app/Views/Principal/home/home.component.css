@@ -107,7 +107,7 @@ nav a:hover {
 }
 
 .search-btn {
-  background: linear-gradient(90deg, #5cb0e7, #1a3c4d);
+  background: linear-gradient(90deg, #1a3c4d 5%, #5cb0e7 100%);
   color: #ffffff;
   border: none;
   padding: 0.6rem 1.2rem;
