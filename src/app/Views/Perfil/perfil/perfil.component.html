@@ -34,6 +34,14 @@
           <label>Apellidos</label>
           <input type="text" [(ngModel)]="user.apellidos" [disabled]="!isEditing" />
         </div>
+        <div class="profile-field">
+          <label>Celular</label>
+          <input type="text" [(ngModel)]="user.celular" [disabled]="!isEditing" />
+        </div>
+        <div class="profile-field">
+          <label>DNI</label>
+          <input type="text" [(ngModel)]="user.dni" [disabled]="!isEditing" />
+        </div>
         <div class="profile-field interests-field">
           <label>Intereses (Habilidades Blandas)</label>
           <div class="interests-container">

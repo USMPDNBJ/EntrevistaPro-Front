@@ -16,6 +16,7 @@
           <th>Hora Inicio - Hora Fin</th>
           <th>Estado</th>
           <th>Link</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -24,10 +25,44 @@
           <td>{{ session.fecha }}</td>
           <td>{{ session.hora_inicio + '  ------ ' + session.hora_fin }}</td>
           <td>{{ session.estado }}</td>
-          <td></td>
+          <td>
+            <span *ngIf="session.enlace">{{ session.enlace }}</span>
+            <button *ngIf="session.enlace" class="btn-secondary copy-btn" (click)="copyLink(session.enlace)">
+              <span class="material-icons">content_copy</span>
+              Copiar
+            </button>
+            <span *ngIf="!session.enlace">-</span>
+          </td>
+          <td>
+            <button class="btn-secondary" (click)="openEditModal(session)" [disabled]="session.estado === 'Terminado' || isLoading">
+              Editar
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
     <div *ngIf="!isLoading && sessions.length === 0" class="no-data">No hay sesiones asignadas.</div>
+  </div>
+
+  <!-- Modal para editar estado y enlace -->
+  <div class="modal" *ngIf="showEditModal" (click)="closeModal($event)">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>Editar Sesión</h3>
+      <div class="form-group">
+        <label for="sessionStatus">Estado</label>
+        <select id="sessionStatus" [(ngModel)]="selectedStatus" [disabled]="isLoading">
+          <option value="Programada">Programada</option>
+          <option value="Terminado">Terminado</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="sessionLink">Enlace</label>
+        <input id="sessionLink" type="text" [(ngModel)]="selectedLink" [disabled]="isLoading" placeholder="Ingrese el enlace de la sesión">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary" (click)="saveChanges()" [disabled]="isLoading">Guardar</button>
+        <button class="btn-secondary" (click)="showEditModal = false" [disabled]="isLoading">Cancelar</button>
+      </div>
+    </div>
   </div>
 </div>

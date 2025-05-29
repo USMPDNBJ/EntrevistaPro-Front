@@ -48,7 +48,7 @@ export class GestionarSesionesComponent implements OnInit {
 
   private apiUrl = environment.apiUrlSession;
   private apiUrlUsers = environment.apiUrlUser;
-  private workersUrl = `${environment.apiUrlUser}/workers`;
+  private workersUrl = environment.apiUrlWorker;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -74,7 +74,7 @@ export class GestionarSesionesComponent implements OnInit {
         this.sessions = sessionsData.map((session: Session) => ({
           ...session,
           usuario_nombre: this.getUserName(usersData, session.usuario_id),
-          profesional_nombre: session.profesional_id ? this.getUserName(usersData, session.profesional_id) : '-'
+          profesional_nombre: session.profesional_id ? this.getUserName(workersData, session.profesional_id) : '-'
         }));
         this.workers = workersData;
         this.allUsers = usersData;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth.service';
 
@@ -31,7 +32,7 @@ interface User {
 @Component({
   selector: 'app-ver-sesiones',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './ver-sesiones.component.html',
   styleUrls: ['./ver-sesiones.component.css']
 })
@@ -39,9 +40,14 @@ export class VerSesionesComponent implements OnInit {
   sessions: Session[] = [];
   isLoading = false;
   errorMessage = '';
+  showEditModal = false;
+  selectedSession: Session | null = null;
+  selectedStatus: string | null = null;
+  selectedLink: string | null = null;
+
   private apiUrl = environment.apiUrlSession;
   private apiUrlUsers = environment.apiUrlUser;
-  private workersUrl = `${environment.apiUrlUser}/workers`;
+  private workersUrl = environment.apiUrlWorker;
 
   constructor(private http: HttpClient, private AuthService: AuthService) {}
 
@@ -63,7 +69,6 @@ export class VerSesionesComponent implements OnInit {
       next: (response: any) => {
         console.log('Respuesta cruda sesiones:', response);
         const sessionsData = Array.isArray(response) ? response : response.data || [];
-        // Filtrar sesiones para el profesional actual
         const filteredSessions = sessionsData.filter((session: Session) => session.profesional_id === profesionalId);
         console.log('Sesiones filtradas:', filteredSessions);
         forkJoin({
@@ -109,6 +114,63 @@ export class VerSesionesComponent implements OnInit {
 
   trackBySessionId(index: number, session: Session): number {
     return session.id;
+  }
+
+  openEditModal(session: Session) {
+    this.selectedSession = session;
+    this.selectedStatus = session.estado;
+    this.selectedLink = session.enlace;
+    this.showEditModal = true;
+  }
+
+  closeModal(event: MouseEvent) {
+    event.stopPropagation();
+    this.showEditModal = false;
+    this.selectedSession = null;
+    this.selectedStatus = null;
+    this.selectedLink = null;
+  }
+
+  saveChanges() {
+    if (this.selectedSession && this.selectedStatus) {
+      this.isLoading = true;
+      const sessionData = {
+        usuario_id: this.selectedSession.usuario_id,
+        profesional_id: this.selectedSession.profesional_id,
+        id_pago: this.selectedSession.id_pago,
+        fecha: this.selectedSession.fecha,
+        hora_inicio: this.selectedSession.hora_inicio,
+        hora_fin: this.selectedSession.hora_fin,
+        estado: this.selectedStatus,
+        evaluacion: this.selectedSession.evaluacion,
+        enlace: this.selectedLink || null
+      };
+      console.log('Sending PUT request to:', `${this.apiUrl}/${this.selectedSession.id}`, 'with data:', sessionData);
+      this.http.put(`${this.apiUrl}/${this.selectedSession.id}`, sessionData, this.getHttpOptions()).subscribe({
+        next: (response) => {
+          console.log('PUT response:', response);
+          this.loadSessions();
+          this.showEditModal = false;
+          this.selectedSession = null;
+          this.selectedStatus = null;
+          this.selectedLink = null;
+        },
+        error: (error) => {
+          console.error('PUT error:', error);
+          this.errorMessage = this.handleError(error);
+          this.isLoading = false;
+        }
+      });
+    }
+  }
+
+  copyLink(link: string) {
+    navigator.clipboard.writeText(link).then(() => {
+      alert('Enlace copiado al portapapeles');
+    }).catch(err => {
+      console.error('Error al copiar enlace:', err);
+      this.errorMessage = 'Error al copiar el enlace';
+    });
   }
 
   private getSessions(): Observable<any> {
