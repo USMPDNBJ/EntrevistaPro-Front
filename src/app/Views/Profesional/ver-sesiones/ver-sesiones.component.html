@@ -1,0 +1,33 @@
+<div class="container sesiones-container">
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <div class="card">
+    <h3>Lista de Sesiones</h3>
+    <button class="btn-secondary reload-btn" (click)="reloadSessions()" [disabled]="isLoading">
+      <span class="material-icons">refresh</span>
+      Recargar
+    </button>
+    <div *ngIf="isLoading" class="loading">Cargando sesiones...</div>
+    <table class="table sessions-table" *ngIf="!isLoading && sessions.length > 0">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Fecha</th>
+          <th>Hora Inicio - Hora Fin</th>
+          <th>Estado</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let session of sessions; trackBy: trackBySessionId">
+          <td>{{ session.usuario_nombre }}</td>
+          <td>{{ session.fecha }}</td>
+          <td>{{ session.hora_inicio + '  ------ ' + session.hora_fin }}</td>
+          <td>{{ session.estado }}</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!isLoading && sessions.length === 0" class="no-data">No hay sesiones asignadas.</div>
+  </div>
+</div>
