@@ -4,3 +4,4 @@ export const environment = {
   apiUrlSession: 'http://localhost:5001/api/session',
   apiUrlPago: 'http://localhost:5001/api/pago',
   apiUrlCourse: 'http://localhost:5001/api/course'
+}
