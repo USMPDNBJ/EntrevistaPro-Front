@@ -3,7 +3,7 @@
   max-width: 1600px;
   margin: 0 auto;
   padding: 4rem 2rem;
-  background: linear-gradient(180deg, rgba(59, 59, 59, 0.8) 0.5%, rgba(44, 120, 115, 0.8) 10%);
+  background: linear-gradient(180deg, #182549 0.5%, rgba(44, 120, 115, 0.8) 10%);
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -173,7 +173,7 @@
 }
 
 .enroll-btn:not(:disabled) {
-  background: linear-gradient(135deg, #000000 1%, #02243f 5%);
+    background: linear-gradient(135deg, #2c2c33 0%, #2b3e9c 100%);
   color: white;
   border-color: transparent;
 

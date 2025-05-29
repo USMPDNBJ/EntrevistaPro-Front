@@ -1,6 +1,6 @@
 /* ===== Sección principal ===== */
 .section {
-  background: linear-gradient(180deg, #575757, #2c7873);
+  background: linear-gradient(180deg, #182549, #2c7873);
   padding: 2rem 2rem 3rem 5rem;
   min-height: 100vh;
   box-sizing: border-box;
@@ -290,11 +290,7 @@
   user-select: none;
 }
 
-.schedule-section .btn:hover:not([disabled]) {
-  background: linear-gradient(135deg, #1f5c57, #144d47);
-  box-shadow: 0 10px 30px rgba(31, 92, 87, 0.7);
-  transform: translateY(-3px);
-}
+
 
 .schedule-section .btn[disabled] {
   background: #cccccc;

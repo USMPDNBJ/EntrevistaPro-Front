@@ -46,7 +46,6 @@
   align-items: center;
   gap: 5px;
   padding: 10px 20px;
-  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
@@ -54,7 +53,7 @@
 }
 
 .action-btn:disabled {
-  background-color: #cccccc;
+  background-color: #ffffff !important;
   cursor: not-allowed;
 }
 
@@ -70,6 +69,13 @@
   margin-right: 5px;
 }
 
+.action-btn:enabled {
+  background: linear-gradient(135deg, #2c2c33 0%, #2b3e9c 100%) !important;
+}
+.action-btn:enabled:hover{
+  background: linear-gradient(135deg, #2c2c33 0%, #0044ff 100%) !important;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -77,7 +83,8 @@
 }
 
 .message-container {
-  min-height: 24px; /* Reserva espacio para mensajes */
+  min-height: 24px;
+  /* Reserva espacio para mensajes */
   width: 100%;
   text-align: center;
 }
@@ -103,6 +110,7 @@
     opacity: 1;
   }
 }
+
 .back-btn {
   display: flex;
   align-items: center;

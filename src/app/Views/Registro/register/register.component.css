@@ -1,7 +1,15 @@
 @keyframes bounce {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .register-form {
@@ -103,7 +111,7 @@
 }
 
 .skill-chip.selected {
-  background: var(--button-gradient);
+    background: linear-gradient(135deg, #2c2c33 0%, #2b3e9c 100%) !important;
   font-weight: bolder;
   color: rgb(255, 255, 255);
   border-color: transparent;
@@ -156,18 +164,22 @@
     padding: 20px;
     max-width: 95%;
   }
+
   .input-row {
     grid-template-columns: 1fr;
     gap: 16px;
     margin-bottom: 16px;
   }
+
   .input-field input {
     padding: 12px 12px 12px 36px;
     font-size: 13px;
   }
+
   .skills-grid {
     grid-template-columns: 1fr 1fr;
   }
+
   .logo-card {
     width: 100px;
   }
@@ -177,13 +189,16 @@
   .skills-grid {
     grid-template-columns: 1fr;
   }
+
   .logo-card {
     width: 80px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .register-form, .logo-card {
+
+  .register-form,
+  .logo-card {
     animation: none;
   }
 }
@@ -224,6 +239,14 @@
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-right: 5px;
+}
+
+.action-btn:enabled {
+  background: linear-gradient(135deg, #2c2c33 0%, #2b3e9c 100%) !important;
+}
+
+.action-btn:enabled:hover {
+  background: linear-gradient(135deg, #2c2c33 0%, #0044ff 100%) !important;
 }
 
 @keyframes spin {

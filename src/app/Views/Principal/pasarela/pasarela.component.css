@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   padding: 1rem 2rem;
-  background: linear-gradient(180deg, #575757, #2c7873);
+  background: linear-gradient(180deg, #182549, #2c7873);
   min-height: 100vh;
   box-sizing: border-box;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -37,15 +37,13 @@
 
 /* ===== Header de la tarjeta ===== */
 .payment-header {
-  background: linear-gradient(180deg, #ffffff 0%, #2c7873 100%);
+  background: linear-gradient(180deg, #324e81 35%, #324e81 35%);
   color: white;
   padding: 1rem 2rem 2.5rem 2.5rem;
   display: flex;
   align-items: center;
   box-shadow: inset 0 -5px 12px rgba(0, 0, 0, 0.2);
   user-select: none;
-  margin: 0;
-  border-radius: 3.5% 3.5% 0 0;
   position: relative;
   /* Añadido para posicionar el botón */
 }
