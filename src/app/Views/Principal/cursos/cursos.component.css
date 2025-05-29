@@ -2,8 +2,8 @@
 .courses {
   max-width: 1600px;
   margin: 0 auto;
-  padding:  4rem 0rem 0rem 4rem;
-  background: linear-gradient(180deg, #04303b, #021e25);
+  padding: 4rem 2rem;
+  background: linear-gradient(180deg, rgba(59, 59, 59, 0.8) 0.5%, rgba(44, 120, 115, 0.8) 10%);
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -24,11 +24,38 @@
 
 /* Contenedor de las cards de cursos */
 .courses-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.courses-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
   position: relative;
   z-index: 1;
+}
+
+/* Estilo para mensaje de carga */
+.loading-message {
+  text-align: center;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-family: 'Roboto', sans-serif;
+  padding: 2rem;
+}
+
+/* Estilo para cuando no hay cursos */
+.no-courses {
+  text-align: center;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-family: 'Roboto', sans-serif;
+  padding: 2rem;
 }
 
 /* Estilo de las cards de cursos */
@@ -36,42 +63,39 @@
   background: white;
   border-radius: 24px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  border: 2px solid #e0e0e0; /* Marco definido */
   overflow: hidden;
   transition: all 0.3s ease;
   animation: fadeIn 0.6s ease-out, shadowPulse 6s infinite ease-in-out;
   display: flex;
   flex-direction: column;
-  margin: 0; /* Eliminar márgenes para evitar bordes */
+  height: 500px; /* Altura fija para todas las cards */
+  margin: 0;
 }
 
 .course-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 50px rgba(74, 144, 226, 0.3);
+  border-color: #4a90e2; /* Marco resalta al hover */
 }
 
 .course-card .image-container {
   position: relative;
   width: 100%;
-  height: 220px; /* Aumentado para más cobertura */
+  height: 220px;
   overflow: hidden;
-  margin: 0;
-  padding: 0;
-  border: none;
 }
 
 .course-card .image-container img {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1.1); /* Zoom inicial leve */
+  transform: scale(1.1);
   transition: transform 0.3s ease;
 }
 
 .course-card:hover .image-container img {
-  transform: scale(1.15); /* Mayor zoom al hover */
+  transform: scale(1.15);
 }
 
 .course-info {
@@ -80,6 +104,8 @@
   flex-direction: column;
   gap: 0.8rem;
   flex-grow: 1;
+  height: calc(100% - 220px); /* Ajustar al espacio restante */
+  justify-content: space-between;
 }
 
 .course-info h3 {
@@ -88,6 +114,9 @@
   color: #333;
   font-family: 'Montserrat', sans-serif;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .course-info .description {
@@ -96,6 +125,18 @@
   font-family: 'Roboto', sans-serif;
   line-height: 1.5;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limitar a 3 líneas */
+  -webkit-box-orient: vertical;
+}
+
+.course-info .course-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .course-info .instructor,
@@ -105,17 +146,18 @@
   color: #555;
   font-family: 'Roboto', sans-serif;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .course-info .price {
   font-weight: 600;
-  color: #e74c3c;
-  margin-top: auto;
+  color: #123257;
 }
 
 .enroll-btn {
-  display: inline-flex;
-  align-items: center;
+
   background: white;
   color: #333;
   padding: 12px 24px;
@@ -125,19 +167,20 @@
   font-weight: 500;
   cursor: pointer;
   position: relative;
-  overflow: hidden;
   transition: all 0.3s ease;
-  margin-top: 1rem;
+  margin-top: auto; /* Asegura que el botón esté al final */
+  text-align: center !important;
 }
 
 .enroll-btn:not(:disabled) {
-  background: linear-gradient(135deg, #21094e 0%, #1e328a 100%);
+  background: linear-gradient(135deg, #000000 1%, #02243f 5%);
   color: white;
   border-color: transparent;
+
 }
 
 .enroll-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #5600f5 0%, #1e328a 100%);
+  background: linear-gradient(135deg, #2c2c33 0%, #002fff 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
@@ -169,6 +212,7 @@
 /* Sección de Preguntas Frecuentes */
 .faq {
   margin-top: 4rem;
+  margin-left: 4rem;
   padding: 2rem 0;
   background: #ffffff;
   border-radius: 24px;
@@ -244,21 +288,17 @@
     margin-bottom: 2rem;
   }
 
-  .courses-container {
+  .courses-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
   }
 
+  .course-card {
+    height: 450px; /* Ajustar altura para pantallas medianas */
+  }
+
   .course-card .image-container {
     height: 180px;
-  }
-
-  .course-card .image-container img {
-    transform: scale(1.1);
-  }
-
-  .course-card:hover .image-container img {
-    transform: scale(1.15);
   }
 
   .course-info {
@@ -271,6 +311,7 @@
 
   .course-info .description {
     font-size: 0.9rem;
+    -webkit-line-clamp: 2; /* Reducir a 2 líneas */
   }
 
   .course-info .instructor,
@@ -312,21 +353,17 @@
     margin-bottom: 1.5rem;
   }
 
-  .courses-container {
+  .courses-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 
+  .course-card {
+    height: 400px; /* Ajustar altura para pantallas pequeñas */
+  }
+
   .course-card .image-container {
     height: 150px;
-  }
-
-  .course-card .image-container img {
-    transform: scale(1.1);
-  }
-
-  .course-card:hover .image-container img {
-    transform: scale(1.15);
   }
 
   .course-info {
@@ -339,6 +376,7 @@
 
   .course-info .description {
     font-size: 0.85rem;
+    -webkit-line-clamp: 2;
   }
 
   .course-info .instructor,
