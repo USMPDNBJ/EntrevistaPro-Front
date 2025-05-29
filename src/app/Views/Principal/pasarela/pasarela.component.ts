@@ -8,7 +8,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule, Location } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -39,7 +39,7 @@ import { NavbarComponent } from "../../../Components/navbar/navbar.component";
     MatDatepickerModule,
     MatNativeDateModule,
     NavbarComponent
-]
+  ]
 })
 export class pasarelaComponent implements OnInit {
   paymentForm: FormGroup;
@@ -53,7 +53,9 @@ export class pasarelaComponent implements OnInit {
     private snackBar: MatSnackBar,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
-    private serviceSession: SessionService, private location: Location
+    private serviceSession: SessionService,
+    private location: Location,
+    private router: Router
   ) {
     this.iconRegistry.addSvgIcon(
       'custom-payment',
@@ -196,18 +198,44 @@ export class pasarelaComponent implements OnInit {
         let fecExp = new Date(year, month - 1, 1);
         let cvv = this.cvv?.value;
         let monto = this.amount?.value;
-        let pago = new Pago(numeroTarjeta, titular, fecExp, cvv, monto)
+        let pago = new Pago(undefined, numeroTarjeta, titular, fecExp, cvv, monto)
+        let c_session: Sessions;
         console.log(pago)
         this.serviceSession.createPago(pago).subscribe({
-          next: (res) => console.log('Pago guardado', res),
+          next: (res) => {
+            console.log('Respuesta createPago:', res);
+            let idPago = res.id_pago;
+
+            if (!idPago) {
+              console.error('No se recibió id_pago válido');
+              return;
+            }
+
+            const sessionData = sessionStorage.getItem('ss_reunion');
+            if (sessionData) {
+              c_session = JSON.parse(sessionData) as Sessions;
+              c_session.id_pago = idPago;
+
+              this.serviceSession.postSession(c_session).subscribe({
+                next: (res) => {
+                  console.log('Pago guardado', res);
+                  this.router.navigate(['/mis-sesiones'])
+                },
+                error: (err) => console.error('Error al guardar el pago', err)
+              });
+            }
+          },
           error: (err) => console.error('Error al guardar el pago', err)
         });
+
+
         // let y = sessionStorage.getItem('ss_reunion');
 
         this.paymentForm.reset({
           amount: { value: 20, disabled: true }
         });
         this.cardType = null;
+
       } else {
         throw new Error('Error en el procesamiento del pago');
       }

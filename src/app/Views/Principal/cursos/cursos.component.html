@@ -1,397 +1,37 @@
 <app-navbar></app-navbar>
-<div style="background: linear-gradient(180deg, #04303b, #021e25);">
+<div class="superSec">
   <section class="courses">
     <!-- Título de la categoría -->
-    <h2>Cursos de Diseño</h2>
+    <h2>Catalogo de Cursos</h2>
 
     <!-- Lista de cursos -->
     <div class="courses-container">
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso de Diseño Gráfico">
-        <div class="course-info">
-          <h3>Introducción al Diseño Gráfico</h3>
-          <p class="description">Aprende los fundamentos del diseño gráfico con herramientas modernas como Adobe Photoshop y Illustrator.</p>
-          <p class="instructor">Instructor: Ana Gómez</p>
-          <p class="duration">Duración: 6 semanas</p>
-          <p class="price">Precio: $99</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
+      <!-- Mostrar mensaje de carga si los datos están cargando -->
+      <div *ngIf="loading" class="loading-message">
+        <p>Cargando cursos...</p>
       </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso de UI/UX">
-        <div class="course-info">
-          <h3>Diseño de Interfaces UI/UX</h3>
-          <p class="description">Domina el diseño de interfaces de usuario y experiencia de usuario con Figma y prototipos interactivos.</p>
-          <p class="instructor">Instructor: Carlos Ruiz</p>
-          <p class="duration">Duración: 8 semanas</p>
-          <p class="price">Precio: $120</p>
-          <button class="enroll-btn">Inscribirse</button>
+
+      <!-- Mostrar los cursos cuando estén disponibles -->
+      <div *ngIf="!loading" class="courses-grid">
+        <!-- Mostrar mensaje si no hay cursos -->
+        <div *ngIf="courses.length === 0" class="no-courses">
+          <p>No hay cursos disponibles en este momento.</p>
         </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso de Tipografía">
-        <div class="course-info">
-          <h3>Fundamentos de Tipografía</h3>
-          <p class="description">Explora cómo usar tipografías para mejorar tus diseños y transmitir mensajes efectivos.</p>
-          <p class="instructor">Instructor: Laura Martínez</p>
-          <p class="duration">Duración: 4 semanas</p>
-          <p class="price">Precio: $75</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <!-- Simulamos más cursos (27 más para llegar a 30) -->
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso de Branding">
-        <div class="course-info">
-          <h3>Branding y Identidad Visual</h3>
-          <p class="description">Crea marcas memorables con estrategias de identidad visual efectivas.</p>
-          <p class="instructor">Instructor: Juan Pérez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $90</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso de Diseño Web">
-        <div class="course-info">
-          <h3>Diseño Web Responsivo</h3>
-          <p class="description">Aprende a diseñar sitios web responsivos con HTML, CSS y herramientas modernas.</p>
-          <p class="instructor">Instructor: Sofía López</p>
-          <p class="duration">Duración: 7 semanas</p>
-          <p class="price">Precio: $110</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <!-- Continuamos simulando cursos... -->
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso de Ilustración Digital">
-        <div class="course-info">
-          <h3>Ilustración Digital para Principiantes</h3>
-          <p class="description">Descubre cómo crear ilustraciones digitales con Procreate y Photoshop.</p>
-          <p class="instructor">Instructor: María Fernández</p>
-          <p class="duration">Duración: 6 semanas</p>
-          <p class="price">Precio: $95</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <!-- Para no hacer el HTML demasiado largo, simulamos que hay 24 cursos más -->
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 1</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 2</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 3</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 4</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 5</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 6</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 7</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 8</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 9</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 10</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 11</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 12</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 13</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 14</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 15</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 16</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 17</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 18</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 19</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 20</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 21</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 22</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 23</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 24</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 25</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 26</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 27</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 28</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="img/Diseno-grafico.jpg" alt="Curso Genérico">
-        <div class="course-info">
-          <h3>Curso de Diseño Avanzado 29</h3>
-          <p class="description">Profundiza en técnicas avanzadas de diseño con proyectos prácticos.</p>
-          <p class="instructor">Instructor: Pedro Sánchez</p>
-          <p class="duration">Duración: 5 semanas</p>
-          <p class="price">Precio: $85</p>
-          <button class="enroll-btn">Inscribirse</button>
+        <!-- Iterar sobre cada curso -->
+        <div *ngFor="let course of courses" class="course-card">
+          <div class="image-container">
+            <img [src]="course.url || 'assets/default-course.jpg'" [alt]="course.nombre">
+          </div>
+          <div class="course-info">
+            <h3>{{ course.nombre }}</h3>
+            <p class="description">{{ course.descripcion }}</p>
+            <div class="course-details">
+              <p class="instructor"><span>Instructor:</span> {{ course.profesional }}</p>
+              <p class="duration"><span>Duración:</span> {{ course.duracion }}</p>
+              <p class="price"><span>Precio:</span> S/{{ course.precio }}</p>
+            </div>
+            <button class="enroll-btn">Inscribirse</button>
+          </div>
         </div>
       </div>
     </div>
@@ -412,12 +52,7 @@
           <summary>¿Puedo acceder a los cursos desde mi móvil?</summary>
           <p>¡Claro! Todos nuestros cursos son accesibles desde cualquier dispositivo, incluyendo móviles y tablets.</p>
         </details>
-        <details class="faq-item">
-          <summary>¿Qué pasa si no termino un curso a tiempo?</summary>
-          <p>No te preocupes, tendrás acceso al contenido del curso de por vida, para que puedas completarlo a tu ritmo.</p>
-        </details>
       </div>
     </section>
   </section>
 </div>
-<app-footer></app-footer>

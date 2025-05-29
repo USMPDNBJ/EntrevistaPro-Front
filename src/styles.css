@@ -7,14 +7,14 @@ html, body {
 
 }
 .btn{
-  background-color: rgb(19, 138, 122) !important;
+  background-color: #317daf !important;
   font-weight: bold !important;
   color: white !important;
   transition: background-color 0.3s ease, filter 0.3s ease !important;
 }
 .btn:hover {
 
-  background-color: rgb(14, 114, 101) !important;
+  background-color: #5cb0e7 !important;
   color: rgb(226, 225, 225) !important;
 
 }

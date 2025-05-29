@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../../../Components/navbar/navbar.component';
-import Agendar from '../../../models/agendar';
+import Sessions from '../../../models/sessions';
 import { SessionService } from '../../../services/session.service';
 import { RouterLink } from '@angular/router';
 
@@ -24,9 +24,9 @@ export class AgendarReunionComponent {
   daysOfWeek: string[] = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
   days: number[] = [];
   emptyDaysBefore: number[] = [];
-  weekDays: { day: number, month: string, year: number, label: string }[] = [];
+  weekDays: { day: number, month: string, year: number, label: string, isSunday: boolean }[] = [];
   yearMonths: string[] = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-  timeSlots: string[] = Array.from({ length: 16 }, (_, i) => {
+  timeSlots: string[] = Array.from({ length: 14 }, (_, i) => {
     // Comienza desde las 8:00 AM (8:00)
     const hour = i + 8; // Añadir 8 para que las horas comiencen desde las 8:00
     return `${hour.toString().padStart(2, '0')}:00`;
@@ -35,10 +35,23 @@ export class AgendarReunionComponent {
   userId: number;
   ngOnInit() {
     this.currentMonth = this.capitalizeFirstLetter(new Date().toLocaleString('default', { month: 'long' }));
+    // Set currentWeekStart to the start of the current week (Sunday)
+    this.currentWeekStart = new Date();
+    const dayOfWeek = this.currentWeekStart.getDay();
+    this.currentWeekStart.setDate(this.currentWeekStart.getDate() - dayOfWeek); // Move to Sunday
     this.generateMonthDays();
     this.generateWeekDays();
   }
 
+  isSunday(day: number, month: string, year: number): boolean {
+    const date = new Date(year, this.getMonthIndex(month), day);
+    return date.getDay() === 0;
+  }
+  isMonthSelectable(monthIndex: number): boolean {
+    const currentDate = new Date();
+    return this.currentYear > currentDate.getFullYear() ||
+      (this.currentYear === currentDate.getFullYear() && monthIndex >= currentDate.getMonth());
+  }
   constructor(private userService: SessionService) {
     const storedUserId = sessionStorage.getItem('userId');
     if (storedUserId) {
@@ -85,7 +98,8 @@ export class AgendarReunionComponent {
         day: day.getDate(),
         month: this.capitalizeFirstLetter(day.toLocaleString('default', { month: 'long' })),
         year: day.getFullYear(),
-        label: this.daysOfWeek[i]
+        label: this.daysOfWeek[i],
+        isSunday: day.getDay() === 0 // true if it's Sunday
       });
     }
   }
@@ -98,10 +112,13 @@ export class AgendarReunionComponent {
   prevPeriod() {
     if (this.view === 'month') {
       const newMonthIndex = this.getMonthIndex(this.currentMonth) - 1;
+      const currentDate = new Date();
       if (newMonthIndex < 0) {
-        this.currentYear--;
-        this.currentMonth = 'Diciembre';
-      } else {
+        if (this.currentYear > currentDate.getFullYear()) {
+          this.currentYear--;
+          this.currentMonth = 'Diciembre';
+        }
+      } else if (this.currentYear > currentDate.getFullYear() || newMonthIndex >= currentDate.getMonth()) {
         this.currentMonth = this.capitalizeFirstLetter(new Date(this.currentYear, newMonthIndex).toLocaleString('default', { month: 'long' }));
       }
       this.generateMonthDays();
@@ -109,7 +126,9 @@ export class AgendarReunionComponent {
       this.currentWeekStart.setDate(this.currentWeekStart.getDate() - 7);
       this.generateWeekDays();
     } else {
-      this.currentYear--;
+      if (this.currentYear > new Date().getFullYear()) {
+        this.currentYear--;
+      }
     }
   }
 
@@ -132,6 +151,14 @@ export class AgendarReunionComponent {
   }
 
   selectDay(day: number, month: string = this.currentMonth, year: number = this.currentYear) {
+    // Crear un objeto Date para verificar si el día es domingo
+    const selectedDate = new Date(year, this.getMonthIndex(month), day);
+    if (selectedDate.getDay() === 0) {
+      // No permitir la selección si es domingo
+      return;
+    }
+
+    // Lógica existente para seleccionar/desmarcar un día
     if (this.selectedDay === day && this.selectedMonth === month && this.selectedYear === year) {
       this.selectedDay = null;
       this.selectedMonth = null;
@@ -176,17 +203,21 @@ export class AgendarReunionComponent {
 
     // Convertir la cadena meetingDate a un objeto Date
     const meetingDateObj = new Date(meetingDate);
-    const session: Agendar = {
-      usuario_id: this.userId,
+    const [horas, minutos] = this.selectedTime.split(':').map(Number);
+    let nuevasHoras = horas + 1;
+    const session: Sessions = {
+      id: undefined,
       profesional_id: 0,
+      usuario_id: this.userId,
+      id_pago: 0,
       fecha: meetingDateObj,
       hora_inicio: this.selectedTime,
-      hora_fin: this.selectedTime + 1,
       estado: 'pendiente',
-      evaluacion: 'undefined',
-      enlace: 'undefined'
+      evaluacion: undefined,
+      enlace: undefined
     };
+    session.hora_fin = `${nuevasHoras.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
     sessionStorage.setItem('ss_reunion', JSON.stringify(session));
-
   }
+
 }

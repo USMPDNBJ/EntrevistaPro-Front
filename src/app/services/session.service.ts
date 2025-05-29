@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import Session from '../models/sessions';
-import Agendar from '../models/agendar';
 import Pago from '../models/pago';
 
 @Injectable({
@@ -26,7 +25,7 @@ export class SessionService {
       map(response => response.data) // Extraemos solo la parte "data" de la respuesta
     );
   }
-  postSession(session: Agendar): Observable<Session> {
+  postSession(session: Session): Observable<Session> {
     const url = this.apiUrl; // Asegúrate de que esta URL coincida con tu API
 
     console.log('Enviando sesión a la URL:', url);
