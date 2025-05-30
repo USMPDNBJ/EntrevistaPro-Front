@@ -6,11 +6,13 @@ import { GestionarTrabajadoresComponent } from '../../Views/Admin/gestionar-trab
 import { NavbarComponent } from '../../Components/navbar/navbar.component';
 import { GestionarUsuariosComponent } from '../../Views/Admin/gestionar-usuarios/gestionar-usuarios.component';
 import { GestionarSesionesComponent } from '../../Views/Admin/gestionar-sesiones/gestionar-sesiones.component';
+import { GestionarCursosComponent } from '../../Views/Admin/gestionar-cursos/gestionar-cursos.component';
 
 const routes: Routes = [
   { path: 'trabajadores', component: GestionarTrabajadoresComponent },
   { path: 'usuarios', component: GestionarUsuariosComponent},
-  { path: 'sesiones', component: GestionarSesionesComponent}
+  { path: 'sesiones', component: GestionarSesionesComponent},
+  { path: 'cursos', component: GestionarCursosComponent}
 ];
 
 @NgModule({
@@ -22,6 +24,7 @@ const routes: Routes = [
     GestionarTrabajadoresComponent,
     GestionarUsuariosComponent,
     GestionarSesionesComponent,
+    GestionarCursosComponent,
     NavbarComponent
   ],
   exports: []

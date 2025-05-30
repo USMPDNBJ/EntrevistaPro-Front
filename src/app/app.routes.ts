@@ -18,6 +18,7 @@ import { GestionarUsuariosComponent } from './Views/Admin/gestionar-usuarios/ges
 import { GestionarSesionesComponent } from './Views/Admin/gestionar-sesiones/gestionar-sesiones.component';
 import { VerSesionesComponent } from './Views/Profesional/ver-sesiones/ver-sesiones.component';
 import { ProfesionalWrapperComponent } from './Modules/profesional/profesional-wrapper.component';
+import { GestionarCursosComponent } from './Views/Admin/gestionar-cursos/gestionar-cursos.component';
 
 export const routes: Routes = [
   {
@@ -60,7 +61,8 @@ export const routes: Routes = [
     children: [
       { path: '', loadChildren: () => import('./Modules/admin/admin.module').then(m => m.AdminModule) },
       { path: 'admin/usuarios', component: GestionarUsuariosComponent },
-      { path: 'admin/sesiones', component: GestionarSesionesComponent }
+      { path: 'admin/sesiones', component: GestionarSesionesComponent },
+      { path: 'admin/cursos', component: GestionarCursosComponent}
     ]
   },
   {

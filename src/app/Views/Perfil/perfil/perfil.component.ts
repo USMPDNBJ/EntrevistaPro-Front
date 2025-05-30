@@ -16,6 +16,7 @@ interface UserProfile {
   celular: string | null;
   habilidades: string[] | null;
   rol: string;
+  contrasena: string | null;
 }
 
 @Component({
@@ -54,6 +55,7 @@ export class PerfilComponent implements OnInit {
         const userData = response.data && response.data.length > 0 ? response.data[0] : null;
         if (userData) {
           this.user = { ...userData, habilidades: userData.habilidades || [] };
+          console.log('Contraseña cargada:', this.user.contrasena); // Verificar que contrasena se carga
         } else {
           this.errorMessage = 'No se encontraron datos del perfil';
         }
@@ -83,6 +85,7 @@ export class PerfilComponent implements OnInit {
         return;
       }
       this.isLoading = true;
+      const originalPassword = this.user.contrasena; // Guardar la contraseña original
       const userData = {
         correo: this.user.correo,
         nombres: this.user.nombres,
@@ -90,8 +93,10 @@ export class PerfilComponent implements OnInit {
         dni: this.user.dni,
         celular: this.user.celular,
         habilidades: this.user.habilidades,
-        rol: this.user.rol
+        rol: this.user.rol,
+        contrasena: originalPassword // Usar la contraseña original
       };
+      console.log('Datos enviados al guardar:', userData); // Verificar qué se envía
       this.http.put(`${environment.apiUrlUser}/${this.authService.getUserId()}`, userData, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
