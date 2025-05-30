@@ -44,9 +44,11 @@ export class VerSesionesComponent implements OnInit {
   selectedSession: Session | null = null;
   selectedStatus: string | null = null;
   selectedLink: string | null = null;
+  selectedEvaluation: string | null = null;
 
   private apiUrl = environment.apiUrlSession;
   private apiUrlUsers = environment.apiUrlUser;
+  private apiUrlSession = environment.apiUrlSession;
   private workersUrl = environment.apiUrlWorker;
 
   constructor(private http: HttpClient, private AuthService: AuthService) {}
@@ -120,6 +122,7 @@ export class VerSesionesComponent implements OnInit {
     this.selectedSession = session;
     this.selectedStatus = session.estado;
     this.selectedLink = session.enlace;
+    this.selectedEvaluation = session.evaluacion;
     this.showEditModal = true;
   }
 
@@ -129,6 +132,7 @@ export class VerSesionesComponent implements OnInit {
     this.selectedSession = null;
     this.selectedStatus = null;
     this.selectedLink = null;
+    this.selectedEvaluation = null;
   }
 
   saveChanges() {
@@ -142,7 +146,7 @@ export class VerSesionesComponent implements OnInit {
         hora_inicio: this.selectedSession.hora_inicio,
         hora_fin: this.selectedSession.hora_fin,
         estado: this.selectedStatus,
-        evaluacion: this.selectedSession.evaluacion,
+        evaluacion: this.selectedEvaluation || null,
         enlace: this.selectedLink || null
       };
       console.log('Sending PUT request to:', `${this.apiUrl}/${this.selectedSession.id}`, 'with data:', sessionData);
@@ -154,6 +158,7 @@ export class VerSesionesComponent implements OnInit {
           this.selectedSession = null;
           this.selectedStatus = null;
           this.selectedLink = null;
+          this.selectedEvaluation = null;
         },
         error: (error) => {
           console.error('PUT error:', error);

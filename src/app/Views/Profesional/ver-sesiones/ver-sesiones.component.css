@@ -46,6 +46,7 @@
 
 .sessions-table th,
 .sessions-table td {
+  text-align: center !important;
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #ddd;
