@@ -1,0 +1,59 @@
+<app-navbar></app-navbar>
+<div class="divG">
+  <div class="sesiones-container">
+    <div class="header">
+      <h2>MIS CURSOS</h2>
+    </div>
+    <div class="search-bar">
+      <mat-form-field appearance="outline">
+        <mat-label>Buscar Sesión</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ej. nombre, Fecha, Estado..." #input>
+      </mat-form-field>
+    </div>
+    <div class="table-container">
+      <mat-table [dataSource]="dataSource">
+        <!-- nombre -->
+        <ng-container matColumnDef="nombre">
+          <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+          <mat-cell *matCellDef="let course">{{ course.nombre }}</mat-cell>
+        </ng-container>
+        <!-- profesional -->
+        <ng-container matColumnDef="categoria">
+          <mat-header-cell *matHeaderCellDef>Categoria</mat-header-cell>
+          <mat-cell *matCellDef="let course">{{ course.categoria }}</mat-cell>
+        </ng-container>
+        <!-- profesional -->
+        <ng-container matColumnDef="profesional">
+          <mat-header-cell *matHeaderCellDef>Profesional</mat-header-cell>
+          <mat-cell *matCellDef="let course">{{ course.profesional }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="duracion">
+          <mat-header-cell *matHeaderCellDef>Duracion</mat-header-cell>
+          <mat-cell *matCellDef="let course">{{ course.duracion }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="horario">
+          <mat-header-cell *matHeaderCellDef>Horario</mat-header-cell>
+          <mat-cell *matCellDef="let course">{{ course.horario }}</mat-cell>
+        </ng-container>
+        <!-- Fecha -->
+        <ng-container matColumnDef="fecha_inicio">
+          <mat-header-cell *matHeaderCellDef>Fecha de Inicio</mat-header-cell>
+          <mat-cell *matCellDef="let course">
+            {{ course.fecha_inicio === 'N/A' ? 'N/A' : (course.fecha_inicio | date: 'dd/MM/yyyy') }}
+          </mat-cell>
+        </ng-container>
+        <!-- Link de Acceso -->
+        <ng-container matColumnDef="url">
+          <mat-header-cell *matHeaderCellDef>Link de Acceso</mat-header-cell>
+          <mat-cell *matCellDef="let course">
+            <a *ngIf="course.url && course.url !== 'N/A'" [href]="course.url" target="_blank" rel="noopener noreferrer">Acceder</a>
+            <span *ngIf="!course.url || course.url === 'N/A'">N/A</span>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+  </div>
+</div>
