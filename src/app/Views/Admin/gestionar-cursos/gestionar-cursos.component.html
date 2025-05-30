@@ -98,9 +98,7 @@
         <tr>
           <th>Nombre</th>
           <th>Descripción</th>
-          <th>Descripción Adicional</th>
           <th>Categoría</th>
-          <th>Etapas</th>
           <th>Fecha Inicio</th>
           <th>Profesional</th>
           <th>Duración</th>
@@ -113,9 +111,7 @@
         <tr *ngFor="let course of courses">
           <td>{{ course.nombre }}</td>
           <td>{{ course.descripcion }}</td>
-          <td>{{ course.descripcion2 || '-' }}</td>
           <td>{{ course.categoria || '-' }}</td>
-          <td>{{ (course.etapas || []).join(', ') || '-' }}</td>
           <td>{{ course.fecha_inicio || '-' }}</td>
           <td>{{ course.profesional }}</td>
           <td>{{ course.duracion }}</td>
