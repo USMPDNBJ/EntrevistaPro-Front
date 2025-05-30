@@ -20,7 +20,7 @@
         <!-- Iterar sobre cada curso -->
         <div *ngFor="let course of courses" class="course-card">
           <div class="image-container">
-            <img [src]="course.url || 'assets/default-course.jpg'" [alt]="course.nombre">
+            <img [src]="course.imagen || 'assets/default-course.jpg'" [alt]="course.nombre">
           </div>
           <div class="course-info">
             <h3>{{ course.nombre }}</h3>

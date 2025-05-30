@@ -5,8 +5,11 @@ export default interface Course {
   descripcion2: string;
   profesional: string;
   duracion: string;
+  horario: string;
+  fecha_inicio: Date;
   precio: number;
   categoria: string;
   etapas: string[];
+  imagen: string;
   url: string;
 }

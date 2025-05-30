@@ -24,12 +24,14 @@
       <!-- Columna derecha: Imagen y atributos adicionales -->
       <div class="curso-imagen-atributos">
         <figure>
-          <img [src]="course.url" [alt]="course.nombre" class="curso-imagen">
-          <button class="enroll-btn" >Inscribirse</button>
+          <img [src]="course.imagen" [alt]="course.nombre" class="curso-imagen">
+          <button class="enroll-btn" routerLink="/pasarela" (click)="scheduleCourse()" >Inscribirse</button>
         </figure>
         <div class="curso-atributos">
           <p><strong>Profesor:</strong> {{ course.profesional }}</p>
           <p><strong>Duración:</strong> {{ course.duracion }}</p>
+          <p><strong>Horario:</strong> {{ course.horario }}</p>
+          <p><strong>Fecha de Inicio:</strong> {{ course.fecha_inicio | date: 'dd/MM/yyyy'}}</p>
           <p><strong>Precio:</strong> {{ course.precio }}</p>
           <p><strong>Categoría:</strong> {{ course.categoria | lowercase }}</p>
           <h3>Etapas del curso:</h3>

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import Course from '../models/course';
+import CoursePayed from '../models/coursePayed';
 
 @Injectable({
   providedIn: 'root'
@@ -33,4 +34,17 @@ export class CourseService {
       map(response => response.data) // Extraemos solo la parte "data" de la respuesta
     );
   }
+  postCreateCoursePayed(coursePayed: CoursePayed): Observable<CoursePayed> {
+    const url = `${this.apiUrl}payed`;
+    console.log('URL de la petición:', url);
+
+    return this.http.post<{ status: number, message: string, data: CoursePayed }>(url, coursePayed, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(
+      map(response => response.data) // Extraemos solo la parte "data" de la respuesta
+    );
+
+  }
+
+
 }
