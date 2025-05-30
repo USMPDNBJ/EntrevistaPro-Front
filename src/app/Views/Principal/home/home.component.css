@@ -165,7 +165,7 @@ nav a:hover {
   max-width: 50%;
   padding: 1.5rem;
   background: rgba(255, 255, 255, 0.9);
-  border-left: 4px solid #2c7873;
+  border-left: 4px solid #5cb0e7;
   border-radius: 0.5rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   font-family: 'Roboto', sans-serif;
@@ -209,7 +209,7 @@ nav a:hover {
   width: 12px;
   vertical-align: middle;
   margin-left: 0.5rem;
-  stroke: #2c7873;
+  stroke: #5cb0e7;
 }
 
 .stats {

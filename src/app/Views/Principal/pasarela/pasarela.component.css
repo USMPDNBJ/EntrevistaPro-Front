@@ -242,7 +242,7 @@ mat-icon.amex {
 }
 
 .submit-button:disabled {
-  background: #a0bdb8;
+  background: linear-gradient(135deg, #292a2c, #c0cad1);
   box-shadow: none;
   cursor: not-allowed;
   color: #e0e0e0;

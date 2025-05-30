@@ -34,6 +34,16 @@ export class CourseService {
       map(response => response.data) // Extraemos solo la parte "data" de la respuesta
     );
   }
+  getCoursesRegisteredId(courseId: string): Observable<Course[]> {
+    const url = `${this.apiUrl}Registered/${courseId}`;
+    console.log('URL de la petición:', url);
+
+    return this.http.get<{ status: number, message: string, data: Course[] }>(url, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(
+      map(response => response.data) // Extraemos solo la parte "data" de la respuesta
+    );
+  }
   postCreateCoursePayed(coursePayed: CoursePayed): Observable<CoursePayed> {
     const url = `${this.apiUrl}payed`;
     console.log('URL de la petición:', url);

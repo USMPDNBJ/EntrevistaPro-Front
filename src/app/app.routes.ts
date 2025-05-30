@@ -19,6 +19,7 @@ import { GestionarSesionesComponent } from './Views/Admin/gestionar-sesiones/ges
 import { DetalleCursoComponent } from './Views/Principal/detalle-curso/detalle-curso.component';
 import { VerSesionesComponent } from './Views/Profesional/ver-sesiones/ver-sesiones.component';
 import { ProfesionalWrapperComponent } from './Modules/profesional/profesional-wrapper.component';
+import { MisCursosComponent } from './Views/Principal/mis-cursos/mis-cursos.component';
 
 export const routes: Routes = [
   {
@@ -41,6 +42,7 @@ export const routes: Routes = [
       { path: 'agendar-reunion', component: AgendarReunionComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
       { path: 'pasarela', component: pasarelaComponent },
       { path: 'mis-sesiones', component: MisSesionesComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
+      { path: 'mis-cursos', component: MisCursosComponent },
       { path: '', redirectTo: '/auth', pathMatch: 'full' },
     ],
   },
