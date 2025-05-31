@@ -31,7 +31,7 @@ export class PerfilComponent implements OnInit {
   isLoading = true;
   errorMessage: string | null = null;
   isEditing = false;
-  availableSkills: string[] = ['Comunicación', 'Trabajo en equipo', 'Resolución de problemas', 'Adaptabilidad', 'Liderazgo'];
+  availableSkills: string[] = ['Diseño', 'Habilidades blandas', 'Idiomas', 'Modelado Técnico', 'Ofimática', 'Programacion'];
 
   constructor(
     private authService: AuthService,
@@ -80,7 +80,7 @@ export class PerfilComponent implements OnInit {
   saveProfile() {
     if (this.user && this.authService.getUserId()) {
       if (!this.user.habilidades || this.user.habilidades.length < 1 || this.user.habilidades.length > 3) {
-        this.errorMessage = 'Debes seleccionar entre 1 y 3 habilidades';
+        this.errorMessage = 'Debes seleccionar entre 1 y 3 categorias';
         this.isLoading = false;
         return;
       }

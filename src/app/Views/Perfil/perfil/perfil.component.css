@@ -5,6 +5,14 @@
   gap: 0;
 }
 
+.perfil{
+  background: linear-gradient(90deg, #bac4e046, #88c5ee8e);
+}
+
+.profile-content {
+  background: linear-gradient(135deg, #bcddd6, #e4e3eb);
+}
+
 .profile-nav {
   width: 200px;
 }

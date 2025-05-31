@@ -8,10 +8,16 @@
 }
 
 .divImgP {
-  background: linear-gradient(90deg, #1a233f 0%, #5cb0e7 100%);
+  background: linear-gradient(120deg, #cbd1da, #1a6ba1);
   justify-content: center;
   align-items: center;
   display: flex;
+}
+
+.divImgP img {
+  border-radius: 50px;
+  max-height: 500px;
+  max-width: 500px;
 }
 
 .visual-img {

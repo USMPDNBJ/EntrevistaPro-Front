@@ -7,7 +7,6 @@ import { CursosComponent } from './Views/Principal/cursos/cursos.component';
 import { HomeComponent } from './Views/Principal/home/home.component';
 import { AgendarReunionComponent } from './Views/Principal/agendar-reunion/agendar-reunion.component';
 import { PerfilComponent } from './Views/Perfil/perfil/perfil.component';
-import { HistorialComponent } from './Views/Perfil/historial/historial.component';
 import { AuthGuard } from './services/auth.guard';
 import { MisSesionesComponent } from './Views/Principal/mis-sesiones/mis-sesiones.component';
 import { AuthWrapperComponent } from './Modules/auth/auth-wrapper.component';
@@ -53,8 +52,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ['user', 'admin', 'worker'] },
     children: [
-      { path: '', component: PerfilComponent },
-      { path: 'historial', component: HistorialComponent },
+      { path: '', component: PerfilComponent }
     ],
   },
   {

@@ -1,6 +1,6 @@
 /* ===== Sección principal ===== */
 .section {
-  background: linear-gradient(90deg, #242a3f 5%, #5cb0e7 100%);
+  background: linear-gradient(90deg, #16485fbb, #105583);
   padding: 2rem 2rem 3rem 5rem;
   min-height: 100vh;
   box-sizing: border-box;
