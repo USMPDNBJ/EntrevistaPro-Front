@@ -21,7 +21,13 @@ export class CursosComponent{
   }
 
   loadCourses() {
-    this.courseService.getCourses().subscribe({
+    const userId = sessionStorage.getItem('userId');
+    if (!userId) {
+      console.error('User ID not found in session storage');
+      this.loading = false;
+      return;
+    }
+    this.courseService.getCourses(userId).subscribe({
       next: (data) => {
         this.courses = data;
         this.loading = false;
