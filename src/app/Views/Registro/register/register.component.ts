@@ -78,7 +78,7 @@ export class RegisterComponent {
         },
       });
     } else {
-      this.errorMessage = 'Por favor, completa todos los campos y selecciona al menos una habilidad.';
+      this.errorMessage = 'Por favor, completa todos los campos y selecciona al menos una categoria.';
     }
   }
 }
