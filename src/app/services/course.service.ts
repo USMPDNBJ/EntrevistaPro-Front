@@ -10,13 +10,14 @@ import { url } from 'node:inspector';
   providedIn: 'root'
 })
 export class CourseService {
-  private apiUrl = environment.apiUrlCatalogo;
+  private apiUrlCatalogo = environment.apiUrlCatalogo;
+  private apiUrl = environment.apiUrlCourse;
 
   constructor(private http: HttpClient) { }
 
   getCourses(courseId: string): Observable<Course[]> {
-    const url=`${this.apiUrl}/${courseId}`
-    console.log('URL de la petición:', `${this.apiUrl}/${courseId}`);
+    const url=`${this.apiUrlCatalogo}/${courseId}`
+    console.log('URL de la petición:', `${this.apiUrlCatalogo}/${courseId}`);
 
     return this.http.get<{ status: number, message: string, data: Course[] }>(url, {
       headers: { 'Content-Type': 'application/json' }
