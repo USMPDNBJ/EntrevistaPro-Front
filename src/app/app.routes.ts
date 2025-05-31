@@ -20,6 +20,7 @@ import { DetalleCursoComponent } from './Views/Principal/detalle-curso/detalle-c
 import { VerSesionesComponent } from './Views/Profesional/ver-sesiones/ver-sesiones.component';
 import { ProfesionalWrapperComponent } from './Modules/profesional/profesional-wrapper.component';
 import { MisCursosComponent } from './Views/Principal/mis-cursos/mis-cursos.component';
+import { GestionarCursosComponent } from './Views/Admin/gestionar-cursos/gestionar-cursos.component';
 
 export const routes: Routes = [
   {
