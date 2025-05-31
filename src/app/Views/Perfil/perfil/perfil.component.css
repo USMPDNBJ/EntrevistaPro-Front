@@ -5,6 +5,14 @@
   gap: 0;
 }
 
+.perfil{
+  background: linear-gradient(90deg, #b2bbd346, #1a2f3d);
+}
+
+.profile-content {
+  background: linear-gradient(185deg, #abbebb, #9dbbc0);
+}
+
 .profile-nav {
   width: 200px;
 }
@@ -17,6 +25,10 @@
 .avatar-section {
   text-align: center;
   margin-bottom: 20px;
+}
+
+.edit-btn {
+  background: linear-gradient(90deg, #13254b, #116d7e )
 }
 
 .avatar {
@@ -34,8 +46,8 @@
 }
 
 .avatar-section p {
-  font-size: 14px;
-  color: #6b7280;
+  font-size: 20px;
+  color: #4a4e52;
 }
 
 .field-section {
@@ -47,18 +59,18 @@
 }
 
 .field label {
-  font-size: 12px;
-  color: #6b7280;
+  font-size: 18px;
+  color: #1c1c1f;
   margin-bottom: 5px;
   display: block;
+  font-weight: bold;
 }
 
 .field input {
-  width: 100%;
+  width: 95%;
   padding: 8px 12px;
-  border: 1px solid #e5e7eb;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 18px;
   color: var(--text);
 }
 
@@ -74,11 +86,13 @@
 }
 
 .skills-field .skill-tag {
-  background: rgba(30, 64, 175, 0.1);
-  color: var(--primary);
+  background: rgba(0, 0, 0, 0.1);
+  color: #171d53;
   padding: 5px 10px;
   border-radius: 15px;
   font-size: 13px;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .skills-field .skill-tag.selected {
@@ -116,7 +130,7 @@
 }
 
 .save-btn {
-  background: #10b981;
+  background: #2aca38;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -148,15 +162,6 @@
 
 .cancel-btn:hover {
   background: #dc2626;
-}
-
-.history-btn {
-  background: #3b82f6;
-  color: var(--accent);
-}
-
-.history-btn:hover {
-  background: #2563eb;
 }
 
 @media (max-width: 768px) {

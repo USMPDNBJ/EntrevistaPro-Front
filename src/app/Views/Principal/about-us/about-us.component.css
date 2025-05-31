@@ -219,7 +219,7 @@ nav a:hover {
   max-width: 1200px;
   margin: 0 auto;
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, #f9fafb 0%, #e0e6ed 100%);
+  background: linear-gradient(#17aa963d, #008cff36) !important;
   position: relative;
   overflow: hidden;
 }
