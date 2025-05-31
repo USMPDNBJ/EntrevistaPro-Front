@@ -4,19 +4,21 @@ import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import Course from '../models/course';
 import CoursePayed from '../models/coursePayed';
+import { url } from 'node:inspector';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
-  private apiUrl = environment.apiUrlCourse;
+  private apiUrl = environment.apiUrlCatalogo;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-    getCourses(): Observable<Course[]> {
-    console.log('URL de la petición:', this.apiUrl);
+  getCourses(courseId: string): Observable<Course[]> {
+    const url=`${this.apiUrl}/${courseId}`
+    console.log('URL de la petición:', `${this.apiUrl}/${courseId}`);
 
-    return this.http.get<{ status: number, message: string, data: Course[] }>(this.apiUrl, {
+    return this.http.get<{ status: number, message: string, data: Course[] }>(url, {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(
       map(response => response.data) // Extraemos solo la parte "data" de la respuesta
