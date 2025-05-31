@@ -19,32 +19,49 @@
       <div *ngIf="isLoading" class="loading">Cargando...</div>
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       <div *ngIf="user && !isLoading && !errorMessage">
-        <div class="avatar-container">
+        <div class="avatar-section">
           <img src="img/perfil.png" alt="Avatar" class="avatar" />
-        </div>
-        <div class="profile-header">
-          <h2>{{ user.nombres }} {{ user.apellidos }}</h2>
+          <h2>{{ user.nombres || 'Sin nombre' }} {{ user.apellidos || '' }}</h2>
           <p>Candidato</p>
         </div>
-        <div class="profile-field">
-          <label>Nombres</label>
-          <input type="text" [(ngModel)]="user.nombres" [disabled]="!isEditing" />
-        </div>
-        <div class="profile-field">
-          <label>Apellidos</label>
-          <input type="text" [(ngModel)]="user.apellidos" [disabled]="!isEditing" />
-        </div>
-        <div class="profile-field interests-field">
-          <label>Intereses (Habilidades Blandas)</label>
-          <div class="interests-container">
-            <span *ngFor="let skill of user.habilidades" class="interest-pill">{{ skill }}</span>
+        <div class="field-section">
+          <div class="field">
+            <label>Nombres</label>
+            <input type="text" [(ngModel)]="user.nombres" [disabled]="!isEditing" placeholder="Ingresa tus nombres" />
+          </div>
+          <div class="field">
+            <label>Apellidos</label>
+            <input type="text" [(ngModel)]="user.apellidos" [disabled]="!isEditing" placeholder="Ingresa tus apellidos" />
+          </div>
+          <div class="field">
+            <label>DNI</label>
+            <input type="text" [(ngModel)]="user.dni" [disabled]="!isEditing" placeholder="Ingresa tu DNI" />
+          </div>
+          <div class="field">
+            <label>Correo Electrónico</label>
+            <input type="email" [(ngModel)]="user.correo" [disabled]="!isEditing" placeholder="Ingresa tu correo" />
+          </div>
+          <div class="field">
+            <label>Celular</label>
+            <input type="text" [(ngModel)]="user.celular" [disabled]="!isEditing" placeholder="Ingresa tu celular" />
+          </div>
+          <div class="field skills-field">
+            <label>Habilidades Blandas</label>
+            <div class="skills-list" *ngIf="!isEditing">
+              <span *ngFor="let skill of user.habilidades || []" class="skill-tag">{{ skill }}</span>
+              <span *ngIf="!(user.habilidades?.length)" class="no-skills">No hay habilidades</span>
+            </div>
+            <div class="skills-list" *ngIf="isEditing">
+              <span *ngFor="let skill of availableSkills" class="skill-tag" 
+                    [ngClass]="{'selected': user.habilidades?.includes(skill), 'disabled': (user.habilidades?.length || 0) >= 3 && !user.habilidades?.includes(skill)}"
+                    (click)="user.habilidades?.includes(skill) ? removeSkill(skill) : addSkill(skill)">
+                {{ skill }}
+              </span>
+              <p *ngIf="user.habilidades && (user.habilidades.length < 1 || user.habilidades.length > 3)" class="error-message">Selecciona entre 1 y 3 habilidades</p>
+            </div>
           </div>
         </div>
-        <div class="profile-field">
-          <label>Correo Electrónico</label>
-          <input type="email" [(ngModel)]="user.correo" [disabled]="!isEditing" />
-        </div>
-        <div class="action-buttons">
+        <div class="action-section">
           <button *ngIf="!isEditing" class="edit-btn" (click)="toggleEdit(true)">
             <svg class="edit-icon" viewBox="0 0 24 24">
               <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
@@ -63,13 +80,6 @@
             </svg>
             Cancelar
           </button>
-          <a class="history-btn" routerLink="/perfil/historial">
-            <svg class="edit-icon" viewBox="0 0 24 24">
-              <path d="M13 3a9 9 0 1 0 8.94 10.15 1 1 0 1 0-1.98-.3A7 7 0 1 1 12 5v2l3-3-3-3v2a9 9 0 0 0 1 18c4.97 0 9-4.03 9-9h-2a7 7 0 1 1-7-7z"/>
-              <path d="M12 8v5l4.3 2.6.7-1.1-3.5-2.1V8z"/>
-            </svg>
-            Ver Historial
-          </a>
         </div>
       </div>
     </div>

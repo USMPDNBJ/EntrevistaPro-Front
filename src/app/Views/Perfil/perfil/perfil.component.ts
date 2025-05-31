@@ -9,13 +9,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 interface UserProfile {
   id: number;
-  correo: string;
-  nombres: string;
-  apellidos: string;
-  dni: string;
-  celular: string;
-  habilidades: string[];
+  correo: string | null;
+  nombres: string | null;
+  apellidos: string | null;
+  dni: string | null;
+  celular: string | null;
+  habilidades: string[] | null;
   rol: string;
+  contrasena: string | null;
 }
 
 @Component({
@@ -30,6 +31,7 @@ export class PerfilComponent implements OnInit {
   isLoading = true;
   errorMessage: string | null = null;
   isEditing = false;
+  availableSkills: string[] = ['Comunicación', 'Trabajo en equipo', 'Resolución de problemas', 'Adaptabilidad', 'Liderazgo'];
 
   constructor(
     private authService: AuthService,
@@ -48,11 +50,17 @@ export class PerfilComponent implements OnInit {
   }
 
   loadUserProfile(userId: number) {
-    this.http.get<{ status: number; message: string; data: UserProfile }>(`${environment.apiUrlUser}/${userId}`).subscribe({
+    this.http.get<{ status: number; message: string; data: UserProfile[] }>(`${environment.apiUrlPerfil}/${userId}`).subscribe({
       next: (response) => {
-        this.user = response.data;
+        const userData = response.data && response.data.length > 0 ? response.data[0] : null;
+        if (userData) {
+          this.user = { ...userData, habilidades: userData.habilidades || [] };
+          console.log('Contraseña cargada:', this.user.contrasena); // Verificar que contrasena se carga
+        } else {
+          this.errorMessage = 'No se encontraron datos del perfil';
+        }
         this.isLoading = false;
-        console.log('Perfil:', response.data);
+        console.log('Perfil:', this.user);
       },
       error: (error) => {
         this.isLoading = false;
@@ -65,14 +73,19 @@ export class PerfilComponent implements OnInit {
   toggleEdit(edit: boolean) {
     this.isEditing = edit;
     if (!edit && this.user) {
-      // Restaurar datos originales si se cancela
       this.loadUserProfile(this.authService.getUserId()!);
     }
   }
 
   saveProfile() {
     if (this.user && this.authService.getUserId()) {
+      if (!this.user.habilidades || this.user.habilidades.length < 1 || this.user.habilidades.length > 3) {
+        this.errorMessage = 'Debes seleccionar entre 1 y 3 habilidades';
+        this.isLoading = false;
+        return;
+      }
       this.isLoading = true;
+      const originalPassword = this.user.contrasena; // Guardar la contraseña original
       const userData = {
         correo: this.user.correo,
         nombres: this.user.nombres,
@@ -80,8 +93,10 @@ export class PerfilComponent implements OnInit {
         dni: this.user.dni,
         celular: this.user.celular,
         habilidades: this.user.habilidades,
-        rol: this.user.rol
+        rol: this.user.rol,
+        contrasena: originalPassword // Usar la contraseña original
       };
+      console.log('Datos enviados al guardar:', userData); // Verificar qué se envía
       this.http.put(`${environment.apiUrlUser}/${this.authService.getUserId()}`, userData, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -99,6 +114,22 @@ export class PerfilComponent implements OnInit {
           console.error('Error:', error);
         }
       });
+    }
+  }
+
+  addSkill(skill: string) {
+    if (this.user && this.user.habilidades) {
+      if (!this.user.habilidades.includes(skill) && this.user.habilidades.length < 3) {
+        this.user.habilidades.push(skill);
+      }
+    } else if (this.user) {
+      this.user.habilidades = [skill];
+    }
+  }
+
+  removeSkill(skill: string) {
+    if (this.user && this.user.habilidades) {
+      this.user.habilidades = this.user.habilidades.filter(s => s !== skill);
     }
   }
 }

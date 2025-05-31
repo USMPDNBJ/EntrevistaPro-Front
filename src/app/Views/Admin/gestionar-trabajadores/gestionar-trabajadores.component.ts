@@ -46,7 +46,7 @@ export class GestionarTrabajadoresComponent implements OnInit {
   ];
 
   private baseUrl = environment.apiUrlUser;
-  private workersUrl = `${environment.apiUrlUser}/workers`;
+  private workersUrl = environment.apiUrlWorker;
 
   constructor(
     private http: HttpClient,

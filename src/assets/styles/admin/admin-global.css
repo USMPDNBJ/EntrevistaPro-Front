@@ -169,7 +169,7 @@ body {
 
 .btn-secondary:hover:not(:disabled) {
   background-color: var(--accent-hover-color);
-  transform: scale(1.05);
+  transform: scale(1.01);
 }
 
 .btn-cancel {

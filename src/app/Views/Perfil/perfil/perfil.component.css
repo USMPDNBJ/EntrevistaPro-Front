@@ -1,50 +1,174 @@
+.profile-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+}
+
+.profile-nav {
+  width: 200px;
+}
+
 .profile-content {
-  background: linear-gradient(135deg, #bcddd6, #e4e3eb);
-  padding: 20px;
-  border-radius: 8px;
-}
-.perfil{
-  height: 100%;
-  background: linear-gradient(90deg, #182549, #5cb0e7);
-}
-.profile-field input {
-  font-weight: 500;
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background: #fff;
+  padding: 25px;
 }
 
-.profile-field:hover input {
-  background: rgba(30, 64, 175, 0.05);
+.avatar-section {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.interests-field .interests-container {
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+}
+
+.avatar-section h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 10px 0 5px;
+}
+
+.avatar-section p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.field-section {
+  margin-bottom: 20px;
+}
+
+.field {
+  margin-bottom: 15px;
+}
+
+.field label {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.field input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.field input:disabled {
+  background: #f5f5f5;
+}
+
+.skills-field .skills-list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 5px;
 }
 
-.interests-field .interest-pill {
+.skills-field .skill-tag {
   background: rgba(30, 64, 175, 0.1);
-  color: #1e40af;
-  padding: 5px 12px;
-  border-radius: 20px;
+  color: var(--primary);
+  padding: 5px 10px;
+  border-radius: 15px;
   font-size: 13px;
-  font-weight: 500;
-  transition: background 0.3s ease, transform 0.3s ease;
 }
 
-.interests-field .interest-pill:hover {
-  background: rgba(30, 64, 175, 0.2);
-  transform: scale(1.05);
+.skills-field .skill-tag.selected {
+  background: rgba(30, 64, 175, 0.3);
+  font-weight: 600;
 }
 
-.action-buttons {
+.skills-field .skill-tag.disabled {
+  background: #e5e7eb;
+  color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+.skills-field .skill-tag:not(.disabled) {
+  cursor: pointer;
+}
+
+.no-skills {
+  font-size: 13px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.action-section {
   display: flex;
-  gap: 15px;
   justify-content: center;
-  margin-top: 25px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.save-btn {
+  background: #10b981;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 50px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.save-btn:hover {
+  background: #059669;
+}
+
+.cancel-btn {
+  background: #ef4444;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  padding: 10px 22px;
+  border-radius: 50px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.cancel-btn:hover {
+  background: #dc2626;
+}
+
+.history-btn {
+  background: #3b82f6;
+  color: var(--accent);
+}
+
+.history-btn:hover {
+  background: #2563eb;
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
+  }
+  .profile-nav {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .profile-content {
+    padding: 15px;
+  }
 }

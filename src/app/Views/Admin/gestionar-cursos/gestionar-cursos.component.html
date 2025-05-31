@@ -1,0 +1,128 @@
+<div class="container">
+  <!-- Formulario para agregar/editar cursos -->
+  <div class="card">
+    <h3>{{ editingCourse ? 'Editar Curso' : 'Agregar Nuevo Curso' }}</h3>
+    <div class="form-grid">
+      <div class="form-field">
+        <label>Nombre</label>
+        <input type="text" [(ngModel)]="newCourse.nombre" *ngIf="!editingCourse" placeholder="Nombre del curso" />
+        <input type="text" [(ngModel)]="editingCourse.nombre" *ngIf="editingCourse" placeholder="Nombre del curso" />
+      </div>
+      <div class="form-field">
+        <label>Descripción</label>
+        <input type="text" [(ngModel)]="newCourse.descripcion" *ngIf="!editingCourse" placeholder="Descripción del curso" />
+        <input type="text" [(ngModel)]="editingCourse.descripcion" *ngIf="editingCourse" placeholder="Descripción del curso" />
+      </div>
+      <div class="form-field">
+        <label>Descripción Adicional</label>
+        <input type="text" [(ngModel)]="newCourse.descripcion2" *ngIf="!editingCourse" placeholder="Descripción adicional" />
+        <input type="text" [(ngModel)]="editingCourse.descripcion2" *ngIf="editingCourse" placeholder="Descripción adicional" />
+      </div>
+      <div class="form-field">
+        <label>Categoría</label>
+        <select [(ngModel)]="newCourse.categoria" *ngIf="!editingCourse">
+          <option value="" disabled selected>Selecciona una categoría</option>
+          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        </select>
+        <select [(ngModel)]="editingCourse.categoria" *ngIf="editingCourse">
+          <option value="" disabled>Selecciona una categoría</option>
+          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        </select>
+      </div>
+      <div class="form-field full-width">
+        <label>Etapas</label>
+        <div class="habilidades-checkboxes">
+          <div *ngFor="let etapa of (editingCourse?.etapas || newCourse.etapas)" class="checkbox-item">
+            <span>{{ etapa }}</span>
+            <button class="btn-action btn-cancel" (click)="removeEtapa(etapa)">Eliminar</button>
+          </div>
+        </div>
+        <input type="text" #etapaInput placeholder="Nueva etapa" />
+        <button class="btn-secondary" (click)="addEtapa(etapaInput.value); etapaInput.value=''">Agregar Etapa</button>
+      </div>
+      <div class="form-field">
+        <label>Fecha de Inicio</label>
+        <input type="date" [(ngModel)]="newCourse.fecha_inicio" *ngIf="!editingCourse" />
+        <input type="date" [(ngModel)]="editingCourse.fecha_inicio" *ngIf="editingCourse" />
+      </div>
+      <div class="form-field">
+        <label>Profesional</label>
+        <input type="text" [(ngModel)]="newCourse.profesional" *ngIf="!editingCourse" placeholder="Nombre del profesional" />
+        <input type="text" [(ngModel)]="editingCourse.profesional" *ngIf="editingCourse" placeholder="Nombre del profesional" />
+      </div>
+      <div class="form-field">
+        <label>Duración</label>
+        <input type="text" [(ngModel)]="newCourse.duracion" *ngIf="!editingCourse" placeholder="Ej. 8 semanas" />
+        <input type="text" [(ngModel)]="editingCourse.duracion" *ngIf="editingCourse" placeholder="Ej. 8 semanas" />
+      </div>
+      <div class="form-field">
+        <label>Horario</label>
+        <input type="text" [(ngModel)]="newCourse.horario" *ngIf="!editingCourse" placeholder="Ej. L-V 8:00pm - 10:00pm" />
+        <input type="text" [(ngModel)]="editingCourse.horario" *ngIf="editingCourse" placeholder="Ej. L-V 8:00pm - 10:00pm" />
+      </div>
+      <div class="form-field">
+        <label>Precio</label>
+        <input type="number" [(ngModel)]="newCourse.precio" *ngIf="!editingCourse" placeholder="Precio en USD" />
+        <input type="number" [(ngModel)]="editingCourse.precio" *ngIf="editingCourse" placeholder="Precio en USD" />
+      </div>
+      <div class="form-field">
+        <label>URL</label>
+        <input type="text" [(ngModel)]="newCourse.url" *ngIf="!editingCourse" placeholder="URL del curso (Teams, Zoom, etc.)" />
+        <input type="text" [(ngModel)]="editingCourse.url" *ngIf="editingCourse" placeholder="URL del curso (Teams, Zoom, etc.)" />
+      </div>
+      <div class="form-field full-width">
+        <label>Imagen (URL)</label>
+        <input type="text" [(ngModel)]="newCourse.imagen" *ngIf="!editingCourse" placeholder="URL de la imagen" />
+        <input type="text" [(ngModel)]="editingCourse.imagen" *ngIf="editingCourse" placeholder="URL de la imagen" />
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-cancel" (click)="cancelEditing()">Cancelar</button>
+      <button class="btn-primary" (click)="saveCourse()" [disabled]="isLoading">
+        {{ editingCourse ? 'Actualizar' : 'Crear' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Mensajes de estado -->
+  <div *ngIf="isLoading" class="loading">Cargando...</div>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+  <!-- Tabla de cursos -->
+  <div class="card">
+    <h3>Lista de Cursos</h3>
+    <div *ngIf="!isLoading && courses.length === 0" class="no-data">No hay cursos disponibles</div>
+    <table class="table" *ngIf="courses.length > 0">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Categoría</th>
+          <th>Fecha Inicio</th>
+          <th>Profesional</th>
+          <th>Duración</th>
+          <th>Horario</th>
+          <th>Precio</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of courses">
+          <td>{{ course.nombre }}</td>
+          <td>{{ course.descripcion }}</td>
+          <td>{{ course.categoria || '-' }}</td>
+          <td>{{ course.fecha_inicio || '-' }}</td>
+          <td>{{ course.profesional }}</td>
+          <td>{{ course.duracion }}</td>
+          <td>{{ course.horario }}</td>
+          <td>{{ course.precio }} USD</td>
+          <td>
+            <button class="btn-action btn-primary" (click)="startEditing(course)">Editar</button>
+            <button class="btn-action btn-cancel" (click)="deleteCourse(course.id_course)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
