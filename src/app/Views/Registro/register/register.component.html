@@ -111,16 +111,16 @@
       <div class="skills-section">
         <h3>
           <svg class="section-icon"><use href="#icon-skills"></use></svg>
-          Selecciona 3 aptitudes de tu interés
+          Selecciona 3 categorías de tu interés
         </h3>
         <div class="skills-grid">
-          <span class="skill-chip" *ngFor="let skill of ['Comunicación', 'Trabajo en equipo', 'Resolución de problemas', 'Adaptabilidad', 'Liderazgo', 'Creatividad']"
+          <span class="skill-chip" *ngFor="let skill of ['Diseño', 'Habilidades Blandas', 'Idiomas', 'Modelado Técnico', 'Ofimática', 'Programación']"
                 (click)="toggleSkill(skill)" [ngClass]="{'selected': selectedSkills.includes(skill)}" tabindex="0">
             {{skill}}
           </span>
         </div>
-        <p class="skills-note" *ngIf="selectedSkills.length >= 3">Maximo de 3 habilidades</p>
-        <p class="error-message" *ngIf="selectedSkills.length === 0 && userGroup.touched">Debes seleccionar al menos una habilidad</p>
+        <p class="skills-note" *ngIf="selectedSkills.length >= 3">Maximo de 3 categorías</p>
+        <p class="error-message" *ngIf="selectedSkills.length === 0 && userGroup.touched">Debes seleccionar al menos una categoría</p>
       </div>
 
       <div class="form-actions">
