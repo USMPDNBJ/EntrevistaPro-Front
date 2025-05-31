@@ -15,8 +15,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import Sessions from '../../../models/sessions';
 import Pago from '../../../models/pago';
+import CoursePayed from '../../../models/coursePayed';
 import { SessionService } from '../../../services/session.service';
 import { NavbarComponent } from "../../../Components/navbar/navbar.component";
+import { CourseService } from '../../../services/course.service';
 
 
 
@@ -47,16 +49,21 @@ export class pasarelaComponent implements OnInit {
   cardType: string | null = null;
   currentYear = new Date().getFullYear();
   currentMonth = new Date().getMonth() + 1;
-
+  scheduleType = sessionStorage.getItem('pasarela');
+  userId = Number(sessionStorage.getItem('userId'));
+  courseId = Number(sessionStorage.getItem('courseId'));
+  monto = Number(sessionStorage.getItem('precio'));
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private serviceSession: SessionService,
+    private serviceCourse: CourseService,
     private location: Location,
     private router: Router
   ) {
+
     this.iconRegistry.addSvgIcon(
       'custom-payment',
       this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/payment.svg')
@@ -81,7 +88,7 @@ export class pasarelaComponent implements OnInit {
         Validators.required,
         Validators.pattern(/^[0-9]{3,4}$/)
       ]],
-      amount: [{ value: 20, disabled: true }, [
+      amount: [{ value: this.monto, disabled: true }, [
         Validators.required,
         Validators.min(1),
         Validators.max(10000)
@@ -178,67 +185,71 @@ export class pasarelaComponent implements OnInit {
     this.isProcessing = true;
 
     try {
-      // Simular llamada a API
+      // Notificación de éxito (simulando pago exitoso)
+      this.snackBar.open('¡Pago procesado exitosamente!', 'Cerrar', {
+        duration: 5000,
+        panelClass: ['success-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      });
 
-      const isSuccess = Math.random() > 0.2;
-      if (isSuccess) {
-        this.snackBar.open('¡Pago procesado exitosamente!', 'Cerrar', {
-          duration: 5000,
-          panelClass: ['success-snackbar'],
-          horizontalPosition: 'center',
-          verticalPosition: 'top'
-        });
+      // Extraer datos del formulario
+      let numeroTarjeta = this.cardNumber?.value;
+      let titular = this.cardHolder?.value;
+      let expiry = this.expiryDate?.value; // ejemplo: "10/25"
+      let [month, year] = expiry.split("/").map((val: string) => parseInt(val));
+      if (year < 100) year += 2000;
+      let fecExp = new Date(year, month - 1, 1);
+      let cvv = this.cvv?.value;
+      let monto = this.amount?.value;
+      let pago = new Pago(undefined, numeroTarjeta, titular, fecExp, cvv, monto);
+      let c_session: Sessions;
+      console.log(pago);
 
-        let numeroTarjeta = this.cardNumber?.value;
-        let titular = this.cardHolder?.value;
-        let expiry = this.expiryDate?.value; // ejemplo: "10/25"
-        let [month, year] = expiry.split("/").map((val: string) => parseInt(val));
-        // Corrige el año a formato completo, asumiendo 2000+
-        if (year < 100) year += 2000;
-        let fecExp = new Date(year, month - 1, 1);
-        let cvv = this.cvv?.value;
-        let monto = this.amount?.value;
-        let pago = new Pago(undefined, numeroTarjeta, titular, fecExp, cvv, monto)
-        let c_session: Sessions;
-        console.log(pago)
-        this.serviceSession.createPago(pago).subscribe({
-          next: (res) => {
-            console.log('Respuesta createPago:', res);
-            let idPago = res.id_pago;
+      // Guardar pago en el backend
+      this.serviceSession.createPago(pago).subscribe({
+        next: (res) => {
+          console.log('Respuesta createPago:', res);
+          let idPago = res.id_pago;
 
-            if (!idPago) {
-              console.error('No se recibió id_pago válido');
-              return;
-            }
+          if (!idPago) {
+            console.error('No se recibió id_pago válido');
+            return;
+          }
 
+          if (this.scheduleType === 'course') {
+            this.paymentForm.reset({
+              amount: { value: monto, disabled: true }
+            });
+            let coursePayed: CoursePayed = { id_course: this.courseId, id_user: this.userId, id_pago: idPago };
+            this.serviceCourse.postCreateCoursePayed(coursePayed).subscribe({
+              next: (res) => {
+                console.log('Pago guardado', res);
+                this.router.navigate(['/mis-sesiones']);
+              },
+              error: (err) => console.error('Error al guardar el pago', err)
+            });
+          } else if (this.scheduleType === 'session') {
             const sessionData = sessionStorage.getItem('ss_reunion');
             if (sessionData) {
               c_session = JSON.parse(sessionData) as Sessions;
               c_session.id_pago = idPago;
-
               this.serviceSession.postSession(c_session).subscribe({
                 next: (res) => {
                   console.log('Pago guardado', res);
-                  this.router.navigate(['/mis-sesiones'])
                 },
                 error: (err) => console.error('Error al guardar el pago', err)
               });
             }
-          },
-          error: (err) => console.error('Error al guardar el pago', err)
-        });
+          } else {
+            console.error('Tipo de agendamiento no válido:', this.scheduleType);
+            return;
+          }
+        },
+        error: (err) => console.error('Error al guardar el pago', err)
+      });
 
-
-        // let y = sessionStorage.getItem('ss_reunion');
-
-        this.paymentForm.reset({
-          amount: { value: 20, disabled: true }
-        });
-        this.cardType = null;
-
-      } else {
-        throw new Error('Error en el procesamiento del pago');
-      }
+      this.cardType = null;
     } catch (error) {
       console.error('Payment error:', error);
       this.snackBar.open('Error al procesar el pago. Por favor intente nuevamente.', 'Cerrar', {

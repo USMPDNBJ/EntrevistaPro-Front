@@ -1,15 +1,15 @@
-export default class Course {
-
-  constructor(
-    public id_course?: number,
-    public nombre?: String,
-    public descripcion?: String,
-    public profesional?: String,
-    public duracion?: string,
-    public precio?: number,
-    public categoria?: string,
-    public etapas?: string[],
-    public url?: string
-  ){ }
-
+export default interface Course {
+  id_course?: string; // Optional, if included by the service
+  nombre: string;
+  descripcion: string;
+  descripcion2: string;
+  profesional: string;
+  duracion: string;
+  horario: string;
+  fecha_inicio: Date;
+  precio: number;
+  categoria: string;
+  etapas: string[];
+  imagen: string;
+  url: string;
 }

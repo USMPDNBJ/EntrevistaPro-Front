@@ -1,0 +1,150 @@
+.principal-container {
+  background: linear-gradient(90deg, #182549, #5cb0e7);
+  width: 100%;
+}
+
+/* Contenedor principal */
+.curso-detalle {
+  max-width: 1200px;
+  margin: 3rem auto;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  color: var(--text-color);
+  background-color: white;
+  border-radius: 10px;
+}
+
+/* Tarjeta principal */
+.curso-contenido {
+  background: var(--card-background);
+  padding: 2rem;
+  box-shadow: var(--card-shadow);
+  transition: box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+/* Estructura en dos columnas */
+.curso-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Columna de texto (izquierda) */
+.curso-texto {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.curso-texto h1 {
+  font-size: 2.6rem;
+  color: var(--heading-color);
+  margin-bottom: 1rem;
+}
+
+.curso-texto .descripcion {
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+/* Columna de imagen y atributos (derecha) */
+.curso-imagen-atributos {
+  display: flex;
+  flex-direction: column;
+
+}
+
+/* Imagen con tamaño predeterminado */
+.curso-imagen {
+  width: 400px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform var(--transition-speed) ease;
+}
+.enroll-btn {
+
+  background: linear-gradient(135deg, #161616 0%, #66a4ce 100%);
+  padding: 12px 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ffffff;
+  width: 400px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  margin-top: 10px; /* Asegura que el botón esté al final */
+  text-align: center !important;
+}
+.enroll-btn:hover {
+  background: linear-gradient(135deg, #3d3d3d 0%, #1389d8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+/* Atributos adicionales debajo de la imagen */
+.curso-atributos {
+  margin: 0;
+  width: 100%;
+  max-width: 400px;
+  padding-left: 8%;
+  background: var(--card-background);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  transition: box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+.curso-atributos p {
+  margin-bottom: 1rem;
+}
+
+.curso-atributos h3 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--subheading-color);
+}
+
+.curso-atributos ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.curso-atributos li {
+  margin-bottom: 0.75rem;
+}
+
+/* Mensaje de error */
+.error-message {
+  color: var(--error-color);
+  background: var(--error-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Indicador de carga */
+.loading {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+
+/* Responsividad: Apila columnas en pantallas pequeñas */
+@media (max-width: 768px) {
+  .curso-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .curso-imagen {
+    width: 100%;
+    height: auto;
+  }
+
+  .curso-atributos {
+    max-width: 100%;
+  }
+}

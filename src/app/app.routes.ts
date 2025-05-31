@@ -16,9 +16,10 @@ import { AdminWrapperComponent } from './Modules/admin/admin-wrapper.component';
 import { pasarelaComponent } from './Views/Principal/pasarela/pasarela.component';
 import { GestionarUsuariosComponent } from './Views/Admin/gestionar-usuarios/gestionar-usuarios.component';
 import { GestionarSesionesComponent } from './Views/Admin/gestionar-sesiones/gestionar-sesiones.component';
+import { DetalleCursoComponent } from './Views/Principal/detalle-curso/detalle-curso.component';
 import { VerSesionesComponent } from './Views/Profesional/ver-sesiones/ver-sesiones.component';
 import { ProfesionalWrapperComponent } from './Modules/profesional/profesional-wrapper.component';
-import { GestionarCursosComponent } from './Views/Admin/gestionar-cursos/gestionar-cursos.component';
+import { MisCursosComponent } from './Views/Principal/mis-cursos/mis-cursos.component';
 
 export const routes: Routes = [
   {
@@ -37,9 +38,11 @@ export const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'about-us', component: AboutUsComponent },
       { path: 'cursos', component: CursosComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
+      { path: 'detalle-curso/:id', component: DetalleCursoComponent },
       { path: 'agendar-reunion', component: AgendarReunionComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
       { path: 'pasarela', component: pasarelaComponent },
       { path: 'mis-sesiones', component: MisSesionesComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
+      { path: 'mis-cursos', component: MisCursosComponent },
       { path: '', redirectTo: '/auth', pathMatch: 'full' },
     ],
   },

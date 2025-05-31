@@ -217,7 +217,9 @@ export class AgendarReunionComponent {
       enlace: undefined
     };
     session.hora_fin = `${nuevasHoras.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
+    sessionStorage.setItem('pasarela', 'session');
     sessionStorage.setItem('ss_reunion', JSON.stringify(session));
+    sessionStorage.setItem('precio', '30');
   }
 
 }
