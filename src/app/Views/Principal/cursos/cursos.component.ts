@@ -8,11 +8,11 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cursos',
-  imports: [ NavbarComponent, CommonModule, RouterLink],
+  imports: [NavbarComponent, CommonModule, RouterLink],
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.css'
 })
-export class CursosComponent{
+export class CursosComponent {
   courses: Course[] = [];
   loading: boolean = true;
 
@@ -38,5 +38,10 @@ export class CursosComponent{
       }
     });
   }
+  idCurso(idCurso: string) {
+    if (idCurso) {
+      sessionStorage.setItem('idCurso', idCurso)
+    }
 
+  }
 }

@@ -16,10 +16,20 @@ import { pasarelaComponent } from './Views/Principal/pasarela/pasarela.component
 import { GestionarUsuariosComponent } from './Views/Admin/gestionar-usuarios/gestionar-usuarios.component';
 import { GestionarSesionesComponent } from './Views/Admin/gestionar-sesiones/gestionar-sesiones.component';
 import { DetalleCursoComponent } from './Views/Principal/detalle-curso/detalle-curso.component';
-import { VerSesionesComponent } from './Views/Profesional/ver-sesiones/ver-sesiones.component';
 import { ProfesionalWrapperComponent } from './Modules/profesional/profesional-wrapper.component';
 import { MisCursosComponent } from './Views/Principal/mis-cursos/mis-cursos.component';
 import { GestionarCursosComponent } from './Views/Admin/gestionar-cursos/gestionar-cursos.component';
+
+export function getCursoPrerenderParams(): { id: string }[] {
+  // Lista estática de IDs de cursos a prerenderizar
+  // Reemplaza con los IDs reales de tus cursos
+  return [
+    { id: '1' },
+    { id: '2' },
+    { id: '3' }
+    // Agrega más IDs según sea necesario
+  ];
+}
 
 export const routes: Routes = [
   {
@@ -38,7 +48,9 @@ export const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'about-us', component: AboutUsComponent },
       { path: 'cursos', component: CursosComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
-      { path: 'detalle-curso/:id', component: DetalleCursoComponent },
+      {
+        path: 'detalle-curso', component: DetalleCursoComponent, data: {}
+      },
       { path: 'agendar-reunion', component: AgendarReunionComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
       { path: 'pasarela', component: pasarelaComponent },
       { path: 'mis-sesiones', component: MisSesionesComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
@@ -64,7 +76,7 @@ export const routes: Routes = [
       { path: '', loadChildren: () => import('./Modules/admin/admin.module').then(m => m.AdminModule) },
       { path: 'admin/usuarios', component: GestionarUsuariosComponent },
       { path: 'admin/sesiones', component: GestionarSesionesComponent },
-      { path: 'admin/cursos', component: GestionarCursosComponent}
+      { path: 'admin/cursos', component: GestionarCursosComponent }
     ]
   },
   {
