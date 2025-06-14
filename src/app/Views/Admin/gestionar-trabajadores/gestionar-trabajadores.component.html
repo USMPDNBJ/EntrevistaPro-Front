@@ -72,7 +72,6 @@
           <label for="rol">Rol</label>
           <select id="rol" formControlName="rol" required>
             <option value="Worker">Worker</option>
-            <option value="Admin">Admin</option>
           </select>
           <span class="error" *ngIf="workerForm.get('rol')?.invalid && workerForm.get('rol')?.touched">
             Requerido
