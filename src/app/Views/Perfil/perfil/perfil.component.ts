@@ -31,7 +31,7 @@ export class PerfilComponent implements OnInit {
   isLoading = true;
   errorMessage: string | null = null;
   isEditing = false;
-  availableSkills: string[] = ['Diseño', 'Habilidades blandas', 'Idiomas', 'Modelado Técnico', 'Ofimática', 'Programacion'];
+  availableSkills: string[] = ['Diseño', 'Habilidades blandas', 'Idiomas', 'Modelado Técnico', 'Ofimática', 'Programación'];
 
   constructor(
     private authService: AuthService,
