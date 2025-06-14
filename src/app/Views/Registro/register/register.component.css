@@ -12,6 +12,21 @@
   }
 }
 
+.comments-section {
+  margin-top: 20px;
+}
+.comments-section .input-field.full-width {
+  width: 100%;
+}
+.comments-section textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
 .register-form {
   background: white;
   border-radius: 20px;

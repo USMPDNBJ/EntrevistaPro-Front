@@ -30,6 +30,7 @@ export class RegisterComponent {
       contrasena: ['', [Validators.required, Validators.minLength(6)]],
       dni: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
       celular: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
+      comentarios: [''] // Campo opcional para comentarios
     });
   }
 
@@ -78,7 +79,7 @@ export class RegisterComponent {
         },
       });
     } else {
-      this.errorMessage = 'Por favor, completa todos los campos y selecciona al menos una categoria.';
+      this.errorMessage = 'Por favor, completa todos los campos y selecciona al menos una categoría.';
     }
   }
 }

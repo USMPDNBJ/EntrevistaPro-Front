@@ -40,7 +40,7 @@
             <input type="text" [(ngModel)]="user.celular" [disabled]="!isEditing" placeholder="Ingresa tu celular" />
           </div>
           <div class="field skills-field">
-            <label>Categorias</label>
+            <label>Categorías</label>
             <div class="skills-list" *ngIf="!isEditing">
               <span *ngFor="let skill of user.habilidades || []" class="skill-tag">{{ skill }}</span>
               <span *ngIf="!(user.habilidades?.length)" class="no-skills">No hay habilidades</span>
@@ -53,6 +53,11 @@
               </span>
               <p *ngIf="user.habilidades && (user.habilidades.length < 1 || user.habilidades.length > 3)" class="error-message">Selecciona entre 1 y 3 habilidades</p>
             </div>
+          </div>
+          <div class="field comments-field">
+            <label>Comentarios</label>
+            <textarea [(ngModel)]="user.comentarios" [disabled]="!isEditing" placeholder="Ingresa tus comentarios" *ngIf="isEditing"></textarea>
+            <p *ngIf="!isEditing">{{ user.comentarios || 'Sin comentarios' }}</p>
           </div>
         </div>
         <div class="action-section">

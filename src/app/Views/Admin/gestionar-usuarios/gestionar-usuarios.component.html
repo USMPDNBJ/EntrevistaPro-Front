@@ -67,8 +67,18 @@
             Máximo 3 habilidades
           </span>
         </div>
+        <!-- Comentarios -->
+        <div class="form-field full-width">
+          <label for="comentarios">Comentarios</label>
+          <textarea id="comentarios" formControlName="comentarios" placeholder="Ingresa comentarios opcionales"></textarea>
+        </div>
         <!-- Rol -->
         <div class="form-field">
+          <label for="rol">Rol</label>
+          <select id="rol" formControlName="rol" required>
+            <option value="Worker">Worker</option>
+            <option value="Admin">Admin</option>
+          </select>
           <span class="error" *ngIf="userForm.get('rol')?.invalid && userForm.get('rol')?.touched">
             Requerido
           </span>
@@ -105,6 +115,7 @@
           <th>Celular</th>
           <th>Habilidades</th>
           <th>Rol</th>
+          <th>Comentarios</th> <!-- Nueva columna -->
           <th>Acciones</th>
         </tr>
       </thead>
@@ -118,6 +129,7 @@
           <td>{{ user.celular }}</td>
           <td>{{ user.habilidades.join(', ') }}</td>
           <td>{{ user.rol }}</td>
+          <td>{{ user.comentarios || 'Sin comentarios' }}</td> <!-- Mostrar comentarios -->
           <td>
             <button class="btn-action edit-btn" (click)="editUser(user)" [disabled]="isLoading">
               <span class="material-icons">edit</span>

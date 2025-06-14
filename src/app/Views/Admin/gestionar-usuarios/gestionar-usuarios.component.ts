@@ -15,6 +15,7 @@ interface User {
   celular: string;
   habilidades: string[];
   rol: string;
+  comentarios?: string; // Nuevo campo para comentarios
 }
 
 @Component({
@@ -62,7 +63,8 @@ export class GestionarUsuariosComponent implements OnInit {
         this.habilidadesDisponibles.map(() => this.fb.control(false)),
         this.minSelectedCheckboxes(1, 3)
       ),
-      rol: ['Worker', Validators.required]
+      rol: ['Worker', Validators.required],
+      comentarios: [''] // Campo opcional para comentarios
     });
 
     this.users$.subscribe(users => {
@@ -160,7 +162,7 @@ export class GestionarUsuariosComponent implements OnInit {
       next: (response) => {
         this.successMessage = 'Usuario creado exitosamente';
         this.errorMessage = null;
-        this.userForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false) });
+        this.userForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false), comentarios: '' });
         this.loadUsers();
       },
       error: (error) => {
@@ -180,7 +182,7 @@ export class GestionarUsuariosComponent implements OnInit {
       next: (response) => {
         this.successMessage = 'Usuario actualizado exitosamente';
         this.errorMessage = null;
-        this.userForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false) });
+        this.userForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false), comentarios: '' });
         this.isEditing = false;
         this.editingUserId = null;
         this.loadUsers();
@@ -206,7 +208,8 @@ export class GestionarUsuariosComponent implements OnInit {
 
     this.userForm.patchValue({
       ...user,
-      contrasena: ''
+      contrasena: '',
+      comentarios: user.comentarios || '' // Cargar comentarios
     });
     this.userForm.get('contrasena')?.clearValidators();
     this.userForm.get('contrasena')?.updateValueAndValidity();
@@ -233,7 +236,7 @@ export class GestionarUsuariosComponent implements OnInit {
   cancelEdit() {
     this.isEditing = false;
     this.editingUserId = null;
-    this.userForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false) });
+    this.userForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false), comentarios: '' });
     this.userForm.get('contrasena')?.setValidators([Validators.minLength(6)]);
     this.userForm.get('contrasena')?.updateValueAndValidity();
   }

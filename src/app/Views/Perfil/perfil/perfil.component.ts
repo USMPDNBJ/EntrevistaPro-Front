@@ -17,6 +17,7 @@ interface UserProfile {
   habilidades: string[] | null;
   rol: string;
   contrasena: string | null;
+  comentarios: string | null; // Nuevo campo para comentarios
 }
 
 @Component({
@@ -54,8 +55,8 @@ export class PerfilComponent implements OnInit {
       next: (response) => {
         const userData = response.data && response.data.length > 0 ? response.data[0] : null;
         if (userData) {
-          this.user = { ...userData, habilidades: userData.habilidades || [] };
-          console.log('Contraseña cargada:', this.user.contrasena); // Verificar que contrasena se carga
+          this.user = { ...userData, habilidades: userData.habilidades || [], comentarios: userData.comentarios || '' };
+          console.log('Contraseña cargada:', this.user.contrasena);
         } else {
           this.errorMessage = 'No se encontraron datos del perfil';
         }
@@ -80,7 +81,7 @@ export class PerfilComponent implements OnInit {
   saveProfile() {
     if (this.user && this.authService.getUserId()) {
       if (!this.user.habilidades || this.user.habilidades.length < 1 || this.user.habilidades.length > 3) {
-        this.errorMessage = 'Debes seleccionar entre 1 y 3 categorias';
+        this.errorMessage = 'Debes seleccionar entre 1 y 3 categorías';
         this.isLoading = false;
         return;
       }
@@ -94,9 +95,10 @@ export class PerfilComponent implements OnInit {
         celular: this.user.celular,
         habilidades: this.user.habilidades,
         rol: this.user.rol,
-        contrasena: originalPassword // Usar la contraseña original
+        contrasena: originalPassword, // Usar la contraseña original
+        comentarios: this.user.comentarios // Incluir comentarios
       };
-      console.log('Datos enviados al guardar:', userData); // Verificar qué se envía
+      console.log('Datos enviados al guardar:', userData);
       this.http.put(`${environment.apiUrlUser}/${this.authService.getUserId()}`, userData, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
