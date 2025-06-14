@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../../environments/environment.prod';
 
 interface Course {
   id_course: number;
@@ -47,7 +48,7 @@ export class GestionarCursosComponent implements OnInit {
   isLoading = false;
   errorMessage: string | null = null;
   successMessage: string | null = null;
-  apiUrlCourse = 'http://localhost:5001/api/course';
+  apiUrlCourse = environment.apiUrlCourse;
   categories = ['Programación', 'Diseño', 'Idiomas', 'Ofimática', 'Liderazgo'];
 
   constructor(private http: HttpClient) {}
