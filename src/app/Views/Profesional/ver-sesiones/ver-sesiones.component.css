@@ -1,5 +1,5 @@
 .container {
-  max-width: 1200px;
+  max-width: 1600px; /* Ancho máximo más amplio */
   margin: 0 auto;
   padding: 20px;
 }
@@ -39,17 +39,18 @@
 }
 
 .sessions-table {
-  width: 100%;
+  width: 100%; /* Ajusta al contenedor */
   border-collapse: collapse;
   margin-top: 20px;
+  min-width: 1200px; /* Ancho mínimo razonable */
 }
 
 .sessions-table th,
 .sessions-table td {
-  text-align: center !important;
   padding: 12px;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid #ddd;
+  vertical-align: middle; /* Centra verticalmente el contenido */
 }
 
 .sessions-table th {
@@ -60,6 +61,21 @@
 
 .sessions-table td {
   color: #555;
+}
+
+/* Columnas específicas para Evaluación PDF y Link (7ma y 8va columna) */
+.sessions-table th:nth-child(7),
+.sessions-table td:nth-child(7) {
+  width: 180px; /* Ancho fijo moderado */
+  word-break: break-word; /* Divide palabras largas */
+  white-space: normal; /* Permite salto de línea */
+}
+
+.sessions-table th:nth-child(8),
+.sessions-table td:nth-child(8) {
+  width: 180px; /* Ancho fijo moderado */
+  word-break: break-word; /* Divide palabras largas */
+  white-space: normal; /* Permite salto de línea */
 }
 
 .reload-btn {
@@ -157,4 +173,15 @@
   margin-left: 10px;
   padding: 5px 10px;
   font-size: 14px;
+}
+
+@media (max-width: 1200px) {
+  .sessions-table {
+    min-width: 100%; /* Ajusta en pantallas pequeñas */
+  }
+  .sessions-table th,
+  .sessions-table td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
 }
