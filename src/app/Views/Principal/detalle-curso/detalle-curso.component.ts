@@ -16,11 +16,10 @@ export class DetalleCursoComponent {
   course: Course | null = null; // Property to store the course
   errorMessage: string | null = null; // For error handling
   isLoading: boolean = true; // To track loading state
-  cursoId: string | null = null; // To store the course ID
   constructor(private service: CourseService, private route: ActivatedRoute) {
-    this.cursoId = this.route.snapshot.paramMap.get('id'); // Get course ID from route
-    if (this.cursoId) {
-      this.loadCourse(this.cursoId); // Load course details
+    const cursoId = sessionStorage.getItem('idCurso'); // Get course ID from route
+    if (cursoId) {
+      this.loadCourse(cursoId); // Load course details
     } else {
       this.errorMessage = 'Curso no encontrado.';
       this.isLoading = false; // Clear loading state
