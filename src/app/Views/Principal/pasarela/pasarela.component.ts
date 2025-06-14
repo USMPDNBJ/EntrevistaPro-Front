@@ -234,6 +234,7 @@ export class pasarelaComponent implements OnInit {
             if (sessionData) {
               c_session = JSON.parse(sessionData) as Sessions;
               c_session.id_pago = idPago;
+              c_session.profesional_id = undefined;
               this.serviceSession.postSession(c_session).subscribe({
                 next: (res) => {
                   console.log('Pago guardado', res);
