@@ -162,7 +162,7 @@ export class GestionarUsuariosComponent implements OnInit {
       next: (response) => {
         this.successMessage = 'Usuario creado exitosamente';
         this.errorMessage = null;
-        this.userForm.reset({ rol: 'Usuario', habilidades: this.habilidadesDisponibles.map(() => false), comentarios: '' });
+        this.userForm.reset({ rol: 'User', habilidades: this.habilidadesDisponibles.map(() => false), comentarios: '' });
         this.loadUsers();
       },
       error: (error) => {
@@ -182,7 +182,7 @@ export class GestionarUsuariosComponent implements OnInit {
       next: (response) => {
         this.successMessage = 'Usuario actualizado exitosamente';
         this.errorMessage = null;
-        this.userForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false), comentarios: '' });
+        this.userForm.reset({ rol: 'User', habilidades: this.habilidadesDisponibles.map(() => false), comentarios: '' });
         this.isEditing = false;
         this.editingUserId = null;
         this.loadUsers();
@@ -236,7 +236,7 @@ export class GestionarUsuariosComponent implements OnInit {
   cancelEdit() {
     this.isEditing = false;
     this.editingUserId = null;
-    this.userForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false), comentarios: '' });
+    this.userForm.reset({ rol: 'User', habilidades: this.habilidadesDisponibles.map(() => false), comentarios: '' });
     this.userForm.get('contrasena')?.setValidators([Validators.minLength(6)]);
     this.userForm.get('contrasena')?.updateValueAndValidity();
   }
