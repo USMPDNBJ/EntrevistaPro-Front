@@ -10,6 +10,24 @@
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/home",
+              "/about-us",
+              "/cursos",
+              "/auth/login",
+              "/auth/register",
+              "/pasarela",
+              "/mis-cursos"
+            ]
+          },
+          "configurations": {
+            "production": {},
+            "development": {}
+          }
+        },
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {

@@ -225,7 +225,7 @@ export class pasarelaComponent implements OnInit {
             this.serviceCourse.postCreateCoursePayed(coursePayed).subscribe({
               next: (res) => {
                 console.log('Pago guardado', res);
-                this.router.navigate(['/mis-sesiones']);
+                this.router.navigate(['/mis-cursos']);
               },
               error: (err) => console.error('Error al guardar el pago', err)
             });
@@ -237,6 +237,7 @@ export class pasarelaComponent implements OnInit {
               this.serviceSession.postSession(c_session).subscribe({
                 next: (res) => {
                   console.log('Pago guardado', res);
+                  this.router.navigate(['/mis-sesiones']);
                 },
                 error: (err) => console.error('Error al guardar el pago', err)
               });
