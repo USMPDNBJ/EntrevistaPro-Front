@@ -182,7 +182,7 @@ export class GestionarUsuariosComponent implements OnInit {
       next: (response) => {
         this.successMessage = 'Usuario actualizado exitosamente';
         this.errorMessage = null;
-        this.userForm.reset({ rol: '', habilidades: this.habilidadesDisponibles.map(() => false), comentarios: '' });
+        this.userForm.reset({ rol: 'User', habilidades: this.habilidadesDisponibles.map(() => false), comentarios: '' });
         this.isEditing = false;
         this.editingUserId = null;
         this.loadUsers();
