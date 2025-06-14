@@ -65,7 +65,14 @@ export class GestionarCursosComponent implements OnInit {
       })
     }).subscribe({
       next: (response) => {
-        this.courses = response.data || [];
+        this.courses = (response.data || []).map(course => {
+          if (!course.id_course && course.id_course !== 0) {
+            console.error('Curso sin id_course encontrado:', course);
+            return { ...course, id_course: -1 }; // Asignar un valor temporal para identificar el problema
+          }
+          return course;
+        });
+        console.log('Cursos cargados:', this.courses);
         this.isLoading = false;
       },
       error: (error: HttpErrorResponse) => {
@@ -77,7 +84,13 @@ export class GestionarCursosComponent implements OnInit {
   }
 
   startEditing(course: Course) {
-    this.editingCourse = { ...course, etapas: course.etapas || [] }; // Asegurar que etapas sea un array
+    if (!course.id_course && course.id_course !== 0) {
+      console.error('Intentando editar curso con id_course inválido:', course);
+      this.errorMessage = 'No se puede editar un curso sin ID válido';
+      return;
+    }
+    this.editingCourse = { ...course, etapas: [...(course.etapas || [])] }; // Copia profunda de etapas y preservar id_course
+    console.log('Iniciando edición para curso con id:', this.editingCourse.id_course);
   }
 
   cancelEditing() {
@@ -131,6 +144,12 @@ export class GestionarCursosComponent implements OnInit {
     const courseToSave = this.editingCourse || this.newCourse;
     const method = this.editingCourse ? 'put' : 'post';
     const url = this.editingCourse ? `${this.apiUrlCourse}/${courseToSave.id_course}` : this.apiUrlCourse;
+
+    if (this.editingCourse && (!courseToSave.id_course || courseToSave.id_course < 0)) {
+      this.errorMessage = 'Error: ID del curso no válido para actualizar';
+      this.isLoading = false;
+      return;
+    }
 
     const fullCourse = {
       ...courseToSave,
