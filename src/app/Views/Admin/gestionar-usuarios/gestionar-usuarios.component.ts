@@ -38,12 +38,12 @@ export class GestionarUsuariosComponent implements OnInit {
   private isInitialLoad = true;
 
   habilidadesDisponibles = [
-    'Comunicación',
-    'Trabajo en equipo',
-    'Resolución de problemas',
-    'Adaptabilidad',
-    'Liderazgo',
-    'Gestión del tiempo'
+    'Diseño',
+    'Habilidades blandas',
+    'Idiomas',
+    'Modelado Técnico',
+    'Ofimática',
+    'Programación'
   ];
 
   private baseUrl = environment.apiUrlUser;
@@ -63,7 +63,7 @@ export class GestionarUsuariosComponent implements OnInit {
         this.habilidadesDisponibles.map(() => this.fb.control(false)),
         this.minSelectedCheckboxes(1, 3)
       ),
-      rol: ['Worker', Validators.required],
+      rol: ['User', Validators.required],
       comentarios: [''] // Campo opcional para comentarios
     });
 
@@ -162,7 +162,7 @@ export class GestionarUsuariosComponent implements OnInit {
       next: (response) => {
         this.successMessage = 'Usuario creado exitosamente';
         this.errorMessage = null;
-        this.userForm.reset({ rol: 'Worker', habilidades: this.habilidadesDisponibles.map(() => false), comentarios: '' });
+        this.userForm.reset({ rol: 'Usuario', habilidades: this.habilidadesDisponibles.map(() => false), comentarios: '' });
         this.loadUsers();
       },
       error: (error) => {
